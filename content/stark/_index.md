@@ -8,22 +8,23 @@ weight = 10
 
 Stark is a window manager for macOS. Use its JavaScript API to create keyboard shortcuts that control windows and applications.
 
+Stark is no longer updated. For a current setup, use [swm](/swm/) for window management and [skbd](/skbd/) for keyboard shortcuts.
+
 ## Installation
 
-Install Stark with [Homebrew][brew].
+Stark must be built from source. You need macOS 26 or later and Xcode 26 or later.
 
-    brew install starkwm/formulae/stark
+```sh
+git clone https://github.com/starkwm/stark.git
+cd stark
+xcodebuild -project Stark.xcodeproj -scheme Stark \
+  -configuration Release -derivedDataPath ./build \
+  CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= build
+```
 
-Launch Stark, grant it Accessibility permission, then restart it. Enable _Launch at login_ in its menu to start it when you log in.
+The app is at `build/Build/Products/Release/Stark.app`. Move it to `/Applications`, launch it, grant it Accessibility permission, then restart it. Enable _Launch at login_ in its menu to start it when you log in.
 
-The Homebrew tap also has an unstable _tip_ build.
-
-    brew install starkwm/formulae/stark@tip
-
-This build uses the latest source from the [GitHub repository][gh-stark] at the time of the build. It is not updated nightly.
-
-[brew]: https://brew.sh
-[gh-stark]: https://github.com/starkwm/stark
+Stark uses private macOS frameworks, so future macOS updates may break it.
 
 ## Configuration
 
