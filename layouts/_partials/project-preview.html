@@ -2,6 +2,11 @@
   <div class="project-preview project-preview--tiling" role="img" aria-label="Three windows tiled with one large window on the left and two stacked on the right">
     <div class="tile tile--main"><span>01</span></div><div class="tile"><span>02</span></div><div class="tile"><span>03</span></div>
   </div>
+{{ else if eq .Section "stags" }}
+  <div class="project-preview project-preview--tags" role="img" aria-label="The work tag is selected, showing a terminal window while a chat window is parked">
+    <div class="tag-preview__view"><span class="tag-preview__active">work</span><span>chat</span></div>
+    <div class="tag-preview__windows"><span>Terminal</span><span class="tag-preview__parked">Chat</span></div>
+  </div>
 {{ else if eq .Section "skbd" }}
   <div class="project-preview project-preview--keys">
     <div><kbd>alt</kbd><span>+</span><kbd>h</kbd><span class="key-arrow" aria-hidden="true">→</span><span>Focus left</span></div>

@@ -1,5 +1,5 @@
 ---
-description: Open-source window managers, keyboard shortcuts, and status bars for macOS.
+description: Open-source window management, window tags, keyboard shortcuts, and status bars for macOS.
 ---
 
 Stark Software is a collection of [open-source][starkwm] macOS tools. I built them to manage my windows and run commands from the keyboard.
@@ -17,6 +17,10 @@ After years of maintaining Stark, I wanted to configure window management with s
 ## Why skbd exists
 
 I built skbd to bind key combinations to shell commands. It can distinguish left and right modifier keys. Pair it with swm to manage windows from the keyboard.
+
+## Where stags fits
+
+[stags](/stags/) groups windows by tags within the active macOS Space. A view can show one tag or several at once, without switching Spaces.
 
 [starkwm]: https://github.com/starkwm
 [first-commit]: https://github.com/starkwm/stark/commit/7cfb1e2339bdb454e158b3e8c0b9fc8ca846f8ed

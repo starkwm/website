@@ -658,6 +658,49 @@ button:focus-visible {
   gap: 8px;
 }
 
+.project-preview--tags {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 14px;
+}
+
+.tag-preview__view,
+.tag-preview__windows {
+  display: flex;
+  gap: 8px;
+}
+
+.tag-preview__view span {
+  padding: 5px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  color: var(--text-muted);
+}
+
+.tag-preview__view .tag-preview__active {
+  border-color: var(--accent);
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+.tag-preview__windows span {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.tag-preview__windows .tag-preview__parked {
+  border-color: var(--border-strong);
+  border-style: dashed;
+  color: var(--text-soft);
+  opacity: 0.55;
+}
+
 .tile {
   align-self: stretch;
   border: 1px solid var(--border-strong);
@@ -712,7 +755,7 @@ button:focus-visible {
 
 .project-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-bottom: 1px solid var(--border);
   border-top: 1px solid var(--border);
   scroll-margin-top: 24px;
@@ -728,6 +771,14 @@ button:focus-visible {
 
 .project + .project {
   border-left: 1px solid var(--border);
+}
+
+.project:nth-child(odd) {
+  border-left: 0;
+}
+
+.project:nth-child(n + 3) {
+  border-top: 1px solid var(--border);
 }
 
 
