@@ -4,7 +4,12 @@
 
     <article class="docs-content">
       <header class="page-header">
-        <h1>{{ .Title }}</h1>
+        <div class="page-header__title">
+          {{ if eq .Parent.Kind "home" }}
+            {{ partial "project-avatar" . }}
+          {{ end }}
+          <h1>{{ .Title }}</h1>
+        </div>
         {{ with .Description }}
           <p>{{ . }}</p>
         {{ end }}
