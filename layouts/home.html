@@ -9,7 +9,7 @@
         <section class="project" aria-labelledby="project-{{ .Section }}">
           <span class="project__number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
           {{ if eq $design "minimal" }}
-            {{ partial "project-line-art" . }}
+            {{ partial "project-avatar" . }}
           {{ end }}
           <div class="project__details">
             <h2 class="project__name" id="project-{{ .Section }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
