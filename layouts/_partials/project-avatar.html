@@ -1,11 +1,7 @@
-{{ with resources.Get (printf "images/project-avatars/%s.png" .Section) }}
-  {{ $light := resources.Get (printf "images/project-avatars/%s-light.png" $.Section) }}
-  {{ $avatar := .Resize "64x64 webp q85" }}
-  {{ $avatar2x := .Resize "128x128 webp q85" }}
-  {{ $lightAvatar := $light.Resize "64x64 webp q85" }}
-  {{ $lightAvatar2x := $light.Resize "128x128 webp q85" }}
-  <span class="project-avatar" aria-hidden="true">
-    <img class="project-avatar__dark" src="{{ $avatar.RelPermalink }}" srcset="{{ $avatar2x.RelPermalink }} 2x" width="64" height="64" alt="" decoding="async" />
-    <img class="project-avatar__light" src="{{ $lightAvatar.RelPermalink }}" srcset="{{ $lightAvatar2x.RelPermalink }} 2x" width="64" height="64" alt="" decoding="async" />
+{{ if in (slice "swm" "stags" "skbd" "sbar" "sborders") .Section }}
+  <span class="project-avatar project-avatar--{{ .Section }}" aria-hidden="true">
+    <svg viewBox="0 0 240 240" width="64" height="64" focusable="false">
+      {{ partial "project-avatar-shape" .Section }}
+    </svg>
   </span>
 {{ end }}

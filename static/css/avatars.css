@@ -1,0 +1,145 @@
+.project-avatar {
+  --avatar-fill: var(--accent);
+  --avatar-ink: #0d1110;
+  --avatar-idle-duration: 10s;
+  --avatar-idle-delay: 0s;
+  --avatar-blink-duration: 7.9s;
+  --avatar-blink-delay: 0s;
+}
+
+.avatar-fill { fill: var(--avatar-fill); }
+.avatar-eyes { fill: var(--avatar-ink); }
+.avatar-mouth {
+  fill: none;
+  stroke: var(--avatar-ink);
+  stroke-width: 3.3;
+  stroke-linecap: round;
+}
+.avatar-focus-ring {
+  fill: none;
+  stroke: var(--avatar-fill);
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.avatar-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.avatar-tag-ear { transform-origin: 153px 109px; }
+.avatar-tag-body { transform-origin: 120px 160px; }
+.avatar-bar-body { transform-origin: 120px 120px; }
+
+.project-avatar--swm { --avatar-idle-duration: 8.8s; --avatar-idle-delay: -5.7s; }
+.project-avatar--stags {
+  --avatar-idle-duration: 9.6s;
+  --avatar-idle-delay: -5.2s;
+  --avatar-blink-duration: 9.3s;
+  --avatar-blink-delay: -1.5s;
+}
+.project-avatar--skbd {
+  --avatar-idle-duration: 11.3s;
+  --avatar-idle-delay: -6.2s;
+  --avatar-blink-duration: 8.6s;
+  --avatar-blink-delay: -4s;
+}
+.project-avatar--sbar {
+  --avatar-idle-duration: 10.2s;
+  --avatar-idle-delay: -6.4s;
+  --avatar-blink-duration: 10.1s;
+  --avatar-blink-delay: -3s;
+}
+.project-avatar--sborders {
+  --avatar-idle-duration: 10.7s;
+  --avatar-idle-delay: -6s;
+  --avatar-blink-duration: 9.7s;
+  --avatar-blink-delay: -5s;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-avatar-motion="running"] .project-avatar svg * {
+    animation-duration: var(--avatar-idle-duration);
+    animation-delay: var(--avatar-idle-delay);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  [data-avatar-motion="running"] .avatar-tile-top { animation-name: avatar-tile-top; }
+  [data-avatar-motion="running"] .avatar-tile-left { animation-name: avatar-tile-left; }
+  [data-avatar-motion="running"] .avatar-tile-right { animation-name: avatar-tile-right; }
+  [data-avatar-motion="running"] .avatar-tag-ear { animation-name: avatar-tag; }
+  [data-avatar-motion="running"] .avatar-tag-body { animation-name: avatar-sway; }
+  [data-avatar-motion="running"] .avatar-key-top { animation-name: avatar-key; }
+  [data-avatar-motion="running"] .avatar-bar-glance { animation-name: avatar-glance; }
+  [data-avatar-motion="running"] .avatar-bar-body { animation-name: avatar-bar; }
+  [data-avatar-motion="running"] .avatar-focus-ring { animation-name: avatar-focus; }
+  [data-avatar-motion="running"] .project-avatar .avatar-blink {
+    animation-name: avatar-blink;
+    animation-duration: var(--avatar-blink-duration);
+    animation-delay: var(--avatar-blink-delay);
+    animation-timing-function: linear;
+  }
+  [data-avatar-motion="running"] .project-avatar[data-avatar-paused="true"] svg * {
+    animation-play-state: paused;
+  }
+}
+
+.avatar-motion-toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+  cursor: pointer;
+}
+.avatar-motion-toggle:hover { color: var(--accent); }
+
+@keyframes avatar-blink {
+  0%, 60%, 63%, 100% { transform: scaleY(1); }
+  61%, 62% { transform: scaleY(.12); }
+}
+@keyframes avatar-tile-top {
+  0%, 65%, 87%, 100% { transform: translateY(0); }
+  73% { transform: translateY(-2px); }
+  79% { transform: translateY(1px); }
+}
+@keyframes avatar-tile-left {
+  0%, 65%, 87%, 100% { transform: translate(0, 0); }
+  73% { transform: translate(-3px, 2px); }
+  80% { transform: translate(1px, -1px); }
+}
+@keyframes avatar-tile-right {
+  0%, 65%, 87%, 100% { transform: translate(0, 0); }
+  73% { transform: translate(3px, 2px); }
+  80% { transform: translate(-1px, -1px); }
+}
+@keyframes avatar-tag {
+  0%, 62%, 87%, 100% { transform: rotate(0); }
+  70% { transform: rotate(6deg); }
+  77% { transform: rotate(-3deg); }
+}
+@keyframes avatar-sway {
+  0%, 62%, 87%, 100% { transform: rotate(0); }
+  70% { transform: rotate(-1.5deg); }
+  77% { transform: rotate(.8deg); }
+}
+@keyframes avatar-key {
+  0%, 66%, 82%, 100% { transform: translateY(0); }
+  72%, 74% { transform: translateY(5px); }
+  78% { transform: translateY(-.6px); }
+}
+@keyframes avatar-glance {
+  0%, 58%, 90%, 100% { transform: translateX(0); }
+  65%, 68% { transform: translateX(-4px); }
+  77%, 80% { transform: translateX(4px); }
+}
+@keyframes avatar-bar {
+  0%, 58%, 90%, 100% { transform: scaleX(1); }
+  72% { transform: scaleX(1.016); }
+}
+@keyframes avatar-focus {
+  0%, 61%, 88%, 100% { opacity: .72; transform: scale(1); }
+  72% { opacity: 1; transform: scale(.975); }
+  80% { opacity: .85; transform: scale(1.006); }
+}
