@@ -1,0 +1,34 @@
+{{ if eq . "swm" }}
+  <g class="avatar-tile-top">
+    <path class="avatar-fill" d="M58 112C43 109 47 91 54 74C64 50 83 48 120 48C158 48 180 53 187 78C190 89 194 107 181 112C148 121 92 121 58 112Z" />
+    <g class="avatar-eyes avatar-blink"><ellipse cx="105" cy="87" rx="4.3" ry="7" /><ellipse cx="135" cy="87" rx="4.3" ry="7" /></g>
+  </g>
+  <path class="avatar-fill avatar-tile-left" d="M57 124C44 121 45 133 47 154C49 181 71 188 101 190C114 191 116 184 115 170L113 146C112 137 105 134 96 132Z" />
+  <path class="avatar-fill avatar-tile-right" d="M184 124C197 121 195 135 193 154C191 181 169 188 139 190C126 191 124 184 125 170L127 146C128 137 135 134 144 132Z" />
+{{ else if eq . "stags" }}
+  <g class="avatar-tag-body">
+    <g class="avatar-tag-ear">
+      <path class="avatar-fill" fill-rule="evenodd" d="M142 80C151 66 159 56 170 49C179 42 185 47 195 57C206 68 202 80 197 90L174 133L139 119ZM191.4 68A6.4 6.4 0 1 0 178.6 68A6.4 6.4 0 1 0 191.4 68Z" />
+    </g>
+    <path class="avatar-fill" d="M116 68C154 66 180 95 180 132C180 172 155 194 117 194C77 194 51 167 52 130C52 96 77 70 116 68Z" />
+    <g class="avatar-eyes avatar-blink"><ellipse cx="104" cy="127" rx="4.3" ry="7" /><ellipse cx="134" cy="127" rx="4.3" ry="7" /></g>
+  </g>
+{{ else if eq . "skbd" }}
+  <path class="avatar-fill" d="M67 67C73 53 90 50 120 50C151 50 169 53 176 70L193 166C199 197 169 197 120 197C70 197 41 195 47 165Z" />
+  <path class="avatar-eyes" d="M52 145C58 169 78 174 120 174C162 174 183 168 188 145L189 158C183 181 156 182 120 182C83 182 58 179 51 158Z" />
+  <g class="avatar-key-top">
+    <path class="avatar-fill" d="M69 65C75 53 92 51 120 51C150 51 168 54 174 69L188 141C184 166 158 171 120 171C82 171 55 166 52 141Z" />
+    <g class="avatar-eyes avatar-blink"><ellipse cx="104" cy="112" rx="4.3" ry="7" /><ellipse cx="136" cy="112" rx="4.3" ry="7" /></g>
+    <path class="avatar-mouth" d="M116 129H124" />
+  </g>
+{{ else if eq . "sbar" }}
+  <g class="avatar-bar-body">
+    <path class="avatar-fill" d="M34 100C45 84 70 82 119 82C166 82 194 85 205 101C217 118 214 137 199 147C186 155 156 158 120 158C81 158 48 156 35 145C23 134 23 116 34 100Z" />
+    <g class="avatar-bar-glance"><g class="avatar-eyes avatar-blink"><ellipse cx="101" cy="119" rx="4.3" ry="7" /><ellipse cx="139" cy="119" rx="4.3" ry="7" /></g></g>
+    <path class="avatar-mouth" d="M113 133Q120 141 127 133" />
+  </g>
+{{ else if eq . "sborders" }}
+  <path class="avatar-focus-ring" d="M120 44C164 44 188 78 194 122C201 166 174 194 124 195C76 196 45 176 45 137C44 89 67 46 120 44Z" />
+  <path class="avatar-fill" d="M120 55C159 55 180 85 183 124C189 161 168 183 124 184C82 185 56 168 56 136C55 94 74 57 120 55Z" />
+  <g class="avatar-eyes avatar-blink"><ellipse cx="102" cy="115" rx="4.3" ry="7" /><ellipse cx="137" cy="115" rx="4.3" ry="7" /></g>
+{{ end }}
