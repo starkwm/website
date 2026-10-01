@@ -7,13 +7,17 @@
     <div class="project-list">
       {{ range $index, $page := where site.Sections.ByWeight "Section" "ne" "stark" }}
         <section class="project" aria-labelledby="project-{{ .Section }}">
-          <span class="project__number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
           {{ if eq $design "minimal" }}
             {{ partial "project-avatar" . }}
           {{ end }}
           <div class="project__details">
-            <h2 class="project__name" id="project-{{ .Section }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-            <p class="project__summary">{{ .Params.homeSummary | default .Description }}</p>
+            <div class="project__intro">
+              <div class="project__heading">
+                <span class="project__number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
+                <h2 class="project__name" id="project-{{ .Section }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+              </div>
+              <p class="project__summary">{{ .Params.homeSummary | default .Description }}</p>
+            </div>
             {{ with (.Params.homeDetails | default .Description) }}
               <p class="project__description">{{ . }}</p>
             {{ end }}
