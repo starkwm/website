@@ -83,18 +83,6 @@
   }
 }
 
-.avatar-motion-toggle {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.22em;
-  cursor: pointer;
-}
-.avatar-motion-toggle:hover { color: var(--accent); }
-
 @keyframes avatar-blink {
   0%, 60%, 63%, 100% { transform: scaleY(1); }
   61%, 62% { transform: scaleY(.12); }

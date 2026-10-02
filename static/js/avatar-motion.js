@@ -1,35 +1,14 @@
 (() => {
   const root = document.documentElement;
   const avatars = [...document.querySelectorAll(".project-avatar")];
-  const button = document.querySelector(".avatar-motion-toggle");
-  if (!avatars.length || !button) return;
+  if (!avatars.length) return;
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  let paused = false;
-
-  try {
-    paused = localStorage.getItem("avatar-motion") === "paused";
-  } catch {
-    // The pause control also works without storage.
-  }
 
   function applyMotion() {
-    const stopped = paused || reducedMotion.matches;
-    root.dataset.avatarMotion = stopped ? "paused" : "running";
-    button.hidden = reducedMotion.matches;
-    button.textContent = stopped ? "Play animations" : "Pause animations";
-    button.setAttribute("aria-pressed", String(stopped));
+    root.dataset.avatarMotion = reducedMotion.matches ? "paused" : "running";
   }
 
-  button.addEventListener("click", () => {
-    paused = !paused;
-    applyMotion();
-    try {
-      localStorage.setItem("avatar-motion", paused ? "paused" : "running");
-    } catch {
-      // Keep the preference for this page even without storage.
-    }
-  });
   reducedMotion.addEventListener("change", applyMotion);
 
   const visibility = new Map(avatars.map(avatar => [avatar, true]));
