@@ -271,6 +271,10 @@ button:focus-visible {
     border-left: 1px solid var(--text);
     color: var(--text-muted);
     padding: 0.15rem 0 0.15rem 0.85rem;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
   }
 
   table {
