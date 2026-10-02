@@ -160,6 +160,24 @@ swm window grid 2:1:1:0:1:1
 
 Display indexes are one-based. `next` and `prev` wrap around the arranged display list; `previous` is also accepted.
 
+### Move between Spaces
+
+```sh
+swm window space [--window <window|recent>] <space-index|next|prev>
+```
+
+Space indexes are zero-based and match `swm query spaces`. `next` and `prev` cycle through normal desktop Spaces in query order, skip fullscreen Spaces, and wrap at either end. `previous` is also accepted. The command defaults to the focused window and keeps the current Space active. Moves to a Space on another display fit the window within that display's visible bounds.
+
+Only windows belonging to one normal desktop Space can move. Fullscreen windows and windows assigned to multiple Spaces are rejected. Moving a window to its current Space leaves it in place.
+
+Movement works with SIP enabled. The command waits up to two seconds for WindowServer to confirm the new Space membership, then updates visible tiling layouts. If movement is unavailable or cannot be confirmed, the command returns an error. A timeout does not undo a move that completes later. Query the state before retrying.
+
+```sh
+swm query spaces
+swm window space next
+swm window space --window <window-id> 0
+```
+
 ### Control tiling
 
 ```sh
@@ -186,6 +204,21 @@ swm window swap-split [--window <window|recent>]
 
 ## Configure spaces
 
+### Activate a Space
+
+```sh
+swm query spaces
+swm space activate <space-index>
+```
+
+Activation uses the zero-based `index` from `swm query spaces`. It changes the visible Desktop on the target's display without requesting keyboard-focus transfer between displays. The target display must contain only normal desktop Spaces. Displays containing native fullscreen Spaces are currently refused.
+
+The command waits up to two seconds for the target display to report the requested current Space. A timeout or cancellation after submission does not mean the Space stayed unchanged. Query the state before retrying.
+
+`space activate` was added after v0.0.25. [Build from source](#installation) if your installed version does not include it.
+
+### Configure a Space
+
 Space commands affect the active space by default. Use `--space <space-index>` to select another space by its zero-based index from `swm query spaces`. Indexes follow the current Space ordering and may change when Spaces are reordered:
 
 ```sh
@@ -198,6 +231,8 @@ swm space gap [--space <space-index>] <abs|rel>:<points>
 ```
 
 Padding, gaps, and ratios are clamped to valid values. Space settings apply to every display showing that space.
+
+### Layouts
 
 The layouts are:
 
@@ -243,17 +278,29 @@ once the movement is queued.
 
 Use `swm config animation-easing ease-out-circ` for a circular ease-out curve like
 yabai's default. Available curves are `linear`, `ease-out-quad`,
-`ease-out-cubic`, `ease-out-circ`, and `ease-in-out-quad`. The default is `ease-out-quad`. Changes apply to newly
-started or retargeted animations; active animations retain their curve.
+`ease-out-cubic`, `ease-out-circ`, and `ease-in-out-quad`. The default is `ease-out-quad`.
+Changes apply to newly started or retargeted animations; active animations retain their curve.
 
-Animation ticks follow the main screen's display link, capped at 60 Hz to avoid
-increasing Accessibility traffic. A 60 Hz clock fallback is used if no screen is
-available when starting an animation. Windows on other displays share this cadence;
-updates still move and resize real windows sequentially, not compositor proxies.
+Each active display schedules animation updates at up to 60 Hz. Without a display,
+swm uses a 60 Hz timer. Each update calculates the window's position and size for the
+next display frame.
+
+Animation reads and writes use Accessibility, one call at a time per app.
+A slow app does not block animation updates in other apps. New pending frames replace
+older ones, and swm checks the final position and size even after display updates stop.
 
 Add the commands to `swmrc` to apply them at startup. Animation smoothness depends on
-the app. Display transfers cancel the selected window's animation. Dragging during
-an animation may still compete with it.
+the app. Moving a window to another display cancels its animation.
+
+When you drag or resize a window, swm stops sending animation updates to it until you
+release the mouse, then recalculates the layout. Clicking without dragging leaves the
+animation running. Geometry commands return an error during a drag. Placement rules
+wait until you release the mouse.
+
+An Accessibility call already in progress can finish after swm cancels an animation.
+swm discards queued updates and ignores results from the cancelled animation.
+Synchronous geometry commands wait for calls in progress to finish before moving or
+resizing the window.
 
 ## Configuration file
 
@@ -266,6 +313,7 @@ The file can be any executable script. A shell script is the simplest option:
 
 swm config layout dwindle
 swm config focus-follows-mouse autofocus
+swm config animation-duration 0.18
 swm config window-gap 8
 swm config top-padding 8
 swm config bottom-padding 8
