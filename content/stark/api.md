@@ -4,6 +4,8 @@ description = 'JavaScript API reference for Stark window-management configuratio
 weight = 10
 +++
 
+> **Deprecated:** Stark is no longer updated. For a current setup, use [swm](/swm/) for window management and [skbd](/skbd/) for keyboard shortcuts.
+
 Use the Stark JavaScript API in your `stark.js` configuration.
 
 The classes below are available globally. Call static methods on the class, then use instance methods and fields on the objects they return.

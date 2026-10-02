@@ -8,7 +8,7 @@ weight = 10
 
 Stark is a window manager for macOS. Use its JavaScript API to create keyboard shortcuts that control windows and applications.
 
-Stark is no longer updated. For a current setup, use [swm](/swm/) for window management and [skbd](/skbd/) for keyboard shortcuts.
+> **Deprecated:** Stark is no longer updated. For a current setup, use [swm](/swm/) for window management and [skbd](/skbd/) for keyboard shortcuts.
 
 ## Installation
 
