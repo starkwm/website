@@ -143,6 +143,16 @@ swm window unminimize [--window <window|recent>]
 
 Directional focus chooses the nearest non-minimized window on the currently visible spaces.
 
+### Move the mouse cursor
+
+```sh
+swm window warp [--window <window|recent> | --direction <left|right|up|down>]
+```
+
+`warp` moves the mouse cursor to the selected window's center without focusing or raising the window, switching Spaces, or generating a mouse movement event. It defaults to the focused window. swm rejects hidden, minimized, and off-Space windows. If the window's center is off-screen, the cursor moves to the center of the largest part of the window visible on a display.
+
+With `--direction`, swm chooses the nearest non-minimized, on-screen window in the requested direction from the managed window under the cursor. If the cursor is not over an available managed window, it starts from the focused window. Each command checks the window under the cursor again, so repeated warps navigate between windows without changing focus. If another window covers the destination, the next warp starts from that covering window. `--window` and `--direction` cannot be combined.
+
 ### Move, resize, and place
 
 ```sh
@@ -215,7 +225,7 @@ Activation uses the zero-based `index` from `swm query spaces`. It changes the v
 
 The command waits up to two seconds for the target display to report the requested current Space. A timeout or cancellation after submission does not mean the Space stayed unchanged. Query the state before retrying.
 
-`space activate` was added after v0.0.25. [Build from source](#installation) if your installed version does not include it.
+`space activate` is available in v0.0.26 and later.
 
 ### Configure a Space
 
