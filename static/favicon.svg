@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Stark Software">
-  <rect width="64" height="64" fill="#fbfbfa"/>
-  <rect x="8" y="8" width="48" height="48" fill="#84cc16"/>
-  <path fill="#fbfbfa" d="M21 45v-7h4v3h14v-8H25l-4-4V19l4-4h18v7h-4v-3H25v8h14l4 4v10l-4 4H21Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Stark Software">
+  <path fill="#b0d953" d="M97 49.5C114 49.5 124 62 137 73C149 83.5 159 83.5 179 90C207 99 226 118 227.5 146C229 180 208 198 177 203C154 207.5 74 209 51 199C31 191 23 171 31 151C37 136 50 127 58 113C71 94 66 66 83 54C87 51 91 49.5 97 49.5Z" />
+  <g fill="#0d1110">
+    <ellipse cx="106.5" cy="132.4" rx="9" ry="14.9" />
+    <ellipse cx="149" cy="132.4" rx="9" ry="14.9" />
+  </g>
 </svg>
