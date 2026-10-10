@@ -5,7 +5,6 @@ weight: 1
 category: Time
 cadence: "Every second"
 options: "`format`, `dateStyle`, `timeStyle`"
-aliases: ["/providers/clock/", "/providers/date/"]
 ---
 
 ## Output

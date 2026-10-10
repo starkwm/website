@@ -5,7 +5,6 @@ weight: 8
 category: Connectivity
 cadence: "Native events"
 options: "`network` block"
-aliases: ["/providers/wifi/"]
 ---
 
 ## Output
