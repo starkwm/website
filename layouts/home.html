@@ -4,7 +4,7 @@
   <div class="home-layout home-layout--minimal">
     <h1 class="visually-hidden">Stark Software apps</h1>
     <div class="project-list">
-      {{ range $index, $page := where site.Sections.ByWeight "Section" "ne" "stark" }}
+      {{ range $index, $page := site.Sections.ByWeight }}
         <section class="project" aria-labelledby="project-{{ .Section }}">
           {{ partial "project-avatar" . }}
           <div class="project__details">
