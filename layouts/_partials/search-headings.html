@@ -1,0 +1,10 @@
+{{- $headings := slice -}}
+{{- range . -}}
+  {{- if .ID -}}
+    {{- $headings = $headings | append (dict "title" (.Title | plainify | htmlUnescape) "id" .ID) -}}
+  {{- end -}}
+  {{- range partial "search-headings" .Headings -}}
+    {{- $headings = $headings | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $headings -}}

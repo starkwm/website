@@ -1,0 +1,10 @@
+<dialog class="docs-search" id="docs-search" aria-labelledby="docs-search-title" data-index-url="{{ (site.Home.OutputFormats.Get "search").RelPermalink }}">
+  <div class="docs-search__header">
+    <h2 id="docs-search-title">Search docs</h2>
+    <button class="docs-search__close" type="button">Close</button>
+  </div>
+  <label for="docs-search-input">Search documentation</label>
+  <input id="docs-search-input" type="search" autocomplete="off" spellcheck="false" aria-describedby="docs-search-status" />
+  <p id="docs-search-status" role="status" aria-live="polite" aria-atomic="true">Enter a word or command.</p>
+  <ul class="docs-search__results" aria-label="Search results"></ul>
+</dialog>

@@ -4,6 +4,15 @@ title = 'Stark Software'
 
 disableKinds = ['rss', 'taxonomy', 'term']
 
+[outputs]
+home = ['html', 'search']
+
+[outputFormats.search]
+mediaType = 'application/json'
+baseName = 'search'
+isPlainText = true
+notAlternative = true
+
 [markup.highlight]
 style = 'github'
 noClasses = false

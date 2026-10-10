@@ -1,0 +1,15 @@
+{{- $pages := slice -}}
+{{- range site.Pages -}}
+  {{- if in (slice "page" "section") .Kind -}}
+    {{- $headings := partial "search-headings" .Fragments.Headings -}}
+    {{- $pages = $pages | append (dict
+      "title" .Title
+      "product" .FirstSection.Title
+      "url" .RelPermalink
+      "description" (.Description | default "" | htmlUnescape)
+      "content" (.Plain | htmlUnescape)
+      "headings" $headings
+    ) -}}
+  {{- end -}}
+{{- end -}}
+{{- $pages | jsonify -}}
