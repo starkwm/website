@@ -1094,7 +1094,8 @@ button:focus-visible {
 
 /* Documentation tools. */
 .docs-search,
-.docs-search-trigger {
+.docs-search-trigger,
+.code-copy {
   --docs-accent: color-mix(in srgb, var(--accent) 75%, var(--text));
 }
 
@@ -1104,7 +1105,8 @@ button:focus-visible {
 }
 
 .docs-search-trigger,
-.docs-search__close {
+.docs-search__close,
+.code-copy {
   min-height: 44px;
   border: 1px solid var(--border-strong);
   border-radius: 0;
@@ -1116,7 +1118,8 @@ button:focus-visible {
 }
 
 .docs-search-trigger:hover,
-.docs-search__close:hover {
+.docs-search__close:hover,
+.code-copy:hover {
   border-color: var(--accent);
   color: var(--docs-accent);
 }
@@ -1130,6 +1133,38 @@ button:focus-visible {
   margin-left: 0.5rem;
   color: var(--text-muted);
   font: inherit;
+}
+
+.code-block {
+  min-width: 0;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+}
+
+.code-block__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  padding: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.code-copy {
+  flex-shrink: 0;
+  min-width: 4rem;
+}
+
+.code-copy-status {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.prose .code-block pre {
+  margin: 0;
+  border: 0;
 }
 
 .docs-search {
