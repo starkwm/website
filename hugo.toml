@@ -30,17 +30,18 @@ name = 'swm'
 url = '/swm/'
 weight = 3
 [[menu.main]]
-name = 'stags'
-url = '/stags/'
-weight = 4
-[[menu.main]]
 name = 'skbd'
 url = '/skbd/'
-weight = 5
+weight = 4
 
 [[menu.main]]
 name = 'sbar'
 url = '/sbar/'
+weight = 5
+
+[[menu.main]]
+name = 'stags'
+url = '/stags/'
 weight = 6
 
 [[menu.footer]]

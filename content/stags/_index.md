@@ -1,7 +1,7 @@
 ---
 title: "stags"
 description: "Tag windows and choose which groups to show in the active macOS Space."
-weight: 25
+weight: 50
 homeSummary: "Window tags within a macOS Space"
 ---
 
