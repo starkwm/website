@@ -9,6 +9,8 @@ homeDetails: "Show system information, media, and workspaces using native provid
 
 Configure your macOS status bar with native providers, shell commands, and streaming plugins.
 
+The latest prerelease is [v0.0.1](https://github.com/starkwm/sbar/releases/tag/v0.0.1), checked on 11 October 2026. This reference covers that release and marks settings that require an unreleased source build. See [release compatibility](#release-compatibility) before using those settings.
+
 ## Start here
 
 1. [Create a configuration](/sbar/configuration/) and arrange items across your displays.
@@ -20,9 +22,25 @@ Configure your macOS status bar with native providers, shell commands, and strea
 
 sbar requires macOS 26 or later. Building from source requires Xcode 26 or later with Swift 6.2.
 
+Install the release with Homebrew on Apple silicon:
+
+```sh
+brew tap starkwm/formulae
+brew install starkwm/formulae/sbar
+```
+
+Start it now and at login:
+
+```sh
+brew services start sbar
+```
+
+Or build the release from source:
+
 ```sh
 git clone https://github.com/starkwm/sbar.git
 cd sbar
+git checkout v0.0.1
 make build
 ```
 
@@ -110,6 +128,17 @@ The app's `symbol` is a fallback if its native icon is unavailable. Battery icon
 
 Use `sbar --version` to print the embedded version without starting the bar.
 
-## About this reference
+## Release compatibility
 
-This reference was checked against the sbar source and documentation on 16 September 2026. Values and date formats depend on your Mac and system locale. [Download the configuration schema](/sbar/config.schema.json).
+The following settings are available on `main` but are not in v0.0.1:
+
+| Settings | Guide |
+| --- | --- |
+| Side bars, `bar.width`, and `bar.extendToTopEdge` | [Vertical bars](/sbar/configuration/#vertical-bars) |
+| Text `fontFamily` | [Text fonts](/sbar/configuration/appearance/#text-fonts) |
+| Group `itemSpacing` and `childStyle` | [Group spacing](/sbar/configuration/items/#group-spacing) |
+| Weather `overcastDay` and `overcastNight` symbols | [Condition symbols](/sbar/providers/weather/#condition-symbols) |
+
+Use the [v0.0.1 configuration schema](/sbar/config.schema.json) for the published release. The [development schema](/sbar/config.main.schema.json) matches [main at 7921050](https://github.com/starkwm/sbar/tree/7921050d6e8a5fe3899cc8b5370612dc814cf094) and includes unreleased settings. Run `sbar validate` as well to check constraints the schema cannot express.
+
+For unreleased settings, keep a source clone on `main` instead of checking out v0.0.1, then run `make build`. The groups and vertical examples linked from these guides also require that source build. Values and date formats depend on your Mac and system locale.

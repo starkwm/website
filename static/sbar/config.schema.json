@@ -23,8 +23,6 @@
           "enum": [
             "top",
             "bottom",
-            "left",
-            "right",
             null
           ],
           "default": "top"
@@ -37,21 +35,6 @@
           "minimum": 20,
           "maximum": 96,
           "default": 32
-        },
-        "width": {
-          "type": [
-            "number",
-            "null"
-          ],
-          "minimum": 20,
-          "maximum": 96,
-          "default": 32,
-          "description": "Width of left and right bars, including content padding."
-        },
-        "extendToTopEdge": {
-          "type": ["boolean", "null"],
-          "default": false,
-          "description": "Extend left and right bars to the physical top edge while respecting the Dock. Top margin still applies. Ignored by top and bottom bars."
         },
         "displays": {
           "enum": [
@@ -89,7 +72,7 @@
             "null"
           ],
           "default": false,
-          "description": "Draw a native window shadow, or an inward edge shadow for square bars spanning the display along their layout axis."
+          "description": "Draw a native window shadow, or a soft edge shadow for square bars spanning the display width."
         },
         "mousePassThrough": {
           "type": [
@@ -323,15 +306,6 @@
             "string",
             "null"
           ]
-        },
-        "itemSpacing": {
-          "description": "Gap between group children in points. Defaults to 4; child padding is additional.",
-          "type": [
-            "number",
-            "null"
-          ],
-          "minimum": 0,
-          "maximum": 96
         },
         "children": {
           "type": [
@@ -611,35 +585,9 @@
         },
         "weather": {
           "$ref": "#/$defs/weather"
-        },
-        "childStyle": {
-          "$ref": "#/$defs/itemStyle",
-          "description": "Default style for group children, overriding the theme. Each child can override these values with its own style."
         }
       },
       "allOf": [
-        {
-          "if": {
-            "properties": {
-              "type": {
-                "const": "group"
-              }
-            },
-            "required": [
-              "type"
-            ]
-          },
-          "else": {
-            "properties": {
-              "itemSpacing": {
-                "type": "null"
-              },
-              "childStyle": {
-                "type": "null"
-              }
-            }
-          }
-        },
         {
           "if": {
             "required": [
@@ -706,13 +654,6 @@
           ],
           "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$",
           "description": "Replacement background while an interactive item is hovered. Inherits from theme.itemStyle and otherwise adds a subtle highlight over the normal background."
-        },
-        "fontFamily": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "description": "Font family or font name for item text. Inherits from theme.itemStyle; defaults to the system font. Custom glyph symbols keep their own font."
         },
         "fontSize": {
           "type": [
@@ -2994,12 +2935,6 @@
         },
         "unavailable": {
           "$ref": "#/$defs/widgetSymbol"
-        },
-        "overcastDay": {
-          "$ref": "#/$defs/widgetSymbol"
-        },
-        "overcastNight": {
-          "$ref": "#/$defs/widgetSymbol"
         }
       },
       "additionalProperties": false,
@@ -3068,12 +3003,6 @@
                 "$ref": "#/$defs/symbol"
               },
               "unavailable": {
-                "$ref": "#/$defs/symbol"
-              },
-              "overcastDay": {
-                "$ref": "#/$defs/symbol"
-              },
-              "overcastNight": {
                 "$ref": "#/$defs/symbol"
               }
             }

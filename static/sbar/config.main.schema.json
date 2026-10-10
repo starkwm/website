@@ -1,0 +1,3192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "sbar configuration",
+  "description": "Schema version 1. Item IDs must be unique across all sections and groups.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "bar",
+    "items"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "bar": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "enum": [
+            "top",
+            "bottom",
+            "left",
+            "right",
+            null
+          ],
+          "default": "top"
+        },
+        "height": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 20,
+          "maximum": 96,
+          "default": 32
+        },
+        "width": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 20,
+          "maximum": 96,
+          "default": 32,
+          "description": "Width of left and right bars, including content padding."
+        },
+        "extendToTopEdge": {
+          "type": ["boolean", "null"],
+          "default": false,
+          "description": "Extend left and right bars to the physical top edge while respecting the Dock. Top margin still applies. Ignored by top and bottom bars."
+        },
+        "displays": {
+          "enum": [
+            "main",
+            "all",
+            "selected",
+            null
+          ],
+          "default": "all"
+        },
+        "displayIDs": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "windowLevel": {
+          "enum": [
+            "floating",
+            "statusBar",
+            "screenSaver",
+            null
+          ],
+          "default": "floating",
+          "description": "Floating keeps the bar above ordinary windows and below system notifications. Higher levels can cover notifications."
+        },
+        "shadow": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false,
+          "description": "Draw a native window shadow, or an inward edge shadow for square bars spanning the display along their layout axis."
+        },
+        "mousePassThrough": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        },
+        "margin": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "top": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 4096
+            },
+            "bottom": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 4096
+            },
+            "left": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 4096
+            },
+            "right": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 4096
+            }
+          }
+        }
+      }
+    },
+    "items": {
+      "type": "object",
+      "properties": {
+        "left": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/item"
+          },
+          "default": []
+        },
+        "center": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/item"
+          },
+          "default": []
+        },
+        "right": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/item"
+          },
+          "default": []
+        }
+      }
+    },
+    "theme": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "background": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+        },
+        "horizontalPadding": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 96
+        },
+        "itemSpacing": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 96
+        },
+        "itemStyle": {
+          "$ref": "#/$defs/itemStyle"
+        },
+        "verticalPadding": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 48
+        },
+        "cornerRadius": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 48
+        },
+        "regionStyle": {
+          "$ref": "#/$defs/regionStyle"
+        },
+        "regions": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/regionStyle"
+            },
+            "center": {
+              "$ref": "#/$defs/regionStyle"
+            },
+            "right": {
+              "$ref": "#/$defs/regionStyle"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "type": {
+          "enum": [
+            "datetime",
+            "divider",
+            "frontApplication",
+            "spacer",
+            "text",
+            "battery",
+            "volume",
+            "network",
+            "calendar",
+            "mail",
+            "vpn",
+            "bluetooth",
+            "audioDevice",
+            "cpu",
+            "memory",
+            "disk",
+            "throughput",
+            "media",
+            "command",
+            "group",
+            "popup",
+            "plugin",
+            "aerospace",
+            "yabai",
+            "spaces",
+            "weather"
+          ]
+        },
+        "enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "text": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Label template. Supports {{value}}, provider fields, {{#field}} / {{^field}} sections, and equality conditions such as {{#status=connected}} / {{^status=connected}}, closed by {{/status}}. Workspace providers also support {{#workspaces}}...{{/workspaces}} lists with per-entry styling. Empty text hides the label. VPN supports {{#services}} and Bluetooth supports {{#devices}}, with {{#separator}} between entries."
+        },
+        "symbol": {
+          "$ref": "#/$defs/symbol"
+        },
+        "symbolPosition": {
+          "enum": [
+            "left",
+            "right",
+            null
+          ],
+          "default": "left",
+          "description": "Side of the text for symbols and application icons. Each provider segment keeps its order and places its symbol on this side. Null uses the default."
+        },
+        "format": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Unicode date/time pattern such as yyyy-MM-dd or HH:mm:ss. A nonempty format overrides dateStyle and timeStyle."
+        },
+        "priority": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": 0,
+          "description": "Higher-priority items remain visible longer during overflow."
+        },
+        "style": {
+          "$ref": "#/$defs/itemStyle"
+        },
+        "primaryAction": {
+          "$ref": "#/$defs/action"
+        },
+        "secondaryAction": {
+          "$ref": "#/$defs/action"
+        },
+        "popup": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "itemSpacing": {
+          "description": "Gap between group children in points. Defaults to 4; child padding is additional.",
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 96
+        },
+        "children": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/item"
+          }
+        },
+        "command": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "script"
+          ],
+          "properties": {
+            "script": {
+              "type": "string",
+              "pattern": "\\S"
+            },
+            "timeout": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0.1,
+              "maximum": 60
+            },
+            "format": {
+              "enum": [
+                "text",
+                "json",
+                null
+              ],
+              "default": "text"
+            },
+            "output": {
+              "enum": [
+                "stdout",
+                "combined",
+                null
+              ]
+            },
+            "onError": {
+              "enum": [
+                "show",
+                "keepLast",
+                "hide",
+                null
+              ],
+              "default": "show"
+            },
+            "maxLength": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1,
+              "maximum": 4096,
+              "default": 256
+            },
+            "showSymbol": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "default": true
+            },
+            "symbols": {
+              "$ref": "#/$defs/commandSymbols"
+            },
+            "tints": {
+              "$ref": "#/$defs/commandTints"
+            }
+          },
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "required": [
+                  "format"
+                ],
+                "properties": {
+                  "format": {
+                    "const": "json"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "output": {
+                    "enum": [
+                      "stdout",
+                      null
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "plugin": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "executable"
+          ],
+          "properties": {
+            "executable": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "arguments": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "restart": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "default": true
+            },
+            "maxLength": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1,
+              "maximum": 4096,
+              "default": 4096
+            },
+            "onError": {
+              "enum": [
+                "show",
+                "keepLast",
+                "hide",
+                null
+              ],
+              "default": "show"
+            },
+            "symbols": {
+              "$ref": "#/$defs/commandSymbols"
+            },
+            "tints": {
+              "$ref": "#/$defs/commandTints"
+            },
+            "showSymbol": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "default": true
+            }
+          }
+        },
+        "refresh": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "mode"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "event",
+                "interval",
+                "manual"
+              ]
+            },
+            "seconds": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 1,
+              "maximum": 86400
+            },
+            "event": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "frontApplication": {
+          "$ref": "#/$defs/frontApplication"
+        },
+        "battery": {
+          "$ref": "#/$defs/battery"
+        },
+        "dateStyle": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "none",
+            "short",
+            "medium",
+            "long",
+            "full",
+            null
+          ],
+          "description": "Localized datetime date style. Defaults to none; ignored when format is nonempty."
+        },
+        "timeStyle": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "none",
+            "short",
+            "medium",
+            "long",
+            "full",
+            null
+          ],
+          "description": "Localized datetime time style. Defaults to short; ignored when format is nonempty."
+        },
+        "volume": {
+          "$ref": "#/$defs/volume"
+        },
+        "network": {
+          "$ref": "#/$defs/network"
+        },
+        "cpu": {
+          "$ref": "#/$defs/cpu"
+        },
+        "memory": {
+          "$ref": "#/$defs/memory"
+        },
+        "disk": {
+          "$ref": "#/$defs/disk"
+        },
+        "throughput": {
+          "$ref": "#/$defs/throughput"
+        },
+        "media": {
+          "$ref": "#/$defs/media"
+        },
+        "spaces": {
+          "$ref": "#/$defs/spaces"
+        },
+        "aerospace": {
+          "$ref": "#/$defs/aerospace"
+        },
+        "yabai": {
+          "$ref": "#/$defs/yabai"
+        },
+        "vpn": {
+          "$ref": "#/$defs/vpn"
+        },
+        "bluetooth": {
+          "$ref": "#/$defs/bluetooth"
+        },
+        "mail": {
+          "$ref": "#/$defs/mail"
+        },
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
+        "audioDevice": {
+          "$ref": "#/$defs/audioDevice"
+        },
+        "weather": {
+          "$ref": "#/$defs/weather"
+        },
+        "childStyle": {
+          "$ref": "#/$defs/itemStyle",
+          "description": "Default style for group children, overriding the theme. Each child can override these values with its own style."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "group"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "else": {
+            "properties": {
+              "itemSpacing": {
+                "type": "null"
+              },
+              "childStyle": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "const": "weather"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "weather"
+            ],
+            "properties": {
+              "weather": {
+                "type": "object"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "weather": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "itemStyle": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "tint": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+        },
+        "background": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+        },
+        "hoverTint": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$",
+          "description": "Text and symbol colour while an interactive item is hovered. Inherits from theme.itemStyle and otherwise keeps the normal tint."
+        },
+        "hoverBackground": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$",
+          "description": "Replacement background while an interactive item is hovered. Inherits from theme.itemStyle and otherwise adds a subtle highlight over the normal background."
+        },
+        "fontFamily": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Font family or font name for item text. Inherits from theme.itemStyle; defaults to the system font. Custom glyph symbols keep their own font."
+        },
+        "fontSize": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "fontWeight": {
+          "enum": [
+            "regular",
+            "medium",
+            "semibold",
+            "bold",
+            null
+          ]
+        },
+        "symbolFontWeight": {
+          "enum": [
+            "regular",
+            "medium",
+            "semibold",
+            "bold",
+            null
+          ]
+        },
+        "horizontalPadding": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 96
+        },
+        "verticalPadding": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 48
+        },
+        "cornerRadius": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 48
+        },
+        "minWidth": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 4096,
+          "description": "Minimum item width in points, including the symbol, label, and padding. Longer content can grow. Ignored when width is set."
+        },
+        "width": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 4096,
+          "description": "Fixed item width in points, including the symbol, label, and padding. Takes precedence over minWidth. Long labels truncate."
+        },
+        "alignment": {
+          "enum": [
+            "leading",
+            "center",
+            "trailing",
+            null
+          ],
+          "description": "Content alignment within the item width. Inherits from theme.itemStyle and defaults to center."
+        }
+      }
+    },
+    "action": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "kind",
+        "value"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "command",
+            "url",
+            "application"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "frontApplication": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "showIcon": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "battery": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "lowThreshold": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100,
+          "default": 20
+        },
+        "symbols": {
+          "$ref": "#/$defs/batterySymbols"
+        },
+        "tints": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "low": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+            },
+            "charging": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+            },
+            "pluggedIn": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "symbol": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "glyph",
+            "font"
+          ],
+          "properties": {
+            "glyph": {
+              "type": "string",
+              "pattern": "\\S"
+            },
+            "font": {
+              "type": "string",
+              "pattern": "\\S"
+            },
+            "size": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 8,
+              "maximum": 72
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "batterySymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "levels": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/widgetSymbol"
+              },
+              {
+                "not": {
+                  "type": "null"
+                }
+              }
+            ]
+          }
+        },
+        "chargingLevels": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/widgetSymbol"
+              },
+              {
+                "not": {
+                  "type": "null"
+                }
+              }
+            ]
+          }
+        },
+        "charging": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "pluggedIn": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "levels": {
+                "items": {
+                  "$ref": "#/$defs/symbol"
+                }
+              },
+              "chargingLevels": {
+                "items": {
+                  "$ref": "#/$defs/symbol"
+                }
+              },
+              "charging": {
+                "$ref": "#/$defs/symbol"
+              },
+              "pluggedIn": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "widgetSymbol": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "glyph"
+          ],
+          "properties": {
+            "glyph": {
+              "type": "string",
+              "pattern": "\\S"
+            },
+            "font": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "\\S"
+            },
+            "size": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 8,
+              "maximum": 72
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "volume": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "symbols": {
+          "$ref": "#/$defs/volumeSymbols"
+        },
+        "tints": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "muted": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+            },
+            "fixed": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+            },
+            "unavailable": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "volumeSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "levels": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/widgetSymbol"
+              },
+              {
+                "not": {
+                  "type": "null"
+                }
+              }
+            ]
+          }
+        },
+        "muted": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "fixed": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "levels": {
+                "items": {
+                  "$ref": "#/$defs/symbol"
+                }
+              },
+              "muted": {
+                "$ref": "#/$defs/symbol"
+              },
+              "fixed": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "networkSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "wifi": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "ethernet": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "cellular": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "other": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "offline": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "wifi": {
+                "$ref": "#/$defs/symbol"
+              },
+              "ethernet": {
+                "$ref": "#/$defs/symbol"
+              },
+              "cellular": {
+                "$ref": "#/$defs/symbol"
+              },
+              "other": {
+                "$ref": "#/$defs/symbol"
+              },
+              "offline": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "network": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "interface": {
+          "enum": [
+            "wifi",
+            "ethernet",
+            "cellular",
+            "other",
+            null
+          ]
+        },
+        "symbols": {
+          "$ref": "#/$defs/networkSymbols"
+        },
+        "tints": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "wifi": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "ethernet": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "cellular": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "other": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "offline": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "hideWhenDisconnected": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "cpu": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "warningThreshold": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100,
+          "default": 60
+        },
+        "highThreshold": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100,
+          "default": 85
+        },
+        "smoothingSamples": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 30,
+          "default": 1
+        },
+        "symbols": {
+          "$ref": "#/$defs/cpuSymbols"
+        },
+        "tints": {
+          "$ref": "#/$defs/cpuTints"
+        }
+      },
+      "additionalProperties": false,
+      "description": "warningThreshold must be below highThreshold, including default values."
+    },
+    "cpuSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "low": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "medium": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "high": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "low": {
+                "$ref": "#/$defs/symbol"
+              },
+              "medium": {
+                "$ref": "#/$defs/symbol"
+              },
+              "high": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "cpuTints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "low": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "medium": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "high": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "unavailable": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "memory": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "symbols": {
+          "$ref": "#/$defs/memorySymbols"
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "memorySymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "available": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "available": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "disk": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^(~|/).*",
+          "description": "Existing file or directory on the desired volume; defaults to the home directory."
+        },
+        "symbols": {
+          "$ref": "#/$defs/diskSymbols"
+        },
+        "tints": {
+          "$ref": "#/$defs/diskTints"
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "warningThreshold": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100,
+          "default": 20
+        },
+        "criticalThreshold": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100,
+          "default": 10
+        }
+      },
+      "additionalProperties": false,
+      "description": "Critical free-space threshold must be below warning, including defaults."
+    },
+    "diskSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "available": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "available": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "diskTints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "normal": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "warning": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "critical": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "unavailable": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "throughput": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "interfaces": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^\\S(?:.*\\S)?$"
+          }
+        },
+        "unit": {
+          "enum": [
+            "bytes",
+            "bits",
+            null
+          ],
+          "default": "bytes"
+        },
+        "smoothingSamples": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 30,
+          "default": 1
+        },
+        "symbols": {
+          "$ref": "#/$defs/throughputSymbols"
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "throughputSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "download": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "upload": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "download": {
+                "$ref": "#/$defs/symbol"
+              },
+              "upload": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "media": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "source": {
+          "enum": [
+            "automatic",
+            "music",
+            "spotify",
+            null
+          ],
+          "default": "automatic"
+        },
+        "symbols": {
+          "$ref": "#/$defs/mediaSymbols"
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "hideWhenPaused": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        },
+        "hideWhenStopped": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        },
+        "hideWhenNotPlaying": {
+          "description": "Hide unless the selected source is playing, including while waiting for playback or when playback is unavailable.",
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "mediaSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "playing": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "paused": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "stopped": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "playing": {
+                "$ref": "#/$defs/symbol"
+              },
+              "paused": {
+                "$ref": "#/$defs/symbol"
+              },
+              "stopped": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "spaces": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "scope": {
+          "enum": [
+            "focused",
+            "display",
+            null
+          ],
+          "default": "focused"
+        },
+        "names": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "oneOf": [
+              {
+                "type": ["string", "null"]
+              },
+              {
+                "type": "object",
+                "required": ["symbol"],
+                "properties": {
+                  "symbol": {
+                    "$ref": "#/$defs/symbol",
+                    "type": ["string", "object"],
+                    "pattern": "\\S"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "description": "Display names by position after scope and fullscreen filtering. The first entry names Space 1. Missing, null, or empty entries retain the default number. Strings are literal text; objects with a symbol field render an SF Symbol name or a font glyph object in place of the name."
+        },
+        "symbols": {
+          "$ref": "#/$defs/spacesSymbols"
+        },
+        "tints": {
+          "$ref": "#/$defs/spacesTints"
+        },
+        "includeFullscreen": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "spacesSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "available": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "available": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "spacesTints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "active": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "inactive": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "unavailable": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "aerospace": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "scope": {
+          "enum": [
+            "focused",
+            "display",
+            null
+          ],
+          "default": "focused"
+        },
+        "symbols": {
+          "$ref": "#/$defs/aerospaceSymbols"
+        },
+        "tints": {
+          "$ref": "#/$defs/aerospaceTints"
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "aerospaceSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "available": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "available": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "aerospaceTints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "inactive": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "unavailable": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "focused": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "visible": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "yabai": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "scope": {
+          "enum": [
+            "focused",
+            "display",
+            null
+          ],
+          "default": "focused"
+        },
+        "symbols": {
+          "$ref": "#/$defs/yabaiSymbols"
+        },
+        "tints": {
+          "$ref": "#/$defs/yabaiTints"
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "includeFullscreen": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "yabaiSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "available": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "available": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "yabaiTints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "inactive": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "unavailable": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "focused": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "visible": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "commandSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "running": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "success": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "failure": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "running": {
+                "$ref": "#/$defs/symbol"
+              },
+              "success": {
+                "$ref": "#/$defs/symbol"
+              },
+              "failure": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "commandTints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "running": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "success": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        },
+        "failure": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "vpnSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "connecting": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "connected": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "disconnecting": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "disconnected": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "connecting": {
+                "$ref": "#/$defs/symbol"
+              },
+              "connected": {
+                "$ref": "#/$defs/symbol"
+              },
+              "disconnecting": {
+                "$ref": "#/$defs/symbol"
+              },
+              "disconnected": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "vpn": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "symbols": {
+          "$ref": "#/$defs/vpnSymbols"
+        },
+        "tints": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "connecting": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "connected": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "disconnecting": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "disconnected": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "unavailable": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "hideWhenDisconnected": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "bluetoothSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "on": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "off": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "connected": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unauthorized": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "on": {
+                "$ref": "#/$defs/symbol"
+              },
+              "off": {
+                "$ref": "#/$defs/symbol"
+              },
+              "connected": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unauthorized": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "bluetooth": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "symbols": {
+          "$ref": "#/$defs/bluetoothSymbols"
+        },
+        "tints": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "on": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "off": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "connected": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "unauthorized": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "unavailable": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "hideWhenDisconnected": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "audioDeviceSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "output": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "input": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "disconnected": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "output": {
+                "$ref": "#/$defs/symbol"
+              },
+              "input": {
+                "$ref": "#/$defs/symbol"
+              },
+              "disconnected": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "mail": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pollInterval": {
+          "type": "number",
+          "minimum": 5,
+          "default": 30,
+          "description": "Seconds between Mail queries. Enabled Mail items share the shortest interval."
+        }
+      }
+    },
+    "calendar": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "lookaheadDays": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 30,
+          "default": 7
+        },
+        "includeAllDay": {
+          "type": ["boolean", "null"],
+          "default": true
+        },
+        "timeFormat": {
+          "type": ["string", "null"],
+          "pattern": "\\S"
+        },
+        "symbols": {
+          "$ref": "#/$defs/calendarSymbols"
+        },
+        "tints": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "loading": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "upcoming": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "ongoing": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "empty": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "unauthorized": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "unavailable": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"}
+          }
+        },
+        "showSymbol": {
+          "type": ["boolean", "null"],
+          "default": true
+        },
+        "hideWhenEmpty": {
+          "type": ["boolean", "null"],
+          "default": false
+        }
+      }
+    },
+    "calendarSymbols": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "font": {"type": ["string", "null"], "pattern": "\\S"},
+        "size": {"type": ["number", "null"], "minimum": 8, "maximum": 72},
+        "loading": {"$ref": "#/$defs/widgetSymbol"},
+        "upcoming": {"$ref": "#/$defs/widgetSymbol"},
+        "ongoing": {"$ref": "#/$defs/widgetSymbol"},
+        "empty": {"$ref": "#/$defs/widgetSymbol"},
+        "unauthorized": {"$ref": "#/$defs/widgetSymbol"},
+        "unavailable": {"$ref": "#/$defs/widgetSymbol"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": ["font"],
+              "properties": {"font": {"type": "string"}}
+            }
+          },
+          "then": {
+            "properties": {
+              "loading": {"$ref": "#/$defs/symbol"},
+              "upcoming": {"$ref": "#/$defs/symbol"},
+              "ongoing": {"$ref": "#/$defs/symbol"},
+              "empty": {"$ref": "#/$defs/symbol"},
+              "unauthorized": {"$ref": "#/$defs/symbol"},
+              "unavailable": {"$ref": "#/$defs/symbol"}
+            }
+          }
+        }
+      ]
+    },
+    "audioDevice": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "symbols": {
+          "$ref": "#/$defs/audioDeviceSymbols"
+        },
+        "tints": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "available": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "disconnected": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            },
+            "unavailable": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "hideWhenDisconnected": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": false
+        },
+        "device": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "output",
+            "input",
+            null
+          ],
+          "default": "output"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regionStyle": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "background": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+        },
+        "borderColor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$"
+        },
+        "cornerRadius": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 48
+        },
+        "horizontalPadding": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 96
+        },
+        "verticalPadding": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 48
+        },
+        "borderWidth": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 48
+        },
+        "itemSpacing": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 96
+        }
+      }
+    },
+    "weather": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "temperatureUnit": {
+          "enum": [
+            "celsius",
+            "fahrenheit",
+            null
+          ],
+          "default": "celsius"
+        },
+        "windSpeedUnit": {
+          "enum": [
+            "kmh",
+            "mph",
+            "ms",
+            "kn",
+            null
+          ],
+          "default": "kmh"
+        },
+        "pollInterval": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 60,
+          "maximum": 86400,
+          "default": 900
+        },
+        "showSymbol": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": true
+        },
+        "symbols": {
+          "$ref": "#/$defs/weatherSymbols"
+        }
+      }
+    },
+    "weatherSymbols": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "font": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "\\S"
+        },
+        "size": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 8,
+          "maximum": 72
+        },
+        "clearDay": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "clearNight": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "partlyCloudyDay": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "partlyCloudyNight": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "overcast": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "fog": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "drizzle": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "freezingDrizzle": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "rain": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "freezingRain": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "snow": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "rainShowers": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "snowShowers": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "thunderstorm": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "thunderstormHail": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unknown": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "overcastDay": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "overcastNight": {
+          "$ref": "#/$defs/widgetSymbol"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": [
+                "font"
+              ],
+              "properties": {
+                "font": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "clearDay": {
+                "$ref": "#/$defs/symbol"
+              },
+              "clearNight": {
+                "$ref": "#/$defs/symbol"
+              },
+              "partlyCloudyDay": {
+                "$ref": "#/$defs/symbol"
+              },
+              "partlyCloudyNight": {
+                "$ref": "#/$defs/symbol"
+              },
+              "overcast": {
+                "$ref": "#/$defs/symbol"
+              },
+              "fog": {
+                "$ref": "#/$defs/symbol"
+              },
+              "drizzle": {
+                "$ref": "#/$defs/symbol"
+              },
+              "freezingDrizzle": {
+                "$ref": "#/$defs/symbol"
+              },
+              "rain": {
+                "$ref": "#/$defs/symbol"
+              },
+              "freezingRain": {
+                "$ref": "#/$defs/symbol"
+              },
+              "snow": {
+                "$ref": "#/$defs/symbol"
+              },
+              "rainShowers": {
+                "$ref": "#/$defs/symbol"
+              },
+              "snowShowers": {
+                "$ref": "#/$defs/symbol"
+              },
+              "thunderstorm": {
+                "$ref": "#/$defs/symbol"
+              },
+              "thunderstormHail": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unknown": {
+                "$ref": "#/$defs/symbol"
+              },
+              "unavailable": {
+                "$ref": "#/$defs/symbol"
+              },
+              "overcastDay": {
+                "$ref": "#/$defs/symbol"
+              },
+              "overcastNight": {
+                "$ref": "#/$defs/symbol"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

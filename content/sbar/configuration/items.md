@@ -26,8 +26,8 @@ Place items in `items.left`, `items.center`, or `items.right` in display order. 
 | `dateStyle` | `none` | Localised date style for `datetime`: `none`, `short`, `medium`, `long`, or `full`. |
 | `timeStyle` | `short` | Localised time style for `datetime`: `none`, `short`, `medium`, `long`, or `full`. |
 | `children` | Empty | Items for a group or popup. |
-| `itemSpacing` | `4` | Group-only gap between children, 0 to 96 points. |
-| `childStyle` | Inherit parent defaults | Group-only style defaults for children. Each child's `style` takes precedence. |
+| `itemSpacing` | `4` | Unreleased. Group-only gap between children, 0 to 96 points. |
+| `childStyle` | Inherit parent defaults | Unreleased. Group-only style defaults for children. Each child's `style` takes precedence. |
 | `frontApplication` | - | [Native application icon](/sbar/providers/frontapplication/) configuration. |
 | `aerospace`, `audioDevice`, `battery`, `bluetooth`, `cpu`, `disk`, `media`, `memory`, `mail`, `network`, `spaces`, `throughput`, `volume`, `vpn`, `weather`, `yabai` | - | Provider settings for data, appearance, and visibility. |
 | `command`, `plugin` | - | Required process settings for the corresponding type. |
@@ -87,6 +87,8 @@ Set `symbolPosition` on each child that needs it. Children do not inherit their 
 ```
 
 ### Group spacing
+
+`itemSpacing` and `childStyle` require an unreleased build from `main`. In v0.0.1, groups use a fixed 4-point gap and children inherit the theme unless they have their own `style`. See [release compatibility](/sbar/#release-compatibility).
 
 Set `itemSpacing` on a group to change the gap between its children. It accepts 0 to 96 points and defaults to 4. Nested groups use their own spacing. Theme and region `itemSpacing` settings control the gaps between top-level items.
 

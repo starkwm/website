@@ -64,7 +64,7 @@ Set these properties inside `theme.itemStyle` or an item's `style`:
 | `background` | Transparent | Item background colour. |
 | `hoverTint` | Normal tint | Text and symbol colour while the pointer is over an interactive item. |
 | `hoverBackground` | Subtle highlight | Background while the pointer is over an interactive item. |
-| `fontFamily` | System font | Installed font family or font name for item text. |
+| `fontFamily` | System font | Unreleased. Installed font family or font name for item text. |
 | `fontSize` | `13` | Font size, from 8 to 72 points. |
 | `fontWeight` | `regular` | `regular`, `medium`, `semibold`, or `bold`. |
 | `symbolFontWeight` | Text weight | The same weights, applied to SF Symbols. |
@@ -78,6 +78,8 @@ Set these properties inside `theme.itemStyle` or an item's `style`:
 Bar padding sits inside its configured height or width. Styling does not increase the bar's thickness, and content that exceeds its bar region is clipped. Bar corners clip both the background and content. See [bar settings](/sbar/configuration/#bar-settings) for height and margins, and [shadows](/sbar/configuration/#shadows) for `bar.shadow`.
 
 ## Text fonts
+
+`fontFamily` requires an unreleased build from `main`. v0.0.1 uses the system font for text; custom font glyph symbols are supported in that release. See [release compatibility](/sbar/#release-compatibility).
 
 Set `fontFamily` in `theme.itemStyle` to choose the default text font. Set it in an item's `style` to override that default:
 
@@ -158,7 +160,7 @@ Region backgrounds fit their visible items, padding, and overflow button. A flex
 
 Padding reduces the room available to items and may move them into overflow. sbar limits padding to half the allocated width or height. Regions stay within the bar bounds, and oversized content remains clipped. Borders draw inside the region bounds. Region decoration adds no click targets, so mouse pass-through still uses item bounds.
 
-The whole-bar background and corner radius still apply. Use a transparent `theme.background` and disable `bar.shadow` for separate floating regions. Region shadows and material backgrounds are not supported. See the complete [sections example](https://github.com/starkwm/sbar/tree/main/examples/sections).
+The whole-bar background and corner radius still apply. Use a transparent `theme.background` and disable `bar.shadow` for separate floating regions. Region shadows and material backgrounds are not supported. See the complete [sections example](https://github.com/starkwm/sbar/tree/v0.0.1/examples/sections).
 
 ## Hover colours
 
@@ -408,6 +410,8 @@ Shell commands can return a JSON symbol, tint, and hidden state alongside text. 
 Process plugins can stream JSON symbols, tints, and visibility alongside text. Configure `plugin.symbols` and `plugin.tints` for running, success, and failure states. Item symbols override state symbols, then result symbols; each output message replaces the previous result. See [process plugin appearance](/sbar/providers/plugin/#state-appearance-and-errors) for precedence and error policies.
 
 ## Vertical bar styling
+
+Side bars require an unreleased build from `main`. v0.0.1 supports horizontal bars only.
 
 In side bars, `theme.regions.left`, `center` and `right` style the top, middle and bottom sections. Each section fills the inner bar width and grows vertically to fit its visible items. Empty sections draw nothing.
 
