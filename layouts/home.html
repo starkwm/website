@@ -1,15 +1,12 @@
 {{ define "title" }}{{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-  {{ $design := site.Params.homeDesign | default "minimal" }}
-  <div class="home-layout home-layout--{{ $design }}">
+  <div class="home-layout home-layout--minimal">
     <h1 class="visually-hidden">Stark Software apps</h1>
     <div class="project-list">
       {{ range $index, $page := where site.Sections.ByWeight "Section" "ne" "stark" }}
         <section class="project" aria-labelledby="project-{{ .Section }}">
-          {{ if eq $design "minimal" }}
-            {{ partial "project-avatar" . }}
-          {{ end }}
+          {{ partial "project-avatar" . }}
           <div class="project__details">
             <div class="project__intro">
               <div class="project__heading">
@@ -23,9 +20,6 @@
             {{ end }}
             <a class="project__link" href="{{ .RelPermalink }}" aria-label="{{ .Title }} documentation">Documentation {{ partial "arrow" . }}</a>
           </div>
-          {{ if ne $design "minimal" }}
-            {{ partial "project-preview" . }}
-          {{ end }}
         </section>
       {{ end }}
     </div>

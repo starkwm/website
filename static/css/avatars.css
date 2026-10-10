@@ -35,13 +35,6 @@
   stroke-width: 3.3;
   stroke-linecap: round;
 }
-.avatar-focus-ring {
-  fill: none;
-  stroke: var(--avatar-fill);
-  stroke-width: 3;
-  transform-box: fill-box;
-  transform-origin: center;
-}
 .avatar-blink {
   transform-box: fill-box;
   transform-origin: center;
@@ -69,12 +62,6 @@
   --avatar-blink-duration: 10.1s;
   --avatar-blink-delay: -3s;
 }
-.project-avatar--sborders {
-  --avatar-idle-duration: 10.7s;
-  --avatar-idle-delay: -6s;
-  --avatar-blink-duration: 9.7s;
-  --avatar-blink-delay: -5s;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   [data-avatar-motion="running"] .project-avatar svg * {
@@ -91,7 +78,6 @@
   [data-avatar-motion="running"] .avatar-key-top { animation-name: avatar-key; }
   [data-avatar-motion="running"] .avatar-bar-glance { animation-name: avatar-glance; }
   [data-avatar-motion="running"] .avatar-bar-body { animation-name: avatar-bar; }
-  [data-avatar-motion="running"] .avatar-focus-ring { animation-name: avatar-focus; }
   [data-avatar-motion="running"] .project-avatar .avatar-blink {
     animation-name: avatar-blink;
     animation-duration: var(--avatar-blink-duration);
@@ -145,9 +131,4 @@
 @keyframes avatar-bar {
   0%, 58%, 90%, 100% { transform: scaleX(1); }
   72% { transform: scaleX(1.016); }
-}
-@keyframes avatar-focus {
-  0%, 61%, 88%, 100% { opacity: .72; transform: scale(1); }
-  72% { opacity: 1; transform: scale(.975); }
-  80% { opacity: .85; transform: scale(1.006); }
 }
