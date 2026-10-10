@@ -1095,7 +1095,8 @@ button:focus-visible {
 /* Documentation tools. */
 .docs-search,
 .docs-search-trigger,
-.code-copy {
+.code-copy,
+.page-toc #TableOfContents {
   --docs-accent: color-mix(in srgb, var(--accent) 75%, var(--text));
 }
 
@@ -1165,6 +1166,27 @@ button:focus-visible {
 .prose .code-block pre {
   margin: 0;
   border: 0;
+}
+
+.page-toc #TableOfContents a {
+  position: relative;
+  display: block;
+  padding-left: 0.75rem;
+  transition: none;
+}
+
+.page-toc #TableOfContents a[aria-current="location"] {
+  color: var(--docs-accent);
+}
+
+.page-toc #TableOfContents a[aria-current="location"]::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 0.3rem;
+  height: 0.3rem;
+  background: currentColor;
 }
 
 .docs-search {
