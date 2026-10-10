@@ -10,6 +10,8 @@ skbd runs shell commands when you press configured keyboard shortcuts. It uses [
 
 [quartz]: https://developer.apple.com/documentation/coregraphics/quartz-event-services
 
+This reference covers [v0.0.7](https://github.com/starkwm/skbd/releases/tag/v0.0.7), the latest prerelease, checked on 11 October 2026.
+
 ## Requirements
 
 - macOS 26 or later
@@ -18,7 +20,7 @@ skbd runs shell commands when you press configured keyboard shortcuts. It uses [
 
 ## Installation
 
-Install skbd with [Homebrew][brew].
+Install skbd with [Homebrew][brew] on Apple silicon.
 
     brew tap starkwm/formulae
     brew install starkwm/formulae/skbd@2
@@ -27,10 +29,11 @@ Create a configuration file, then start skbd as a launchd service with `brew ser
 
     brew services start skbd@2
 
-To build skbd from the [latest source][gh-skbd], install the latest Xcode and macOS SDK.
+To build the same release from [source][gh-skbd], install Xcode 26 or later and the macOS SDK.
 
     git clone https://github.com/starkwm/skbd.git
     cd skbd
+    git checkout v0.0.7
     make build
 
 If you build from source, you will need to create a Launch Agent `.plist` file to run skbd in the background.

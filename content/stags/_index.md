@@ -9,6 +9,8 @@ homeSummary: "Window tags within a macOS Space"
 
 `stags` is an early implementation. Some applications refuse off-screen moves or leave a narrow strip visible. Read [window recovery](/stags/recovery/) before using it with windows you need to keep open.
 
+`stags` has no published tags or releases. These guides cover [main at e34c65e](https://github.com/starkwm/stags/tree/e34c65e551025a2d11eff8e4d274de66c212bead), checked on 11 October 2026. Installation is from source.
+
 ## Start here
 
 1. [Build and start the daemon](/stags/getting-started/), then grant Accessibility permission.

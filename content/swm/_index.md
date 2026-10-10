@@ -10,6 +10,8 @@ weight = 20
 
 It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the JavaScript configuration used by its predecessor, [Stark](https://github.com/starkwm/stark), with a small shell-based command interface.
 
+This reference covers [v0.0.26](https://github.com/starkwm/swm/releases/tag/v0.0.26), the latest prerelease, checked on 11 October 2026.
+
 ## Requirements
 
 - macOS 26 or later
@@ -20,7 +22,7 @@ It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the Java
 
 ## Installation
 
-Install the latest release with Homebrew:
+Install the latest release with Homebrew on Apple silicon:
 
 ```sh
 brew tap starkwm/formulae
@@ -38,6 +40,7 @@ Or build from source:
 ```sh
 git clone https://github.com/starkwm/swm.git
 cd swm
+git checkout v0.0.26
 make build
 ```
 
@@ -152,6 +155,8 @@ swm window warp [--window <window|recent> | --direction <left|right|up|down>]
 `warp` moves the mouse cursor to the selected window's center without focusing or raising the window, switching Spaces, or generating a mouse movement event. It defaults to the focused window. swm rejects hidden, minimized, and off-Space windows. If the window's center is off-screen, the cursor moves to the center of the largest part of the window visible on a display.
 
 With `--direction`, swm chooses the nearest non-minimized, on-screen window in the requested direction from the managed window under the cursor. If the cursor is not over an available managed window, it starts from the focused window. Each command checks the window under the cursor again, so repeated warps navigate between windows without changing focus. If another window covers the destination, the next warp starts from that covering window. `--window` and `--direction` cannot be combined.
+
+`window warp` is available in v0.0.26 and later.
 
 ### Move, resize, and place
 
