@@ -1,10 +1,10 @@
-+++
-title = 'swm'
-description = 'A client and daemon for scriptable macOS window management.'
-homeSummary = 'Command-line window management with optional automatic tiling'
-homeDetails = 'Move, resize, and focus windows from the command line, or let automatic tiling arrange them for you. Query displays, spaces, and windows as JSON, then use shell scripts and event signals to automate your desktop.'
-weight = 20
-+++
+---
+title: "swm"
+description: "A client and daemon for scriptable macOS window management."
+weight: 20
+homeSummary: "Command-line window management with optional automatic tiling"
+homeDetails: "Move, resize, and focus windows from the command line, or let automatic tiling arrange them for you. Query displays, spaces, and windows as JSON, then use shell scripts and event signals to automate your desktop."
+---
 
 `swm` is a command-line window manager with optional automatic tiling. One `swm` process runs as a daemon and tracks applications, displays, spaces, and windows. Other invocations send commands to that daemon.
 

@@ -1,8 +1,8 @@
 ---
 title: "sbar"
 description: "Configure sbar for macOS."
-showDocList: false
 weight: 40
+showDocList: false
 homeSummary: "A configurable status bar for macOS"
 homeDetails: "Show system information, media, and workspaces using native providers. Add shell commands and streaming plugins, then style the bar with JSON."
 ---

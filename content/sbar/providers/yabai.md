@@ -2,7 +2,7 @@
 title: "Yabai"
 description: "Yabai Spaces, with focused or per-display scope and fullscreen filtering."
 weight: 19
-category: Workspaces
+category: "Workspaces"
 cadence: "2-second polling"
 options: "`yabai` block"
 ---

@@ -2,7 +2,7 @@
 title: "Mail"
 description: "Apple Mail's combined inbox unread count."
 weight: 7
-category: Connectivity
+category: "Connectivity"
 cadence: "Configurable polling"
 options: "`mail` block"
 ---

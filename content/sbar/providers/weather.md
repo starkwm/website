@@ -2,7 +2,7 @@
 title: "Weather"
 description: "Current weather from Open-Meteo at configured coordinates."
 weight: 9
-category: Weather
+category: "Weather"
 cadence: "Configurable polling"
 options: "`weather` block"
 ---

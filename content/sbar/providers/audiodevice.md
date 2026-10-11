@@ -2,7 +2,7 @@
 title: "Audio devices"
 description: "The default audio output or input device name, with device and error states."
 weight: 6
-category: System
+category: "System"
 cadence: "Native events"
 options: "`audioDevice` block"
 ---

@@ -2,7 +2,7 @@
 title: "Date and time"
 description: "Current date and time with localised styles or custom patterns."
 weight: 1
-category: Time
+category: "Time"
 cadence: "Every second"
 options: "`format`, `dateStyle`, `timeStyle`"
 ---

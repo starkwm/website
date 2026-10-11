@@ -2,7 +2,7 @@
 title: "Network"
 description: "Wi-Fi, Connected, or Offline based on the current network path."
 weight: 8
-category: Connectivity
+category: "Connectivity"
 cadence: "Native events"
 options: "`network` block"
 ---

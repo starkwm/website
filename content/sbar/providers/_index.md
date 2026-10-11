@@ -1,8 +1,8 @@
 ---
 title: "Providers"
 description: "Compare provider output, updates, and configuration."
-showDocList: false
 weight: 2
+showDocList: false
 ---
 
 Every provider uses the same item structure. Start with `id` and `type`, then add the settings listed on its page. Shared styling, actions, and refresh controls are available to every provider. Use [`text` templates](/sbar/configuration/text-templates/) to customise displayed labels; provider pages describe their default labels.

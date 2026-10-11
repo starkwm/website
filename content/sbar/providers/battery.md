@@ -2,7 +2,7 @@
 title: "Battery"
 description: "Battery percentage and charging state, with an AC power fallback."
 weight: 4
-category: System
+category: "System"
 cadence: "Native events"
 options: "`battery` block"
 ---

@@ -2,7 +2,7 @@
 title: "Spaces"
 description: "Native macOS Spaces, with focused or per-display scope and configurable labels."
 weight: 17
-category: Workspaces
+category: "Workspaces"
 cadence: "Native events"
 options: "`spaces` block"
 ---

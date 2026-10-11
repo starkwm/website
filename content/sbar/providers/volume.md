@@ -2,7 +2,7 @@
 title: "Volume"
 description: "Output volume and mute state, with automatic icons and optional state colours."
 weight: 5
-category: System
+category: "System"
 cadence: "Native events"
 options: "`volume` block"
 ---

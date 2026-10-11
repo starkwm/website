@@ -2,7 +2,7 @@
 title: "Shell command"
 description: "Captured output from a shell command."
 weight: 20
-category: Extensions
+category: "Extensions"
 cadence: "Startup / trigger / interval"
 options: "`command` block"
 ---

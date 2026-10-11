@@ -2,7 +2,7 @@
 title: "Bluetooth"
 description: "Bluetooth power state, connected device names, and access status."
 weight: 11
-category: Connectivity
+category: "Connectivity"
 cadence: "Native events"
 options: "`bluetooth` block"
 ---

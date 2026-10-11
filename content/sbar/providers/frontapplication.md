@@ -2,7 +2,7 @@
 title: "Front application"
 description: "The name of the application owning the menu bar, with an optional native colour icon."
 weight: 3
-category: Desktop
+category: "Desktop"
 cadence: "Native events"
 options: "`frontApplication` block"
 ---

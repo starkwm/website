@@ -2,7 +2,7 @@
 title: "AeroSpace"
 description: "AeroSpace workspaces, with focused or per-display scope and custom labels."
 weight: 18
-category: Workspaces
+category: "Workspaces"
 cadence: "2-second polling"
 options: "`aerospace` block"
 ---

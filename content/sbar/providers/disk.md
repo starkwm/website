@@ -2,7 +2,7 @@
 title: "Disk"
 description: "Capacity of a selected volume, with configurable formats and free-space colours."
 weight: 14
-category: System
+category: "System"
 cadence: "2-second sampling"
 options: "`disk` block"
 ---

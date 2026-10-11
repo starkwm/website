@@ -1,8 +1,8 @@
 ---
 title: "Configuration"
 description: "One JSON file controls the entire bar."
-showDocList: false
 weight: 1
+showDocList: false
 ---
 
 By default, sbar looks for `~/.config/sbar/config.jsonc`, then `~/.config/sbar/config.json`. Edit either file and sbar reloads it when the file changes. If neither file exists, the bar shows the application owning the menu bar, a divider, and a clock. Removing the active file restores that default bar. If an edit is invalid, sbar keeps the last valid configuration. If the file is invalid at startup, it uses the default bar.

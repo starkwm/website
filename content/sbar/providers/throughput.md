@@ -2,7 +2,7 @@
 title: "Throughput"
 description: "Download and upload rates, with interface selection and smoothing."
 weight: 15
-category: Connectivity
+category: "Connectivity"
 cadence: "2-second sampling"
 options: "`throughput` block"
 ---

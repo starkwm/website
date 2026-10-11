@@ -2,7 +2,7 @@
 title: "CPU"
 description: "Aggregate CPU usage, for example CPU 12%."
 weight: 12
-category: System
+category: "System"
 cadence: "2-second sampling"
 options: "`cpu` block"
 ---
