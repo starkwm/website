@@ -10,7 +10,7 @@ homeDetails: "Move, resize, and focus windows from the command line, or let auto
 
 It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the JavaScript configuration used by its predecessor, [Stark](https://github.com/starkwm/stark), with a small shell-based command interface.
 
-This reference covers [v0.0.26](https://github.com/starkwm/swm/releases/tag/v0.0.26), the latest prerelease, checked on 11 October 2026.
+This reference covers [v0.0.27](https://github.com/starkwm/swm/releases/tag/v0.0.27), the latest prerelease, checked on 12 October 2026.
 
 ## Requirements
 
@@ -40,7 +40,7 @@ Or build from source:
 ```sh
 git clone https://github.com/starkwm/swm.git
 cd swm
-git checkout v0.0.26
+git checkout v0.0.27
 make build
 ```
 
@@ -300,9 +300,15 @@ Each active display schedules animation updates at up to 60 Hz. Without a displa
 swm uses a 60 Hz timer. Each update calculates the window's position and size for the
 next display frame.
 
+If a display stops sending updates for two seconds, swm finishes its affected
+animations at their destination. Animations on other displays continue normally.
+
 Animation reads and writes use Accessibility, one call at a time per app.
 A slow app does not block animation updates in other apps. New pending frames replace
-older ones, and swm checks the final position and size even after display updates stop.
+older ones. After the final write, swm waits 100 ms before checking the window's
+position and size. If the frame still differs from the destination, swm corrects it
+once and checks again after another 100 ms. These waits do not block updates to
+other windows in the same app. Newer requests and cancellation discard stale checks.
 
 Add the commands to `swmrc` to apply them at startup. Animation smoothness depends on
 the app. Moving a window to another display cancels its animation.
