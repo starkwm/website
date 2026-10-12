@@ -1,7 +1,7 @@
 {{ define "title" }}{{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-  <div class="home-layout home-layout--minimal">
+  <div class="home-layout">
     <h1 class="visually-hidden">Stark Software apps</h1>
     <div class="project-list">
       {{ range $index, $page := site.Sections.ByWeight }}
