@@ -11,6 +11,13 @@
   --accent-muted: #ecf7e2;
   --code-bg: #f1f1ed;
   --code-text: #242421;
+  --texture-ink: color-mix(in srgb, var(--text) 14%, transparent);
+  --texture-hatch: repeating-linear-gradient(
+    135deg,
+    transparent 0 4px,
+    var(--texture-ink) 4px 5px,
+    transparent 5px 8px
+  );
   --wide-width: 90rem;
   --font-mono:
     "Atkinson Hyperlegible Mono", ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
@@ -249,10 +256,11 @@ button:focus-visible {
   }
 
   pre {
+    position: relative;
     overflow-x: auto;
     border: 1px solid var(--border);
     background: var(--code-bg);
-    padding: 0.85rem;
+    padding: 0.85rem 0.85rem calc(0.85rem + 12px);
 
     code {
       border: 0;
@@ -299,8 +307,10 @@ button:focus-visible {
   flex-shrink: 0;
   width: 96px;
   height: 96px;
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
   background: var(--bg);
+  background-image: radial-gradient(var(--border) 0.75px, transparent 0.75px);
+  background-size: 6px 6px;
 }
 
 .project-avatar svg {
@@ -537,6 +547,32 @@ button:focus-visible {
   padding: 32px 16px;
 }
 
+.project::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid var(--text-soft);
+  border-right: 1px solid var(--text-soft);
+  pointer-events: none;
+}
+
+.project::after,
+.code-block::after,
+.prose pre::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 12px;
+  border-top: 1px solid var(--border);
+  background-image: var(--texture-hatch);
+  pointer-events: none;
+}
+
 .project + .project {
   border-top: 1px solid var(--border);
 }
@@ -620,6 +656,8 @@ button:focus-visible {
 
 .home-layout--minimal .project__number {
   display: block;
+  border-left: 2px solid var(--accent);
+  padding-left: 5px;
 }
 
 .home-layout--minimal .project-avatar {
@@ -911,10 +949,24 @@ button:focus-visible {
 }
 
 .code-block {
+  position: relative;
   min-width: 0;
   margin-bottom: 1rem;
   border: 1px solid var(--border);
   background: var(--code-bg);
+}
+
+.code-block::before,
+.prose pre::before {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid var(--text-soft);
+  border-left: 1px solid var(--text-soft);
+  pointer-events: none;
 }
 
 .code-block__toolbar {
@@ -940,6 +992,11 @@ button:focus-visible {
 .prose .code-block pre {
   margin: 0;
   border: 0;
+}
+
+.prose .code-block pre::before,
+.prose .code-block pre::after {
+  content: none;
 }
 
 .page-toc #TableOfContents a {
