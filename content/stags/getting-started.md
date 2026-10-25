@@ -39,4 +39,4 @@ Before trying this with important windows, read [window recovery](/stags/recover
 
 ## Use it with swm
 
-If [swm](/swm/) manages the same windows, choose its floating layout. Automatic tiling can move a parked window back on screen. The daemons do not yet coordinate layouts.
+If [swm](/swm/) manages the same windows, use its floating layout. Automatic tiling can move a parked window back on screen. The two daemons do not coordinate their layouts yet.

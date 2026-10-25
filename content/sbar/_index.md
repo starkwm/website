@@ -1,13 +1,13 @@
 ---
 title: "sbar"
-description: "Configure sbar for macOS."
+description: "A status bar for macOS built from native providers, shell commands, and plugins."
 weight: 40
 showDocList: false
 homeSummary: "A configurable status bar for macOS"
 homeDetails: "Show system information, media, and workspaces using native providers. Add shell commands and streaming plugins, then style the bar with JSON."
 ---
 
-Configure your macOS status bar with native providers, shell commands, and streaming plugins.
+sbar draws a status bar on your displays. Each item comes from a native provider, such as battery or Spaces, a shell command, or a long-running plugin process. One JSON file describes the bar, and sbar reloads it when you save.
 
 The latest prerelease is [v0.0.1](https://github.com/starkwm/sbar/releases/tag/v0.0.1), checked on 11 October 2026. This reference covers that release and marks settings that require an unreleased source build. See [release compatibility](#release-compatibility) before using those settings.
 
@@ -82,7 +82,7 @@ Save this as `~/.config/sbar/config.jsonc`, then run `sbar`:
 }
 ```
 
-sbar reloads the file automatically. If an edit is invalid, it keeps the last valid configuration. Run `sbar validate` to check your file, or `sbar query --diagnostics` to inspect errors. Stop the bar with `sbar stop`. See [runtime commands](/sbar/configuration/refresh/#runtime-commands) for custom configuration paths and control sockets.
+sbar reloads the file when it changes. If an edit is invalid, it keeps the last valid configuration. Run `sbar validate` to check your file, or `sbar query --diagnostics` to inspect errors. Stop the bar with `sbar stop`. See [runtime commands](/sbar/configuration/refresh/#runtime-commands) for custom configuration paths and control sockets.
 
 ## A styled bar {#app-icons-battery-state-and-localized-date-and-time}
 

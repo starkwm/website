@@ -3,7 +3,7 @@ title: "swm"
 description: "A client and daemon for scriptable macOS window management."
 weight: 20
 homeSummary: "Command-line window management with optional automatic tiling"
-homeDetails: "Move, resize, and focus windows from the command line, or let automatic tiling arrange them for you. Query displays, spaces, and windows as JSON, then use shell scripts and event signals to automate your desktop."
+homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
 ---
 
 `swm` is a command-line window manager with optional automatic tiling. One `swm` process runs as a daemon and tracks applications, displays, spaces, and windows. Other invocations send commands to that daemon.
@@ -44,13 +44,13 @@ git checkout v0.0.27
 make build
 ```
 
-The development binary is written to `.build/debug/swm`. Run it once and grant the requested Accessibility permission:
+`make build` writes the binary to `.build/debug/swm`. Run it once and grant Accessibility permission when macOS asks:
 
 ```sh
 .build/debug/swm
 ```
 
-A source build is not installed as a background service automatically.
+A source build does not install a login service.
 
 ## How commands work
 
@@ -66,7 +66,7 @@ Send commands to the running daemon through command-specific subcommands:
 swm <domain> <command> [arguments]
 ```
 
-The available domains are `query`, `window`, `space`, `config`, `rule`, and `signal`. Commands print their result to standard output and return a non-zero exit status on failure. Run `swm --help`, `swm <domain> --help`, or `swm help <domain> <command>` for progressively more specific help.
+The available domains are `query`, `window`, `space`, `config`, `rule`, and `signal`. Commands print their result to standard output and return a non-zero exit status on failure. Run `swm --help`, `swm <domain> --help`, or `swm help <domain> <command>` for help.
 
 Top-level options:
 
@@ -183,7 +183,7 @@ swm window space [--window <window|recent>] <space-index|next|prev>
 
 Space indexes are zero-based and match `swm query spaces`. `next` and `prev` cycle through normal desktop Spaces in query order, skip fullscreen Spaces, and wrap at either end. `previous` is also accepted. The command defaults to the focused window and keeps the current Space active. Moves to a Space on another display fit the window within that display's visible bounds.
 
-Only windows belonging to one normal desktop Space can move. Fullscreen windows and windows assigned to multiple Spaces are rejected. Moving a window to its current Space leaves it in place.
+Only windows on a single normal desktop Space can move. swm rejects fullscreen windows and windows assigned to more than one Space. Moving a window to its current Space leaves it in place.
 
 Movement works with SIP enabled. The command waits up to two seconds for WindowServer to confirm the new Space membership, then updates visible tiling layouts. If movement is unavailable or cannot be confirmed, the command returns an error. A timeout does not undo a move that completes later. Query the state before retrying.
 
@@ -226,7 +226,7 @@ swm query spaces
 swm space activate <space-index>
 ```
 
-Activation uses the zero-based `index` from `swm query spaces`. It changes the visible Desktop on the target's display without requesting keyboard-focus transfer between displays. The target display must contain only normal desktop Spaces. Displays containing native fullscreen Spaces are currently refused.
+Activation uses the zero-based `index` from `swm query spaces`. It changes the visible Desktop on the target's display without requesting keyboard-focus transfer between displays. The target display must contain only normal desktop Spaces. swm refuses displays that contain a native fullscreen Space.
 
 The command waits up to two seconds for the target display to report the requested current Space. A timeout or cancellation after submission does not mean the Space stayed unchanged. Query the state before retrying.
 
@@ -245,7 +245,7 @@ swm space padding [--space <space-index>] <abs|rel>:<top>:<bottom>:<left>:<right
 swm space gap [--space <space-index>] <abs|rel>:<points>
 ```
 
-Padding, gaps, and ratios are clamped to valid values. Space settings apply to every display showing that space.
+swm clamps padding, gaps, and ratios to valid values. Space settings apply to every display showing that space.
 
 ### Layouts
 
@@ -256,9 +256,9 @@ The layouts are:
 - `monocle`: overlap every tiled window across the available bounds.
 - `dwindle`: recursively split the available bounds around the focused window.
 
-In a dwindle layout, new windows split the focused tiled window and removing a window collapses its sibling branch. Splits normally follow the longest available edge. `swm space preserve-split on` retains each branch's chosen direction so it can be changed with `swm window toggle-split`.
+In a dwindle layout, new windows split the focused tiled window and removing a window collapses its sibling branch. Splits normally follow the longest available edge. `swm space preserve-split on` keeps each branch's direction, and `swm window toggle-split` changes it.
 
-Each physical display has an independent tiling layout, including when macOS's **Displays have separate Spaces** setting is disabled. Moving a tiled window between displays moves it into the destination layout. Manually moving or resizing a tiled window causes it to snap back into place.
+Each physical display has an independent tiling layout, including when macOS's **Displays have separate Spaces** setting is disabled. Moving a tiled window between displays moves it into the destination layout. If you move or resize a tiled window by hand, it snaps back into place.
 
 ## Set global defaults
 
@@ -279,49 +279,34 @@ swm config left-padding <points>
 swm config right-padding <points>
 ```
 
-Built-in defaults are floating layout, focus-follows-mouse off, `0.5` master ratio, master on the left, split preservation off, animation disabled, and zero padding and gaps. Negative padding or gap values are clamped to zero.
+Built-in defaults are floating layout, focus-follows-mouse off, `0.5` master ratio, master on the left, split preservation off, animation disabled, and zero padding and gaps. swm clamps negative padding and gaps to zero.
 
 ## Window animation
 
-Window animation is disabled by default. Run
-`swm config animation-duration 0.18` to animate swaps, automatic layout reflows, and `move`, `resize`, and `grid` commands,
-or set it to `0` to finish active animations and return to instant movement.
-The accepted range is 0 through 1 second. macOS Reduce Motion overrides this setting.
-Repeated relative moves and resizes accumulate against the pending destination.
-Display transfers remain instant. With animation enabled, geometry commands return
-once the movement is queued.
+Window animation is off by default. Turn it on with a duration in seconds, from 0 through 1:
 
-Use `swm config animation-easing ease-out-circ` for a circular ease-out curve like
-yabai's default. Available curves are `linear`, `ease-out-quad`,
-`ease-out-cubic`, `ease-out-circ`, and `ease-in-out-quad`. The default is `ease-out-quad`.
-Changes apply to newly started or retargeted animations; active animations retain their curve.
+```sh
+swm config animation-duration 0.18
+swm config animation-easing ease-out-circ
+```
 
-Each active display schedules animation updates at up to 60 Hz. Without a display,
-swm uses a 60 Hz timer. Each update calculates the window's position and size for the
-next display frame.
+This animates swaps, automatic layout reflows, and the `move`, `resize`, and `grid` commands. Set the duration to `0` to finish active animations and go back to instant movement. macOS Reduce Motion overrides the setting. Add both commands to `swmrc` to apply them at startup.
 
-If a display stops sending updates for two seconds, swm finishes its affected
-animations at their destination. Animations on other displays continue normally.
+The easing curves are `linear`, `ease-out-quad`, `ease-out-cubic`, `ease-out-circ`, and `ease-in-out-quad`. The default is `ease-out-quad`. `ease-out-circ` is close to yabai's default. A new curve applies to animations that start or change destination after you set it. Running animations keep their curve.
 
-Animation reads and writes use Accessibility, one call at a time per app.
-A slow app does not block animation updates in other apps. New pending frames replace
-older ones. After the final write, swm waits 100 ms before checking the window's
-position and size. If the frame still differs from the destination, swm corrects it
-once and checks again after another 100 ms. These waits do not block updates to
-other windows in the same app. Newer requests and cancellation discard stale checks.
+With animation on, geometry commands return as soon as swm queues the movement. Repeated relative moves and resizes add up against the pending destination, not the current frame. Moving a window to another display is always instant and cancels its animation. Smoothness depends on the app.
 
-Add the commands to `swmrc` to apply them at startup. Animation smoothness depends on
-the app. Moving a window to another display cancels its animation.
+### Dragging during an animation
 
-When you drag or resize a window, swm stops sending animation updates to it until you
-release the mouse, then recalculates the layout. Clicking without dragging leaves the
-animation running. Geometry commands return an error during a drag. Placement rules
-wait until you release the mouse.
+When you drag or resize a window, swm stops animating it until you release the mouse, then recalculates the layout. A click without a drag leaves the animation running. Geometry commands return an error during a drag, and placement rules wait for the mouse release.
 
-An Accessibility call already in progress can finish after swm cancels an animation.
-swm discards queued updates and ignores results from the cancelled animation.
-Synchronous geometry commands wait for calls in progress to finish before moving or
-resizing the window.
+### Timing and corrections
+
+Each active display drives animation updates at up to 60 Hz. With no display, swm uses a 60 Hz timer. If a display stops sending updates for two seconds, swm jumps that display's animations to their destination. Animations on other displays carry on.
+
+swm reads and writes window frames through Accessibility, one call at a time per app, so a slow app does not hold up animations in other apps. A new frame replaces any frame still waiting to be written. After the final write, swm waits 100 ms and checks the window's position and size. If the frame is off, swm corrects it once and checks again 100 ms later. These checks do not block other windows in the same app, and a newer request or a cancellation discards them.
+
+An Accessibility call can still finish after swm cancels its animation. swm drops the queued updates and ignores the late result. Synchronous geometry commands wait for in-progress calls before they move or resize the window.
 
 ## Configuration file
 
@@ -344,16 +329,14 @@ swm config right-padding 8
 
 ## Window rules
 
-Add rules to `~/.config/swm/swmrc` to keep selected windows floating or place them
-on a display. For example, leave Settings and Finder out of tiling layouts:
+Add rules to `~/.config/swm/swmrc` to keep selected windows floating or place them on a display. For example, leave Settings and Finder out of tiling layouts:
 
 ```sh
 swm rule add label=settings bundle-id=com.apple.systempreferences manage=off
 swm rule add label=finder bundle-id=com.apple.finder manage=off
 ```
 
-Rules last until the daemon stops. Adding or removing a rule updates existing
-windows as well as windows opened later.
+Rules last until the daemon stops. Adding or removing a rule updates existing windows as well as windows opened later.
 
 ### Commands
 
@@ -364,20 +347,13 @@ swm rule remove finder
 swm rule remove 1
 ```
 
-`list` returns a JSON array. Each entry has a one-based `index` and a `rule` object
-with the registered properties. Indexes change after removal. Use a unique,
-non-integer `label` to remove a rule by name.
+`list` returns a JSON array. Each entry has a one-based `index` and a `rule` object with the registered properties. Indexes change after removal. Use a unique, non-integer `label` to remove a rule by name.
 
 `add` requires at least one action:
 
 - `manage=on|off` allows or skips automatic tiling.
-- `display=<index|uuid>` moves the window to a display without following focus.
-  Indexes start at 1 and use the same order as `swm window display`. Use a UUID from
-  `swm query displays` to identify a monitor regardless of its index. Rules accept
-  neither `next` nor `prev`.
-- `grid=<columns>:<rows>:<x>:<y>:<width>:<height>` places a floating window within
-  the display's visible bounds. It uses the destination Space's padding and gaps,
-  with the same coordinate clamping as `swm window grid`.
+- `display=<index|uuid>` moves the window to a display without following focus. Indexes start at 1 and use the same order as `swm window display`. Use a UUID from `swm query displays` to identify a monitor regardless of its index. Rules accept neither `next` nor `prev`.
+- `grid=<columns>:<rows>:<x>:<y>:<width>:<height>` places a floating window within the display's visible bounds. It uses the destination Space's padding and gaps, with the same coordinate clamping as `swm window grid`.
 
 ### Match windows
 
@@ -388,16 +364,11 @@ A rule can use these filters:
 - `title=<regex>` matches the window title.
 - `app!=<regex>` or `title!=<regex>` requires the text not to match.
 
-All filters must match. If a window's value is missing, that filter fails even
-when inverted. A rule without filters matches every window.
+All filters must match. If a window's value is missing, that filter fails even when inverted. A rule without filters matches every window.
 
-Regexes use Foundation's ICU syntax. They are case-sensitive by default and match
-substrings unless anchored with `^` and `$`. Quote them in shell scripts. swm
-rejects invalid regexes, unknown properties, empty values, and duplicate properties
-without adding the rule.
+Regexes use Foundation's ICU syntax. They are case-sensitive by default and match substrings unless anchored with `^` and `$`. Quote them in shell scripts. swm rejects invalid regexes, unknown properties, empty values, and duplicate properties without adding the rule.
 
-The last matching value for each action wins. A rule that only sets `grid` leaves
-an earlier `manage` or `display` value in place. Put broad rules before exceptions:
+The last matching value for each action wins. A rule that only sets `grid` leaves an earlier `manage` or `display` value in place. Put broad rules before exceptions:
 
 ```sh
 swm rule add label=finder app='^Finder$' manage=off
@@ -406,21 +377,11 @@ swm rule add label=finder-projects app='^Finder$' title='^Projects$' manage=on
 
 ### Tiling
 
-`manage=off` leaves a window out of automatic tiling and tiling cycles. Queries,
-focus, and direct window commands still work. `manage=on` allows tiling if the
-window supports it. It cannot force fixed-size, nonstandard, or native-fullscreen
-windows into a layout.
+`manage=off` leaves a window out of automatic tiling and tiling cycles. Queries, focus, and direct window commands still work. `manage=on` allows tiling if the window supports it. It cannot force fixed-size, nonstandard, or native-fullscreen windows into a layout.
 
-swm checks rules before a new window's first layout, when rules change, and during
-later window updates. Title changes trigger a check when the app supports title
-notifications. Removing a management rule restores the earlier matching value or
-the normal default.
+swm checks rules before a new window's first layout, when rules change, and during later window updates. Title changes trigger a check when the app supports title notifications. Removing a management rule restores the earlier matching value or the normal default.
 
-`swm window layout float`, `tile`, and `toggle` override management rules for that
-window until it closes or the daemon restarts. Rule edits preserve those choices.
-`toggle` reverses the window's float/tile setting.
-Rules do not change the Space's layout. A Space using `float` keeps its usual
-floating-window commands and cycling.
+`swm window layout float`, `tile`, and `toggle` override management rules for that window until it closes or the daemon restarts. Rule edits preserve those choices. `toggle` reverses the window's float/tile setting. Rules do not change the Space's layout. A Space using `float` keeps its usual floating-window commands and cycling.
 
 ### Display and grid placement
 
@@ -429,28 +390,15 @@ floating-window commands and cycling.
 swm rule add label=finder app='^Finder$' manage=off display=2 grid=2:1:1:0:1:1
 ```
 
-swm selects the display before calculating the grid. Without a grid, it preserves
-the window's relative position and fits its size to the destination. Tiled windows
-join the destination layout.
+swm selects the display before calculating the grid. Without a grid, it preserves the window's relative position and fits its size to the destination. Tiled windows join the destination layout.
 
-Grid placement requires a resizable, floating window. Use `manage=off`, a manual
-float command, or a destination Space with the `float` layout. A grid waits until
-the window meets those conditions.
+Grid placement requires a resizable, floating window. Use `manage=off`, a manual float command, or a destination Space with the `float` layout. A grid waits until the window meets those conditions.
 
-Each placement action runs when it first matches or its value changes. Later
-manual moves and resizes leave that action unchanged, so it does not run again.
-A new display value also reapplies the matching grid on that display. Changing
-only the grid does not repeat a completed display move.
+Each placement action runs when it first matches or its value changes. Later manual moves and resizes leave that action unchanged, so it does not run again. A new display value also reapplies the matching grid on that display. Changing only the grid does not repeat a completed display move.
 
-Placement waits for minimized windows, windows on inactive or fullscreen Spaces,
-and unavailable destination displays. swm tries again during later window or
-display updates. It does not switch Spaces to place a window or apply a grid on a
-substitute monitor.
+Placement waits for minimized windows, windows on inactive or fullscreen Spaces, and unavailable destination displays. swm tries again during later window or display updates. It does not switch Spaces to place a window or apply a grid on a substitute monitor.
 
-Removing a placement rule leaves the current frame and display in place unless
-an earlier matching value takes over. swm forgets completed actions when a window
-closes or stops matching them. If an Accessibility move or resize fails, swm logs
-the failure and stops retrying that action. Remove and add the rule to retry.
+Removing a placement rule leaves the current frame and display in place unless an earlier matching value takes over. swm forgets completed actions when a window closes or stops matching them. If an Accessibility move or resize fails, swm logs the failure and stops retrying that action. Remove and add the rule to retry.
 
 ## Run commands on events
 

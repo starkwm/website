@@ -113,7 +113,7 @@ To create a floating bar, add margins and rounded corners:
 }
 ```
 
-Margins leave space between the bar and its placement area's edges. Left and right margins shorten horizontal bars; top and bottom margins shorten side bars. Excessive margins are clamped to leave at least one point of space, and the bar shrinks to fit.
+Margins leave space between the bar and its placement area's edges. Left and right margins shorten horizontal bars; top and bottom margins shorten side bars. sbar clamps margins that would leave no room, keeping at least one point of space, and shrinks the bar to fit.
 
 For top bars and side bars with `extendToTopEdge`, `margin.top` starts at the physical screen edge. Leave enough room for the menu bar or notch. Other positions use the usable display area. Changes reload automatically.
 

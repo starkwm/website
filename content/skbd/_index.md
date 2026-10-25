@@ -3,7 +3,7 @@ title: "skbd"
 description: "A keyboard shortcut daemon for macOS built on Quartz Event Services."
 weight: 30
 homeSummary: "Keyboard shortcuts for shell commands"
-homeDetails: "Bind key combinations to shell commands, with support for left and right modifier keys. Configuration reloads as you edit it. Use it to launch apps, run scripts, or trigger swm commands from the keyboard."
+homeDetails: "Bind key combinations to shell commands, including bindings that tell left and right modifier keys apart. skbd reloads its configuration when you save it, so a new shortcut works without a restart."
 ---
 
 skbd runs shell commands when you press configured keyboard shortcuts. It uses [Quartz Event Services][quartz] to monitor key presses on macOS and can distinguish left and right modifier keys.
@@ -20,34 +20,45 @@ This reference covers [v0.0.7](https://github.com/starkwm/skbd/releases/tag/v0.0
 
 ## Installation
 
-Install skbd with [Homebrew][brew] on Apple silicon.
+Install skbd with [Homebrew][brew] on Apple silicon:
 
-    brew tap starkwm/formulae
-    brew install starkwm/formulae/skbd@2
+```sh
+brew tap starkwm/formulae
+brew install starkwm/formulae/skbd@2
+```
 
-Create a configuration file, then start skbd as a launchd service with `brew services`.
+skbd refuses to start without a configuration, so create one first:
 
-    brew services start skbd@2
+```sh
+mkdir -p ~/.config/skbd
+echo 'hyper - t: open -a Terminal' > ~/.config/skbd/skbdrc
+```
 
-To build the same release from [source][gh-skbd], install Xcode 26 or later and the macOS SDK.
+Start skbd as a launchd service:
 
-    git clone https://github.com/starkwm/skbd.git
-    cd skbd
-    git checkout v0.0.7
-    make build
+```sh
+brew services start skbd@2
+```
 
-If you build from source, you will need to create a Launch Agent `.plist` file to run skbd in the background.
-
-[brew]: https://brew.sh
-[gh-skbd]: https://github.com/starkwm/skbd
-
-The configuration must exist before starting `skbd`. Enable Accessibility permission in System Settings > Privacy & Security > Accessibility, then restart the service:
+Grant Accessibility permission in System Settings > Privacy & Security > Accessibility, then restart the service:
 
 ```sh
 brew services restart skbd@2
 ```
 
-For a source build, run `.build/debug/skbd` in the foreground. If startup reports `failed to create event tap`, check Accessibility permission.
+To build the same release from [source][gh-skbd], install Xcode 26 or later and the macOS SDK:
+
+```sh
+git clone https://github.com/starkwm/skbd.git
+cd skbd
+git checkout v0.0.7
+make build
+```
+
+Run `.build/debug/skbd` in the foreground. If startup reports `failed to create event tap`, check Accessibility permission. A source build does not install a login service, so create a Launch Agent `.plist` file to run skbd in the background.
+
+[brew]: https://brew.sh
+[gh-skbd]: https://github.com/starkwm/skbd
 
 ## Command line
 
@@ -63,9 +74,9 @@ The selected configuration path must exist and parse successfully at startup. He
 
 ## Configuration
 
-Configure `skbd` with a single file or a directory of files. It reads `~/.config/skbd/skbdrc` by default. If the configured path points to a directory, `skbd` loads all non-hidden regular files in that directory in lexicographical filename order. Use `-c/--config` to select another path. Subdirectories are not loaded, and files do not need a particular extension. Files are joined with newlines and parsed as one configuration. The first matching binding wins; the last `.blocklist` directive replaces earlier lists.
+Configure `skbd` with a single file or a directory of files. It reads `~/.config/skbd/skbdrc` by default. If the configured path points to a directory, `skbd` loads all non-hidden regular files in that directory in lexicographical filename order. Use `-c/--config` to select another path. `skbd` skips subdirectories, and files need no particular extension. It joins the files with newlines and parses them as one configuration. The first matching binding wins; the last `.blocklist` directive replaces earlier lists.
 
-`skbd` reloads the configuration when you edit it. You do not need to restart the daemon. If the configured path is a symlink, `skbd` watches both the symlink location and the resolved target, so editing the target or repointing the symlink reloads the configuration. For a directory configuration, `skbd` reloads when files in the directory are edited, added, removed, or renamed.
+`skbd` reloads the configuration when you edit it, without a restart. If the configured path is a symlink, `skbd` watches both the symlink location and the resolved target, so editing the target or repointing the symlink reloads the configuration. For a directory configuration, `skbd` reloads when you edit, add, remove, or rename a file in it.
 
 If a changed configuration cannot be loaded or parsed, `skbd` prints an error and keeps using the last valid configuration.
 
