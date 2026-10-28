@@ -3,7 +3,11 @@ title: "sbar"
 description: "A status bar for macOS built from native providers, shell commands, and plugins."
 weight: 40
 showDocList: false
-homeSummary: "A configurable status bar for macOS"
+homeSummary: "Keeps an eye on everything, up top."
+homeHello: "I show."
+homeSays: "\"type\": \"datetime\""
+homeInstall: "brew install starkwm/formulae/sbar"
+homeVersion: "v0.0.1"
 homeDetails: "Show system information, media, and workspaces using native providers. Add shell commands and streaming plugins, then style the bar with JSON."
 ---
 

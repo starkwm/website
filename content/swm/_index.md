@@ -2,7 +2,11 @@
 title: "swm"
 description: "A client and daemon for scriptable macOS window management."
 weight: 20
-homeSummary: "Command-line window management with optional automatic tiling"
+homeSummary: "Moves your windows around so you don't have to."
+homeHello: "I tile."
+homeSays: "swm window warp --direction east"
+homeInstall: "brew install starkwm/formulae/swm"
+homeVersion: "v0.0.27"
 homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
 ---
 
