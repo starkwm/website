@@ -2,23 +2,59 @@
 
 {{ define "main" }}
   <div class="home-layout">
-    <h1 class="visually-hidden">Stark Software apps</h1>
-    <div class="project-list">
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="home-hero__intro">
+        <div>
+          <h1 class="home-hero__title" id="home-title">Meet the crew<br />that runs your Mac.</h1>
+          <p class="home-hero__lede">Four small, open-source tools. One tiles windows, one tags them, one listens to your keyboard, one draws a status bar. They all take orders from the shell.</p>
+        </div>
+        <div class="home-install">
+          <p class="home-install__label">Install · macOS 26+ · Apple silicon</p>
+          <pre class="home-install__command"><span aria-hidden="true">$ </span>brew tap starkwm/formulae</pre>
+        </div>
+      </div>
+
+      <div class="crew">
+        <div class="crew__bar" aria-hidden="true">
+          <span class="crew__spaces"><span class="is-active">1</span><span>2</span><span>3</span></span>
+          <span>cpu 12% · 87%</span>
+        </div>
+        <ul class="crew__members">
+          {{ range site.Sections.ByWeight }}
+            <li>
+              <a class="crew__member" href="#{{ .Section }}">
+                {{ with .Params.homeHello }}<span class="speech">{{ . }}</span>{{ end }}
+                {{ partial "project-avatar" . }}
+                <span class="visually-hidden">{{ .Title }}</span>
+              </a>
+            </li>
+          {{ end }}
+        </ul>
+      </div>
+    </section>
+
+    <div class="member-list">
       {{ range $index, $page := site.Sections.ByWeight }}
-        <section class="project" aria-labelledby="project-{{ .Section }}">
-          {{ partial "project-avatar" . }}
-          <div class="project__details">
-            <div class="project__intro">
-              <div class="project__heading">
-                <span class="project__number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
-                <h2 class="project__name" id="project-{{ .Section }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-              </div>
-              <p class="project__summary">{{ .Params.homeSummary | default .Description }}</p>
+        <section class="member" id="{{ .Section }}" aria-labelledby="project-{{ .Section }}">
+          <div class="member__stage">
+            {{ partial "project-avatar" . }}
+            {{ with .Params.homeSays }}<code class="speech member__says">{{ . }}</code>{{ end }}
+          </div>
+          <div class="member__details">
+            <div class="member__heading">
+              <span class="member__number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
+              <h2 class="member__name" id="project-{{ .Section }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+              {{ with .Params.homeVersion }}<span class="member__version">{{ . }}</span>{{ end }}
             </div>
+            <p class="member__summary">{{ .Params.homeSummary | default .Description }}</p>
             {{ with (.Params.homeDetails | default .Description) }}
-              <p class="project__description">{{ . }}</p>
+              <p class="member__description">{{ . }}</p>
             {{ end }}
-            <a class="project__link" href="{{ .RelPermalink }}" aria-label="{{ .Title }} documentation">Documentation {{ partial "arrow" . }}</a>
+            {{ partial "home-sketch" .Section }}
+            <div class="member__actions">
+              {{ with .Params.homeInstall }}<code class="member__install">{{ . }}</code>{{ end }}
+              <a class="member__link" href="{{ .RelPermalink }}" aria-label="{{ .Title }} documentation">Documentation {{ partial "arrow" . }}</a>
+            </div>
           </div>
         </section>
       {{ end }}

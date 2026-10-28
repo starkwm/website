@@ -2,7 +2,11 @@
 title: "stags"
 description: "Tag windows and choose which groups to show in the active macOS Space."
 weight: 50
-homeSummary: "Window tags within a macOS Space"
+homeSummary: "Sorts your windows into piles."
+homeHello: "I tag."
+homeSays: "stags view work chat"
+homeInstall: "git clone https://github.com/starkwm/stags.git"
+homeVersion: "Build from source"
 ---
 
 `stags` assigns one or more tags to each window in the active macOS Space. Choose a view containing one or several tags, and it moves windows outside that view to a display edge. It does not switch native Spaces.

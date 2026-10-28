@@ -1,0 +1,9 @@
+{{ if eq . "swm" }}
+  <div class="sketch sketch--tiles" aria-hidden="true"><span class="is-active"></span><span></span><span></span></div>
+{{ else if eq . "stags" }}
+  <div class="sketch sketch--tags" aria-hidden="true"><span class="is-active">work</span><span class="is-active">chat</span><span>music</span><span>notes</span></div>
+{{ else if eq . "skbd" }}
+  <div class="sketch sketch--keys" aria-hidden="true"><kbd>hyper</kbd><span>+</span><kbd class="is-active">T</kbd></div>
+{{ else if eq . "sbar" }}
+  <div class="sketch sketch--bar" aria-hidden="true"><span class="crew__spaces"><span class="is-active">1</span><span>2</span><span>3</span></span><span>cpu 12% · 87% · 20:14</span></div>
+{{ end }}
