@@ -6,15 +6,15 @@ homeSummary: "Turns key presses into shell commands."
 homeHello: "I listen."
 homeSays: "hyper - t: open -a Terminal"
 homeInstall: "brew install starkwm/formulae/skbd@2"
-homeVersion: "v0.0.7"
-homeDetails: "Bind key combinations to shell commands, including bindings that tell left and right modifier keys apart. skbd reloads its configuration when you save it, so a new shortcut works without a restart."
+homeVersion: "v0.0.8"
+homeDetails: "Bind key combinations to shell commands, including bindings that tell left and right modifier keys apart. skbd reloads its configuration when you save it, so a new shortcut works without a restart. Homebrew currently installs v0.0.7."
 ---
 
 skbd runs shell commands when you press configured keyboard shortcuts. It uses [Quartz Event Services][quartz] to monitor key presses on macOS and can distinguish left and right modifier keys.
 
 [quartz]: https://developer.apple.com/documentation/coregraphics/quartz-event-services
 
-This reference covers [v0.0.7](https://github.com/starkwm/skbd/releases/tag/v0.0.7), the latest prerelease, checked on 11 October 2026.
+This reference covers [v0.0.8](https://github.com/starkwm/skbd/releases/tag/v0.0.8), the latest prerelease, checked on 31 October 2026.
 
 ## Requirements
 
@@ -23,6 +23,8 @@ This reference covers [v0.0.7](https://github.com/starkwm/skbd/releases/tag/v0.0
 - Xcode 26 or later with Swift 6.2 when building from source
 
 ## Installation
+
+As of 31 October 2026, the Homebrew `skbd@2` formula still installs v0.0.7. To build v0.0.8, use the source instructions below.
 
 Install skbd with [Homebrew][brew] on Apple silicon:
 
@@ -50,12 +52,12 @@ Grant Accessibility permission in System Settings > Privacy & Security > Accessi
 brew services restart skbd@2
 ```
 
-To build the same release from [source][gh-skbd], install Xcode 26 or later and the macOS SDK:
+To build v0.0.8 from [source][gh-skbd], install Xcode 26 or later and the macOS SDK:
 
 ```sh
 git clone https://github.com/starkwm/skbd.git
 cd skbd
-git checkout v0.0.7
+git checkout v0.0.8
 make build
 ```
 
