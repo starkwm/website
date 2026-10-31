@@ -77,7 +77,8 @@
   [data-avatar-motion="running"] .avatar-tag-ear { animation-name: avatar-tag; }
   [data-avatar-motion="running"] .avatar-tag-body { animation-name: avatar-sway; }
   [data-avatar-motion="running"] .avatar-key-top { animation-name: avatar-key; }
-  [data-avatar-motion="running"] .avatar-bar-glance { animation-name: avatar-glance; }
+  [data-avatar-motion="running"] .avatar-bar-glance,
+  [data-avatar-motion="running"] .avatar-border-glance { animation-name: avatar-glance; }
   [data-avatar-motion="running"] .avatar-bar-body { animation-name: avatar-bar; }
   [data-avatar-motion="running"] .project-avatar .avatar-blink {
     animation-name: avatar-blink;
