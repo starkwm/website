@@ -7,7 +7,7 @@ homeHello: "I listen."
 homeSays: "hyper - t: open -a Terminal"
 homeInstall: "brew install starkwm/formulae/skbd@2"
 homeVersion: "v0.0.8"
-homeDetails: "Bind key combinations to shell commands, including bindings that tell left and right modifier keys apart. skbd reloads its configuration when you save it, so a new shortcut works without a restart. Homebrew currently installs v0.0.7."
+homeDetails: "Bind key combinations to shell commands, including bindings that tell left and right modifier keys apart. skbd reloads its configuration when you save it, so a new shortcut works without a restart."
 ---
 
 skbd runs shell commands when you press configured keyboard shortcuts. It uses [Quartz Event Services][quartz] to monitor key presses on macOS and can distinguish left and right modifier keys.
@@ -23,8 +23,6 @@ This reference covers [v0.0.8](https://github.com/starkwm/skbd/releases/tag/v0.0
 - Xcode 26 or later with Swift 6.2 when building from source
 
 ## Installation
-
-As of 31 October 2026, the Homebrew `skbd@2` formula still installs v0.0.7. To build v0.0.8, use the source instructions below.
 
 Install skbd with [Homebrew][brew] on Apple silicon:
 
