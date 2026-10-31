@@ -29,11 +29,11 @@ Both `.jsonc` and `.json` files accept this syntax. `sbar start` and `sbar valid
 }
 ```
 
-Save persistent changes in the configuration file. sbar never writes to the file or backs it up. For editor completion, copy the [v0.0.1 schema](/sbar/config.schema.json) beside your configuration as `config.schema.json` and add `"$schema": "config.schema.json"` to the root object. For an unreleased source build, use the [development schema](/sbar/config.main.schema.json) instead.
+Save persistent changes in the configuration file. sbar never writes to the file or backs it up. For editor completion, copy the [v0.0.2 schema](/sbar/config.schema.json) beside your configuration as `config.schema.json` and add `"$schema": "config.schema.json"` to the root object.
 
-The [Everyday bar](https://github.com/starkwm/sbar/tree/v0.0.1/examples/everyday) includes native application icons, media shown only during playback, weather, system metrics, unread Mail counts, and connection and audio-device popovers. It uses [text templates](/sbar/configuration/text-templates/) for labels, plus hover colours and minimum widths for its CPU and memory items. The [floating bar](https://github.com/starkwm/sbar/tree/v0.0.1/examples/floating) has fewer items, inset edges, and rounded corners. The [sections example](https://github.com/starkwm/sbar/tree/v0.0.1/examples/sections) gives the left, centre, and right regions separate backgrounds and borders.
+The [Everyday bar](https://github.com/starkwm/sbar/tree/v0.0.2/examples/everyday) includes native application icons, media shown only during playback, weather, system metrics, unread Mail counts, and connection and audio-device popovers. It uses [text templates](/sbar/configuration/text-templates/) for labels, plus hover colours and minimum widths for its CPU and memory items. The [floating bar](https://github.com/starkwm/sbar/tree/v0.0.2/examples/floating) has fewer items, inset edges, and rounded corners. The [sections example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/sections) gives the left, centre, and right regions separate backgrounds and borders.
 
-The unreleased [groups example](https://github.com/starkwm/sbar/tree/main/examples/groups) demonstrates child spacing and style inheritance. For a side bar, see the unreleased [vertical example](https://github.com/starkwm/sbar/tree/main/examples/vertical). Both require a build from `main`.
+The [groups example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/groups) demonstrates child spacing and style inheritance. For a side bar, see the [vertical example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/vertical).
 
 ## Example
 
@@ -63,14 +63,14 @@ Provider configuration blocks must match the item's `type`. For example, an `aud
 
 ## Bar settings
 
-In v0.0.1, `position` accepts `top` or `bottom`. Side bars, `width`, and `extendToTopEdge` require an unreleased build from `main`. See [release compatibility](/sbar/#release-compatibility).
+`position` accepts `top`, `bottom`, `left`, or `right`. Use `width` and `extendToTopEdge` to configure side bars.
 
 | Property | Default | Description |
 | --- | --- | --- |
-| `position` | `top` | `top` or `bottom`; unreleased builds also accept `left` or `right`. |
+| `position` | `top` | `top`, `bottom`, `left`, or `right`. |
 | `height` | `32` | Horizontal bar height, 20 to 96 points including padding. |
-| `width` | `32` | Unreleased. Vertical bar width, 20 to 96 points including padding. |
-| `extendToTopEdge` | `false` | Unreleased. Extend side bars into the menu-bar area, respecting the Dock and margins. Ignored by horizontal bars. |
+| `width` | `32` | Vertical bar width, 20 to 96 points including padding. |
+| `extendToTopEdge` | `false` | Extend side bars into the menu-bar area, respecting the Dock and margins. Ignored by horizontal bars. |
 | `margin` | All `0` | Object with `top`, `bottom`, `left`, `right` offsets, each from 0 to 4096 points. |
 | `displays` | `all` | `main`, `all`, or `selected`. |
 | `displayIDs` | None | Display IDs, required when `displays` is `selected`. |
@@ -121,8 +121,6 @@ The theme's `verticalPadding` and `cornerRadius` accept 0 to 48 points and defau
 
 ## Vertical bars
 
-This section requires an unreleased build from `main`. v0.0.1 supports horizontal bars only.
-
 Set `bar.position` to `left` or `right` and set the width with `bar.width`. Items stay upright and run from top to bottom on either edge.
 
 | Section | Position in a side bar |
@@ -151,7 +149,7 @@ Group children and provider entries, such as a list of Spaces, stack vertically.
 
 Side bars do not reserve space for other windows. Set a left or right gap in your window manager if needed.
 
-See the [vertical example](https://github.com/starkwm/sbar/tree/main/examples/vertical) for app shortcuts, status icons and popups.
+See the [vertical example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/vertical) for app shortcuts, status icons and popups.
 
 ## Shadows
 
