@@ -23,6 +23,8 @@
           "enum": [
             "top",
             "bottom",
+            "left",
+            "right",
             null
           ],
           "default": "top"
@@ -35,6 +37,21 @@
           "minimum": 20,
           "maximum": 96,
           "default": 32
+        },
+        "width": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 20,
+          "maximum": 96,
+          "default": 32,
+          "description": "Width of left and right bars, including content padding."
+        },
+        "extendToTopEdge": {
+          "type": ["boolean", "null"],
+          "default": false,
+          "description": "Extend left and right bars to the physical top edge while respecting the Dock. Top margin still applies. Ignored by top and bottom bars."
         },
         "displays": {
           "enum": [
@@ -72,7 +89,7 @@
             "null"
           ],
           "default": false,
-          "description": "Draw a native window shadow, or a soft edge shadow for square bars spanning the display width."
+          "description": "Draw a native window shadow, or an inward edge shadow for square bars spanning the display along their layout axis."
         },
         "mousePassThrough": {
           "type": [
@@ -232,6 +249,7 @@
             "battery",
             "volume",
             "network",
+            "calendar",
             "mail",
             "vpn",
             "bluetooth",
@@ -306,6 +324,15 @@
             "string",
             "null"
           ]
+        },
+        "itemSpacing": {
+          "description": "Gap between group children in points. Defaults to 4; child padding is additional.",
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 96
         },
         "children": {
           "type": [
@@ -580,14 +607,43 @@
         "mail": {
           "$ref": "#/$defs/mail"
         },
+        "calendar": {
+          "$ref": "#/$defs/calendar"
+        },
         "audioDevice": {
           "$ref": "#/$defs/audioDevice"
         },
         "weather": {
           "$ref": "#/$defs/weather"
+        },
+        "childStyle": {
+          "$ref": "#/$defs/itemStyle",
+          "description": "Default style for group children, overriding the theme. Each child can override these values with its own style."
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "group"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "else": {
+            "properties": {
+              "itemSpacing": {
+                "type": "null"
+              },
+              "childStyle": {
+                "type": "null"
+              }
+            }
+          }
+        },
         {
           "if": {
             "required": [
@@ -654,6 +710,13 @@
           ],
           "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$",
           "description": "Replacement background while an interactive item is hovered. Inherits from theme.itemStyle and otherwise adds a subtle highlight over the normal background."
+        },
+        "fontFamily": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Font family or font name for item text. Inherits from theme.itemStyle; defaults to the system font. Custom glyph symbols keep their own font."
         },
         "fontSize": {
           "type": [
@@ -1890,6 +1953,32 @@
           ],
           "default": "focused"
         },
+        "names": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "oneOf": [
+              {
+                "type": ["string", "null"]
+              },
+              {
+                "type": "object",
+                "required": ["symbol"],
+                "properties": {
+                  "symbol": {
+                    "$ref": "#/$defs/symbol",
+                    "type": ["string", "object"],
+                    "pattern": "\\S"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "description": "Display names by position after scope and fullscreen filtering. The first entry names Space 1. Missing, null, or empty entries retain the default number. Strings are literal text; objects with a symbol field render an SF Symbol name or a font glyph object in place of the name."
+        },
         "symbols": {
           "$ref": "#/$defs/spacesSymbols"
         },
@@ -2682,6 +2771,83 @@
         }
       }
     },
+    "calendar": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "lookaheadDays": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 30,
+          "default": 7
+        },
+        "includeAllDay": {
+          "type": ["boolean", "null"],
+          "default": true
+        },
+        "timeFormat": {
+          "type": ["string", "null"],
+          "pattern": "\\S"
+        },
+        "symbols": {
+          "$ref": "#/$defs/calendarSymbols"
+        },
+        "tints": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "loading": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "upcoming": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "ongoing": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "empty": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "unauthorized": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"},
+            "unavailable": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"}
+          }
+        },
+        "showSymbol": {
+          "type": ["boolean", "null"],
+          "default": true
+        },
+        "hideWhenEmpty": {
+          "type": ["boolean", "null"],
+          "default": false
+        }
+      }
+    },
+    "calendarSymbols": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "font": {"type": ["string", "null"], "pattern": "\\S"},
+        "size": {"type": ["number", "null"], "minimum": 8, "maximum": 72},
+        "loading": {"$ref": "#/$defs/widgetSymbol"},
+        "upcoming": {"$ref": "#/$defs/widgetSymbol"},
+        "ongoing": {"$ref": "#/$defs/widgetSymbol"},
+        "empty": {"$ref": "#/$defs/widgetSymbol"},
+        "unauthorized": {"$ref": "#/$defs/widgetSymbol"},
+        "unavailable": {"$ref": "#/$defs/widgetSymbol"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "required": ["font"],
+              "properties": {"font": {"type": "string"}}
+            }
+          },
+          "then": {
+            "properties": {
+              "loading": {"$ref": "#/$defs/symbol"},
+              "upcoming": {"$ref": "#/$defs/symbol"},
+              "ongoing": {"$ref": "#/$defs/symbol"},
+              "empty": {"$ref": "#/$defs/symbol"},
+              "unauthorized": {"$ref": "#/$defs/symbol"},
+              "unavailable": {"$ref": "#/$defs/symbol"}
+            }
+          }
+        }
+      ]
+    },
     "audioDevice": {
       "type": [
         "object",
@@ -2935,6 +3101,12 @@
         },
         "unavailable": {
           "$ref": "#/$defs/widgetSymbol"
+        },
+        "overcastDay": {
+          "$ref": "#/$defs/widgetSymbol"
+        },
+        "overcastNight": {
+          "$ref": "#/$defs/widgetSymbol"
         }
       },
       "additionalProperties": false,
@@ -3003,6 +3175,12 @@
                 "$ref": "#/$defs/symbol"
               },
               "unavailable": {
+                "$ref": "#/$defs/symbol"
+              },
+              "overcastDay": {
+                "$ref": "#/$defs/symbol"
+              },
+              "overcastNight": {
                 "$ref": "#/$defs/symbol"
               }
             }

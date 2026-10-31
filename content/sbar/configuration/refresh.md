@@ -130,6 +130,8 @@ sbar subscribe [--socket <path>]
 
 ### Stop the bar
 
+For a Homebrew service, use `brew services stop sbar` to stop it and disable startup at login. `sbar stop` alone causes Homebrew to restart the service. The command below stops a foreground instance.
+
 ```sh
 sbar stop [--socket <path>]
 ```

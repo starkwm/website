@@ -16,6 +16,8 @@ stags restore
 
 This shows every known tag and restores parked windows in the active macOS Space. The daemon keeps running. If a parked window belongs to another Space, switch to that Space and run `stags restore` again. You can then select a narrower view.
 
+For a Homebrew service, restore parked windows in each Space before running `brew services stop stags`. Using `stags stop` alone causes Homebrew to restart it.
+
 ## Stop the daemon
 
 ```sh

@@ -4,9 +4,9 @@ description: "A client and daemon for scriptable macOS window management."
 weight: 20
 homeSummary: "Moves your windows around so you don't have to."
 homeHello: "I tile."
-homeSays: "swm window warp --direction east"
+homeSays: "swm window warp right"
 homeInstall: "brew install starkwm/formulae/swm"
-homeVersion: "v0.0.27"
+homeVersion: "v0.0.28"
 homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
 ---
 
@@ -14,7 +14,7 @@ homeDetails: "Move, resize, and focus windows from the command line, or tile the
 
 It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the JavaScript configuration used by its predecessor, [Stark](https://github.com/starkwm/stark), with a small shell-based command interface.
 
-This reference covers [v0.0.27](https://github.com/starkwm/swm/releases/tag/v0.0.27), the latest prerelease, checked on 12 October 2026.
+This reference covers [v0.0.28](https://github.com/starkwm/swm/releases/tag/v0.0.28), the latest prerelease, checked on 31 October 2026.
 
 ## Requirements
 
@@ -44,7 +44,7 @@ Or build from source:
 ```sh
 git clone https://github.com/starkwm/swm.git
 cd swm
-git checkout v0.0.27
+git checkout v0.0.28
 make build
 ```
 
@@ -122,7 +122,7 @@ Add at most one selector to filter the result:
 
 ```sh
 swm query windows --display 1
-swm query windows --space 0
+swm query windows --space 1
 swm query windows --window 12345
 ```
 
@@ -134,31 +134,31 @@ swm query space [space-index]
 swm query window [window-id]
 ```
 
-Display indexes are one-based and follow the physical display arrangement. Space indexes are zero-based. A filtered query returns one JSON object when the selector identifies the same type as the query; otherwise it returns an array of related objects.
+Display indexes are one-based and follow the physical display arrangement. Space indexes are one-based. A filtered query returns one JSON object when the selector identifies the same type as the query; otherwise it returns an array of related objects.
 
 ## Manage windows
 
-The `--window` option accepts a numeric window ID, or `recent` for the previously focused window. Commands that accept `--window` use the focused window when it and any alternative target, such as `--direction`, are omitted.
+The `--window` option accepts a numeric window ID, or `recent` for the previously focused window. Commands that accept `--window` use the focused window when it is omitted.
 
 ### Focus and minimize
 
 ```sh
-swm window focus [--window <window|recent> | --direction <left|right|up|down>]
+swm window focus <left|right|up|down|next|prev|recent|master|window-id>
 swm window minimize [--window <window|recent>]
 swm window unminimize [--window <window|recent>]
 ```
 
-Directional focus chooses the nearest non-minimized window on the currently visible spaces.
+Directional focus chooses the nearest non-minimized window on the currently visible Spaces. `next` and `prev` follow stable layout order. Use `recent` for the previously focused window, `master` for the master window in the focused window's layout, or a window ID to focus that window.
 
 ### Move the mouse cursor
 
 ```sh
-swm window warp [--window <window|recent> | --direction <left|right|up|down>]
+swm window warp [--window <window|recent> | <left|right|up|down>]
 ```
 
 `warp` moves the mouse cursor to the selected window's center without focusing or raising the window, switching Spaces, or generating a mouse movement event. It defaults to the focused window. swm rejects hidden, minimized, and off-Space windows. If the window's center is off-screen, the cursor moves to the center of the largest part of the window visible on a display.
 
-With `--direction`, swm chooses the nearest non-minimized, on-screen window in the requested direction from the managed window under the cursor. If the cursor is not over an available managed window, it starts from the focused window. Each command checks the window under the cursor again, so repeated warps navigate between windows without changing focus. If another window covers the destination, the next warp starts from that covering window. `--window` and `--direction` cannot be combined.
+With a direction, swm chooses the nearest non-minimized, on-screen window in the requested direction from the managed window under the cursor. If the cursor is not over an available managed window, it starts from the focused window. Each command checks the window under the cursor again, so repeated warps navigate between windows without changing focus. If another window covers the destination, the next warp starts from that covering window. `--window` and a direction cannot be combined.
 
 `window warp` is available in v0.0.26 and later.
 
@@ -171,7 +171,7 @@ swm window grid [--window <window|recent>] <columns>:<rows>:<x>:<y>:<width>:<hei
 swm window display [--window <window|recent>] <next|prev|display-index>
 ```
 
-`abs` sets coordinates or dimensions; `rel` adds signed values to the current frame. Grid coordinates start at `0:0` in the top-left. The final width and height are cell spans. For example, this places the focused window in the right half of a 2-by-1 grid:
+`abs` sets coordinates or dimensions; `rel` adds signed values to the current frame. Grid cells share the padded screen bounds, with the configured gap between adjacent cells. A multi-cell span includes its internal gaps; a full-axis span uses the entire padded axis. Grid coordinates start at `0:0` in the top-left. The final width and height are cell spans. For example, this places the focused window in the right half of a 2-by-1 grid:
 
 ```sh
 swm window grid 2:1:1:0:1:1
@@ -185,7 +185,7 @@ Display indexes are one-based. `next` and `prev` wrap around the arranged displa
 swm window space [--window <window|recent>] <space-index|next|prev>
 ```
 
-Space indexes are zero-based and match `swm query spaces`. `next` and `prev` cycle through normal desktop Spaces in query order, skip fullscreen Spaces, and wrap at either end. `previous` is also accepted. The command defaults to the focused window and keeps the current Space active. Moves to a Space on another display fit the window within that display's visible bounds.
+Space indexes are one-based and match `swm query spaces`. `next` and `prev` cycle through normal desktop Spaces in query order, skip fullscreen Spaces, and wrap at either end. `previous` is also accepted. The command defaults to the focused window and keeps the current Space active. Moves to a Space on another display fit the window within that display's visible bounds.
 
 Only windows on a single normal desktop Space can move. swm rejects fullscreen windows and windows assigned to more than one Space. Moving a window to its current Space leaves it in place.
 
@@ -194,30 +194,24 @@ Movement works with SIP enabled. The command waits up to two seconds for WindowS
 ```sh
 swm query spaces
 swm window space next
-swm window space --window <window-id> 0
+swm window space --window <window-id> 1
 ```
 
 ### Control tiling
 
 ```sh
 swm window layout [--window <window|recent>] <float|tile|toggle>
-swm window cycle --direction <next|prev>
-swm window swap-cycle --direction <next|prev>
-swm window swap [--window <window|recent>] --direction <left|right|up|down>
-swm window swap-with-master [--window <window|recent>]
-swm window focus-master [--window <window|recent>]
-swm window split-ratio [--window <window|recent>] <abs|rel>:<ratio>
+swm window swap [--window <window|recent>] <left|right|up|down|next|prev|master>
+swm window split-ratio [--window <window|recent>] <ratio>
 swm window toggle-split [--window <window|recent>]
 swm window swap-split [--window <window|recent>]
 ```
 
 - `layout` floats a window, returns it to tiling, or toggles its state.
-- `cycle` focuses the next or previous window in stable layout order.
-- `swap-cycle` swaps the focused tiled window with its ordered neighbour.
-- `swap` swaps tiled positions, or complete frames in a floating layout.
-- `swap-with-master` promotes a window in a master layout.
-- `focus-master` focuses the master window for the selected window's layout.
-- `split-ratio` changes the nearest dwindle split; ratios are clamped to `0.1...0.9`.
+- `swap left|right|up|down` swaps tiled positions, or complete frames in a floating layout.
+- `swap next|prev` swaps the focused tiled window with its ordered neighbour and does not accept `--window`.
+- `swap master` promotes a window in a master layout.
+- `split-ratio` sets the nearest dwindle split to a ratio from `0.1` through `0.9`, or adjusts it by a signed change such as `+0.05`. Adjustments are clamped to that range.
 - `toggle-split` switches the nearest retained dwindle split between columns and rows.
 - `swap-split` exchanges the two subtrees at the nearest dwindle split.
 
@@ -230,7 +224,7 @@ swm query spaces
 swm space activate <space-index>
 ```
 
-Activation uses the zero-based `index` from `swm query spaces`. It changes the visible Desktop on the target's display without requesting keyboard-focus transfer between displays. The target display must contain only normal desktop Spaces. swm refuses displays that contain a native fullscreen Space.
+Activation uses the one-based `index` from `swm query spaces`. It changes the visible Desktop on the target's display without requesting keyboard-focus transfer between displays. The target display must contain only normal desktop Spaces. swm refuses displays that contain a native fullscreen Space.
 
 The command waits up to two seconds for the target display to report the requested current Space. A timeout or cancellation after submission does not mean the Space stayed unchanged. Query the state before retrying.
 
@@ -238,18 +232,18 @@ The command waits up to two seconds for the target display to report the request
 
 ### Configure a Space
 
-Space commands affect the active space by default. Use `--space <space-index>` to select another space by its zero-based index from `swm query spaces`. Indexes follow the current Space ordering and may change when Spaces are reordered:
+Space commands affect the active space by default. Use `--space <space-index>` to select another space by its one-based index from `swm query spaces`. Indexes follow the current Space ordering and may change when Spaces are reordered:
 
 ```sh
 swm space layout [--space <space-index>] <float|master|monocle|dwindle>
-swm space master-ratio [--space <space-index>] <abs|rel>:<ratio>
+swm space master-ratio [--space <space-index>] <ratio>
 swm space master-placement [--space <space-index>] <left|right|top|bottom|next|prev>
 swm space preserve-split [--space <space-index>] <on|off>
-swm space padding [--space <space-index>] <abs|rel>:<top>:<bottom>:<left>:<right>
-swm space gap [--space <space-index>] <abs|rel>:<points>
+swm space padding [--space <space-index>] [--top <points>] [--bottom <points>] [--left <points>] [--right <points>]
+swm space gap [--space <space-index>] <points>
 ```
 
-swm clamps padding, gaps, and ratios to valid values. Space settings apply to every display showing that space.
+Use an unsigned value to set a ratio, padding, or gap, or a signed value such as `+2` or `-2` to adjust it. Master ratios must be from `0.1` through `0.9`; adjustments are clamped to that range. Padding requires at least one side flag and leaves omitted sides unchanged. Negative resulting padding and gaps are clamped to zero. Space settings apply to every display showing that space.
 
 ### Layouts
 
@@ -276,14 +270,11 @@ swm config master-placement <left|right|top|bottom>
 swm config preserve-split <on|off>
 swm config animation-duration <seconds>
 swm config animation-easing <linear|ease-out-quad|ease-out-cubic|ease-out-circ|ease-in-out-quad>
-swm config window-gap <points>
-swm config top-padding <points>
-swm config bottom-padding <points>
-swm config left-padding <points>
-swm config right-padding <points>
+swm config gap <points>
+swm config padding [--top <points>] [--bottom <points>] [--left <points>] [--right <points>]
 ```
 
-Built-in defaults are floating layout, focus-follows-mouse off, `0.5` master ratio, master on the left, split preservation off, animation disabled, and zero padding and gaps. swm clamps negative padding and gaps to zero.
+Built-in defaults are floating layout, focus-follows-mouse off, `0.5` master ratio, master on the left, split preservation off, animation disabled, and zero padding and gaps. The master ratio must be from `0.1` through `0.9`. Global settings accept absolute values only. Global padding requires unsigned values; negative gaps are clamped to zero. Run a config command without a value to print its current setting, such as `swm config gap` or `swm config padding`.
 
 ## Window animation
 
@@ -324,12 +315,11 @@ The file can be any executable script. A shell script is the simplest option:
 swm config layout dwindle
 swm config focus-follows-mouse autofocus
 swm config animation-duration 0.18
-swm config window-gap 8
-swm config top-padding 8
-swm config bottom-padding 8
-swm config left-padding 8
-swm config right-padding 8
+swm config gap 8
+swm config padding --top 8 --bottom 8 --left 8 --right 8
 ```
+
+Run `swm reload` to execute the configuration again, or `swm reload --config /path/to/swmrc` to use another file. Reload removes every rule and signal before running the file. Settings the file no longer sets keep their current values.
 
 ## Window rules
 
@@ -350,6 +340,8 @@ swm rule list
 swm rule remove finder
 swm rule remove 1
 ```
+
+Use `swm rule clear` to remove every registered rule.
 
 `list` returns a JSON array. Each entry has a one-based `index` and a `rule` object with the registered properties. Indexes change after removal. Use a unique, non-integer `label` to remove a rule by name.
 
@@ -453,6 +445,8 @@ Actions run asynchronously through `/usr/bin/env sh -c`. Depending on the event,
 - `SWM_RECENT_DISPLAY_ID`
 - `SWM_EVENT_DISPLAY_ID`
 
+Use `swm signal clear` to remove every registered signal.
+
 Signal registrations exist only for the current daemon run, so put persistent registrations in `swmrc`.
 
 ## Keyboard shortcuts
@@ -463,5 +457,5 @@ Signal registrations exist only for the current daemon run, so put persistent re
 hyper - h: swm window grid 2:1:0:0:1:1
 hyper - l: swm window grid 2:1:1:0:1:1
 hyper - f: swm window grid 1:1:0:0:1:1
-hyper - r: swm window focus --window recent
+hyper - r: swm window focus recent
 ```

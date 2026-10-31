@@ -7,13 +7,13 @@ homeSummary: "Keeps an eye on everything, up top."
 homeHello: "I show."
 homeSays: "\"type\": \"datetime\""
 homeInstall: "brew install starkwm/formulae/sbar"
-homeVersion: "v0.0.1"
+homeVersion: "v0.0.2"
 homeDetails: "Show system information, media, and workspaces using native providers. Add shell commands and streaming plugins, then style the bar with JSON."
 ---
 
 sbar draws a status bar on your displays. Each item comes from a native provider, such as battery or Spaces, a shell command, or a long-running plugin process. One JSON file describes the bar, and sbar reloads it when you save.
 
-The latest prerelease is [v0.0.1](https://github.com/starkwm/sbar/releases/tag/v0.0.1), checked on 11 October 2026. This reference covers that release and marks settings that require an unreleased source build. See [release compatibility](#release-compatibility) before using those settings.
+The latest prerelease is [v0.0.2](https://github.com/starkwm/sbar/releases/tag/v0.0.2), checked on 31 October 2026. This reference covers that release.
 
 ## Start here
 
@@ -33,32 +33,7 @@ brew tap starkwm/formulae
 brew install starkwm/formulae/sbar
 ```
 
-Start it now and at login:
-
-```sh
-brew services start sbar
-```
-
-Or build the release from source:
-
-```sh
-git clone https://github.com/starkwm/sbar.git
-cd sbar
-git checkout v0.0.1
-make build
-```
-
-Use `make release` for an optimised build in `.build/release`. The `sbar` executable is self-contained. Copy it to a directory on your `PATH` to use the CLI commands.
-
-The commands in this reference assume `sbar` is on your `PATH`. From the source repository, add the debug build for the current terminal session:
-
-```sh
-export PATH="$PWD/.build/debug:$PATH"
-```
-
-For later sessions, add the absolute directory containing `sbar` to your shell's `PATH`. You can also use `.build/debug/sbar` from the source repository whenever an example calls `sbar`.
-
-Source builds do not install a login service. To start the bar at login, create a Launch Agent that runs the executable by its absolute path. Commands and plugins inherit that process's environment, so use absolute executable paths or configure its `PATH` explicitly.
+Create a configuration before starting the bar, as shown below.
 
 ## A minimal bar
 
@@ -68,7 +43,7 @@ Create the configuration directory:
 mkdir -p ~/.config/sbar
 ```
 
-Save this as `~/.config/sbar/config.jsonc`, then run `sbar`:
+Save this as `~/.config/sbar/config.jsonc`:
 
 ```json
 {
@@ -86,7 +61,18 @@ Save this as `~/.config/sbar/config.jsonc`, then run `sbar`:
 }
 ```
 
-sbar reloads the file when it changes. If an edit is invalid, it keeps the last valid configuration. Run `sbar validate` to check your file, or `sbar query --diagnostics` to inspect errors. Stop the bar with `sbar stop`. See [runtime commands](/sbar/configuration/refresh/#runtime-commands) for custom configuration paths and control sockets.
+Check the configuration, then start the bar now and at login:
+
+```sh
+sbar validate
+brew services start sbar
+```
+
+Run the service as your desktop user, without `sudo`. Use `brew services stop sbar` to stop it and disable startup at login, or `brew services restart sbar` to restart it. Homebrew keeps the process running, so `sbar stop` alone causes it to restart.
+
+To try the bar in the foreground instead, run `sbar` after stopping any Homebrew service. Stop the foreground process with Ctrl-C or `sbar stop` from another terminal.
+
+sbar reloads the file when it changes. If an edit is invalid, it keeps the last valid configuration. Run `sbar validate` to check your file, or `sbar query --diagnostics` to inspect errors. See [runtime commands](/sbar/configuration/refresh/#runtime-commands) for custom configuration paths and control sockets.
 
 ## A styled bar {#app-icons-battery-state-and-localized-date-and-time}
 
@@ -134,15 +120,27 @@ Use `sbar --version` to print the embedded version without starting the bar.
 
 ## Release compatibility
 
-The following settings are available on `main` but are not in v0.0.1:
+Use the [v0.0.2 configuration schema](/sbar/config.schema.json) for this release. It includes side bars, text fonts, group spacing and styles, and day/night overcast symbols. The linked examples also target v0.0.2. Run `sbar validate` to check constraints the schema cannot express.
 
-| Settings | Guide |
-| --- | --- |
-| Side bars, `bar.width`, and `bar.extendToTopEdge` | [Vertical bars](/sbar/configuration/#vertical-bars) |
-| Text `fontFamily` | [Text fonts](/sbar/configuration/appearance/#text-fonts) |
-| Group `itemSpacing` and `childStyle` | [Group spacing](/sbar/configuration/items/#group-spacing) |
-| Weather `overcastDay` and `overcastNight` symbols | [Condition symbols](/sbar/providers/weather/#condition-symbols) |
+## Build from source
 
-Use the [v0.0.1 configuration schema](/sbar/config.schema.json) for the published release. The [development schema](/sbar/config.main.schema.json) matches [main at 7921050](https://github.com/starkwm/sbar/tree/7921050d6e8a5fe3899cc8b5370612dc814cf094) and includes unreleased settings. Run `sbar validate` as well to check constraints the schema cannot express.
+Build the release from source:
 
-For unreleased settings, keep a source clone on `main` instead of checking out v0.0.1, then run `make build`. The groups and vertical examples linked from these guides also require that source build. Values and date formats depend on your Mac and system locale.
+```sh
+git clone https://github.com/starkwm/sbar.git
+cd sbar
+git checkout v0.0.2
+make build
+```
+
+Use `make release` for an optimised build in `.build/release`. The `sbar` executable is self-contained. Copy it to a directory on your `PATH` to use the CLI commands.
+
+The commands in this reference assume `sbar` is on your `PATH`. From the source repository, add the debug build for the current terminal session:
+
+```fish
+fish_add_path --path "$PWD/.build/debug"
+```
+
+For later sessions, add the absolute directory containing `sbar` to your shell's `PATH`. You can also use `.build/debug/sbar` from the source repository whenever an example calls `sbar`.
+
+Source builds do not install a login service. To start the bar at login, create a Launch Agent that runs the executable by its absolute path. Commands and plugins inherit that process's environment, so use absolute executable paths or configure its `PATH` explicitly.

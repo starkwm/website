@@ -41,7 +41,7 @@ Override individual icons with these `weather.symbols` keys:
 | --- | --- |
 | Clear and mainly clear | `clearDay`, `clearNight` |
 | Partly cloudy | `partlyCloudyDay`, `partlyCloudyNight` |
-| Overcast | `overcast`; unreleased builds also accept `overcastDay` and `overcastNight` |
+| Overcast | `overcast`, `overcastDay`, `overcastNight` |
 | Fog | `fog` |
 | Drizzle and rain | `drizzle`, `freezingDrizzle`, `rain`, `freezingRain` |
 | Snow and showers | `snow`, `rainShowers`, `snowShowers` |
@@ -71,7 +71,7 @@ Strings name SF Symbols. Glyph objects use their own `font` and `size` or inheri
 }
 ```
 
-In v0.0.1, `overcast` overrides the icon for both day and night. Unreleased builds from `main` also accept `overcastDay` and `overcastNight`. Those builds select the day or night entry using the location's daylight flag, falling back to `overcast`, then the built-in `cloud.fill` icon when the entry is omitted or `null`. See [release compatibility](/sbar/#release-compatibility).
+Use `overcast` for both day and night, or set `overcastDay` and `overcastNight` separately. sbar selects the day or night entry using the location's daylight flag, falling back to `overcast`, then the built-in `cloud.fill` icon when the entry is omitted or `null`.
 
 Other omitted or `null` entries keep the built-in icons. `unknown` covers unrecognised weather codes, while `unavailable` applies before a reading exists. A stale reading keeps its condition icon. An item-level `symbol` overrides every condition. `weather.showSymbol: false` hides all of them. See [font glyph symbols](/sbar/configuration/appearance/#font-glyph-symbols) for font requirements.
 
