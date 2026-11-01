@@ -114,6 +114,21 @@ A Space command uses the active Space unless you supply `--space`, and applies t
 
 A global change starts from the global ratio, applies the result to every Space, replacing per-Space split ratios, and updates the default for future Spaces. Both commands replace any individual split adjustments in their scope. Use `swm window split-ratio` afterwards to adjust just the nearest split for a window; that command does not change the Space's setting for new splits.
 
+### Float windows before direct placement
+
+On `main`, `swm window move`, `swm window resize`, and `swm window grid` reject tiled windows with `window is tiled: <window-id>`. This changed in [755a57c](https://github.com/starkwm/swm/commit/755a57c2f6f488df4a1d4690e6426b28e28e3771) and is not included in v0.0.28.
+
+Before using these commands on a tiled window, float it first. For example, to place the focused window in the right half of the display:
+
+```sh
+swm window layout float
+swm window grid 2:1:1:0:1:1
+```
+
+For a specific window, pass the same `--window <window-id>` to both commands. Update scripts and grid key bindings that target tiled windows before using a build from `main`. Use `swm window layout tile` to return the window to automatic tiling afterwards.
+
+Windows on a Space using the `float` layout, explicitly floated windows, and windows on multiple Spaces are outside automatic layout geometry and do not trigger this rejection. Other checks still apply. `swm window display` and `swm window space` are not affected by this change.
+
 ## Requirements
 
 - macOS 26 or later
