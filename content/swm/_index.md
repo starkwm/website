@@ -20,6 +20,8 @@ This reference covers [v0.0.28](https://github.com/starkwm/swm/releases/tag/v0.0
 
 On `main`, `swm -v` is a short form of `swm --version`. Both print `swm version <version>` and exit without starting the daemon. The short form was added in [b213835](https://github.com/starkwm/swm/commit/b2138357727b99333e6bdaedf30c950209d0eb0f) and is not included in v0.0.28. Use `swm --version` with that release.
 
+On `main`, window subcommands accept only `--window` for the optional window selector. The `-w` short form was removed in [ea1e57d](https://github.com/starkwm/swm/commit/ea1e57d62e3ab7500f9d29fd856eeed60ec1afbc). Replace `-w` with `--window` in scripts and key bindings before using a build from `main`. This change is not included in v0.0.28. Window IDs, `recent`, and the default focused-window selection are unchanged.
+
 ## Requirements
 
 - macOS 26 or later
