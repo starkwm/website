@@ -18,7 +18,7 @@ This reference covers [v0.0.29](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main
 
-The following behavior is on [main at 5385402](https://github.com/starkwm/swm/commit/5385402353a77c1a27ef2b66347086ac0c36786f), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
+The following behavior is on [main at 2543eb4](https://github.com/starkwm/swm/commit/2543eb481791f67e07df1225e393a20cd547b7c3), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
 
 ### Dwindle size recovery
 
@@ -27,6 +27,21 @@ When an application repeatedly keeps a window larger than requested, dwindle rec
 swm waits for all windows in the Space/display layout to settle before attempting up to two corrective layout passes. If recovery fails, it can try restoring the last verified arrangement when the same windows, display bounds, and Space settings still match. It does not float windows or turn on split preservation to make them fit.
 
 If swm cannot find or restore a working arrangement, it logs an unsatisfied layout and stops retrying that arrangement during background reflows. Recovery is bounded and is not guaranteed when windows cannot fit or an app changes its size requirements. Explicit layout adjustments and finishing a pointer move or resize allow a fresh attempt. Observed size constraints are temporary and are removed when the window closes.
+
+### Enable split preservation before toggling
+
+On main, `swm window toggle-split` requires split preservation to be enabled for the selected window's dwindle layout. This requirement was added in [2543eb4](https://github.com/starkwm/swm/commit/2543eb481791f67e07df1225e393a20cd547b7c3). Split preservation is off by default.
+
+For a focused tiled window in the active Space's dwindle layout:
+
+```sh
+swm space preserve-split on
+swm window toggle-split
+```
+
+Update scripts and key bindings that toggle splits to enable preservation first. For a window selected with `--window`, enable preservation on its Space with `swm space preserve-split --space <space-index> on`. Without preservation, or when the window has no eligible dwindle split, the command returns `window has no dwindle split to toggle, or preserve-split is off: <window-id>`.
+
+Turning preservation off with `swm space preserve-split off` clears retained directions and returns splits to following the longest edge. The new preservation requirement does not apply to v0.0.29.
 
 ## Upgrade from v0.0.28
 
