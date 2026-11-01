@@ -6,7 +6,7 @@ homeSummary: "Moves your windows around so you don't have to."
 homeHello: "I tile."
 homeSays: "swm window warp right"
 homeInstall: "brew install starkwm/formulae/swm"
-homeVersion: "v0.0.28"
+homeVersion: "v0.0.29"
 homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
 ---
 
@@ -14,17 +14,17 @@ homeDetails: "Move, resize, and focus windows from the command line, or tile the
 
 It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the JavaScript configuration used by its predecessor, [Stark](https://github.com/starkwm/stark), with a small shell-based command interface.
 
-This reference covers [v0.0.28](https://github.com/starkwm/swm/releases/tag/v0.0.28), the latest prerelease, checked on 31 October 2026.
+This reference covers [v0.0.29](https://github.com/starkwm/swm/releases/tag/v0.0.29), the latest prerelease, checked on 1 November 2026.
 
-## Unreleased main
+## Upgrade from v0.0.28
 
-On `main`, `swm -v` is a short form of `swm --version`. Both print `swm version <version>` and exit without starting the daemon. The short form was added in [b213835](https://github.com/starkwm/swm/commit/b2138357727b99333e6bdaedf30c950209d0eb0f) and is not included in v0.0.28. Use `swm --version` with that release.
+In v0.0.29, `swm -v` is a short form of `swm --version`. Both print `swm version <version>` and exit without starting the daemon. The short form was added in [b213835](https://github.com/starkwm/swm/commit/b2138357727b99333e6bdaedf30c950209d0eb0f). Use `swm --version` with v0.0.28.
 
-On `main`, window subcommands accept only `--window` for the optional window selector. The `-w` short form was removed in [ea1e57d](https://github.com/starkwm/swm/commit/ea1e57d62e3ab7500f9d29fd856eeed60ec1afbc). Replace `-w` with `--window` in scripts and key bindings before using a build from `main`. This change is not included in v0.0.28. Window IDs, `recent`, and the default focused-window selection are unchanged.
+In v0.0.29, window subcommands accept only `--window` for the optional window selector. The `-w` short form was removed in [ea1e57d](https://github.com/starkwm/swm/commit/ea1e57d62e3ab7500f9d29fd856eeed60ec1afbc). Replace `-w` with `--window` in scripts and key bindings before upgrading. This change is not included in v0.0.28. Window IDs, `recent`, and the default focused-window selection are unchanged.
 
 ### Read Space settings
 
-On `main`, omit the value from `space layout`, `space master-ratio`, `space master-placement`, `space preserve-split`, or `space gap` to print the selected Space's current setting. Run `space padding` without side flags to print all four sides. These read operations were added in [46a0ba6](https://github.com/starkwm/swm/commit/46a0ba614ba8a13f995c724157c738fa49fcf3bb) and are not included in v0.0.28.
+In v0.0.29, omit the value from `space layout`, `space master-ratio`, `space master-placement`, `space preserve-split`, or `space gap` to print the selected Space's current setting. Run `space padding` without side flags to print all four sides. These read operations were added in [46a0ba6](https://github.com/starkwm/swm/commit/46a0ba614ba8a13f995c724157c738fa49fcf3bb).
 
 ```sh
 swm space layout
@@ -41,7 +41,7 @@ Reading a setting leaves it unchanged. Layout, master ratio, master placement, a
 
 ### Adjust global settings
 
-On `main`, `config gap`, `config padding`, and `config master-ratio` accept signed changes such as `+2` or `-0.05`. An unsigned number sets the value. This was added in [95cdec2](https://github.com/starkwm/swm/commit/95cdec2b285bf2bedec6d03be14e69dd2c418498) and is not included in v0.0.28.
+In v0.0.29, `config gap`, `config padding`, and `config master-ratio` accept signed changes such as `+2` or `-0.05`. An unsigned number sets the value. This was added in [95cdec2](https://github.com/starkwm/swm/commit/95cdec2b285bf2bedec6d03be14e69dd2c418498).
 
 ```sh
 swm config gap +2
@@ -57,7 +57,7 @@ A negative global gap now subtracts from the global value instead of setting the
 
 ### Cycle global master placement
 
-On `main`, `swm config master-placement next` and `swm config master-placement prev` cycle the global master-area edge. This was added in [18fb8e7](https://github.com/starkwm/swm/commit/18fb8e714e920811f4c87bd0422513bc35bfee8e) and is not included in v0.0.28.
+In v0.0.29, `swm config master-placement next` and `swm config master-placement prev` cycle the global master-area edge. This was added in [18fb8e7](https://github.com/starkwm/swm/commit/18fb8e714e920811f4c87bd0422513bc35bfee8e).
 
 ```sh
 swm config master-placement next
@@ -70,7 +70,7 @@ Omit the argument to read the global edge without changing it, or supply `left`,
 
 ### Exclude a bundle ID from a rule
 
-On `main`, `swm rule add` accepts `bundle-id!=<identifier>` to match windows whose bundle ID differs from the given identifier. This was added in [83dde79](https://github.com/starkwm/swm/commit/83dde79606ecdc6d9c0f7d15c1df873c82ac721d) and is not included in v0.0.28.
+In v0.0.29, `swm rule add` accepts `bundle-id!=<identifier>` to match windows whose bundle ID differs from the given identifier. This was added in [83dde79](https://github.com/starkwm/swm/commit/83dde79606ecdc6d9c0f7d15c1df873c82ac721d).
 
 ```sh
 swm rule add label=other-apps 'bundle-id!=com.apple.finder' manage=off
@@ -82,9 +82,9 @@ Negation is supported only for `bundle-id`, `app`, and `title` rule filters. Sup
 
 ### Update signal active filters
 
-On `main`, `swm signal add` accepts `active=on|off` instead of `active=yes|no`. This changed in [19395d7](https://github.com/starkwm/swm/commit/19395d7e0d7f5f3d27d2f82c83144310ff944949) and is not included in v0.0.28. Keep using `yes` and `no` with that release.
+In v0.0.29, `swm signal add` accepts `active=on|off` instead of `active=yes|no`. This changed in [19395d7](https://github.com/starkwm/swm/commit/19395d7e0d7f5f3d27d2f82c83144310ff944949). Keep using `yes` and `no` with v0.0.28.
 
-Before using a build from `main`, replace `active=yes` with `active=on` and `active=no` with `active=off` in signal registrations, including those in `swmrc`. The old values now return an error.
+Before upgrading, replace `active=yes` with `active=on` and `active=no` with `active=off` in signal registrations, including those in `swmrc`. The old values now return an error.
 
 ```sh
 swm signal add event=window-focused active=on action='echo "$SWM_WINDOW_ID"'
@@ -94,7 +94,7 @@ swm signal add event=window-focused active=on action='echo "$SWM_WINDOW_ID"'
 
 ### Set dwindle split ratios
 
-On `main`, `swm space split-ratio` and `swm config split-ratio` read, set, or adjust the ratio used for dwindle splits. These commands were added in [9523c6e](https://github.com/starkwm/swm/commit/9523c6e41bf73b07180ad22989e0c60b8a6f7867) and are not included in v0.0.28.
+In v0.0.29, `swm space split-ratio` and `swm config split-ratio` read, set, or adjust the ratio used for dwindle splits. These commands were added in [9523c6e](https://github.com/starkwm/swm/commit/9523c6e41bf73b07180ad22989e0c60b8a6f7867).
 
 ```sh
 swm space split-ratio [--space <space-index>] [<ratio>]
@@ -116,7 +116,7 @@ A global change starts from the global ratio, applies the result to every Space,
 
 ### Float windows before direct placement
 
-On `main`, `swm window move`, `swm window resize`, and `swm window grid` reject tiled windows with `window is tiled: <window-id>`. This changed in [755a57c](https://github.com/starkwm/swm/commit/755a57c2f6f488df4a1d4690e6426b28e28e3771) and is not included in v0.0.28.
+In v0.0.29, `swm window move`, `swm window resize`, and `swm window grid` reject tiled windows with `window is tiled: <window-id>`. This changed in [755a57c](https://github.com/starkwm/swm/commit/755a57c2f6f488df4a1d4690e6426b28e28e3771).
 
 Before using these commands on a tiled window, float it first. For example, to place the focused window in the right half of the display:
 
@@ -125,7 +125,7 @@ swm window layout float
 swm window grid 2:1:1:0:1:1
 ```
 
-For a specific window, pass the same `--window <window-id>` to both commands. Update scripts and grid key bindings that target tiled windows before using a build from `main`. Use `swm window layout tile` to return the window to automatic tiling afterwards.
+For a specific window, pass the same `--window <window-id>` to both commands. Update scripts and grid key bindings that target tiled windows before upgrading. Use `swm window layout tile` to return the window to automatic tiling afterwards.
 
 Windows on a Space using the `float` layout, explicitly floated windows, and windows on multiple Spaces are outside automatic layout geometry and do not trigger this rejection. Other checks still apply. `swm window display` and `swm window space` are not affected by this change.
 
@@ -157,7 +157,7 @@ Or build from source:
 ```sh
 git clone https://github.com/starkwm/swm.git
 cd swm
-git checkout v0.0.28
+git checkout v0.0.29
 make build
 ```
 
@@ -189,7 +189,7 @@ Top-level options:
 
 ```text
 -h, --help                 Show help
-    --version              Show the version
+-v, --version              Show the version
 ```
 
 Daemon startup options, accepted by `swm` and `swm start`:
@@ -251,7 +251,7 @@ Display indexes are one-based and follow the physical display arrangement. Space
 
 ## Manage windows
 
-The `--window` option accepts a numeric window ID, or `recent` for the previously focused window. Commands that accept `--window` use the focused window when it is omitted.
+The `--window` option has no short form. It accepts a numeric window ID, or `recent` for the previously focused window. Commands that accept `--window` use the focused window when it is omitted.
 
 ### Focus and minimize
 
@@ -284,9 +284,10 @@ swm window grid [--window <window|recent>] <columns>:<rows>:<x>:<y>:<width>:<hei
 swm window display [--window <window|recent>] <next|prev|display-index>
 ```
 
-`abs` sets coordinates or dimensions; `rel` adds signed values to the current frame. Grid cells share the padded screen bounds, with the configured gap between adjacent cells. A multi-cell span includes its internal gaps; a full-axis span uses the entire padded axis. Grid coordinates start at `0:0` in the top-left. The final width and height are cell spans. For example, this places the focused window in the right half of a 2-by-1 grid:
+`abs` sets coordinates or dimensions; `rel` adds signed values to the current frame. Grid cells share the padded screen bounds, with the configured gap between adjacent cells. A multi-cell span includes its internal gaps; a full-axis span uses the entire padded axis. Grid coordinates start at `0:0` in the top-left. The final width and height are cell spans. `move`, `resize`, and `grid` reject tiled windows. Float the focused window before placing it in the right half of a 2-by-1 grid:
 
 ```sh
+swm window layout float
 swm window grid 2:1:1:0:1:1
 ```
 
@@ -348,15 +349,16 @@ The command waits up to two seconds for the target display to report the request
 Space commands affect the active space by default. Use `--space <space-index>` to select another space by its one-based index from `swm query spaces`. Indexes follow the current Space ordering and may change when Spaces are reordered:
 
 ```sh
-swm space layout [--space <space-index>] <float|master|monocle|dwindle>
-swm space master-ratio [--space <space-index>] <ratio>
-swm space master-placement [--space <space-index>] <left|right|top|bottom|next|prev>
-swm space preserve-split [--space <space-index>] <on|off>
+swm space layout [--space <space-index>] [<float|master|monocle|dwindle>]
+swm space master-ratio [--space <space-index>] [<ratio>]
+swm space master-placement [--space <space-index>] [<left|right|top|bottom|next|prev>]
+swm space split-ratio [--space <space-index>] [<ratio>]
+swm space preserve-split [--space <space-index>] [<on|off>]
 swm space padding [--space <space-index>] [--top <points>] [--bottom <points>] [--left <points>] [--right <points>]
-swm space gap [--space <space-index>] <points>
+swm space gap [--space <space-index>] [<points>]
 ```
 
-Use an unsigned value to set a ratio, padding, or gap, or a signed value such as `+2` or `-2` to adjust it. Master ratios must be from `0.1` through `0.9`; adjustments are clamped to that range. Padding requires at least one side flag and leaves omitted sides unchanged. Negative resulting padding and gaps are clamped to zero. Space settings apply to every display showing that space.
+Use an unsigned value to set a ratio, padding, or gap, or a signed value such as `+2` or `-2` to adjust it. Master and split ratios must be from `0.1` through `0.9`; adjustments are clamped to that range. Omit the value to read a setting. Padding without side flags prints all four sides; when setting padding, omitted sides stay unchanged. Negative resulting padding and gaps are clamped to zero. Space settings apply to every display showing that space.
 
 ### Layouts
 
@@ -379,7 +381,8 @@ Config commands change settings in the running daemon. Layout, padding, and gap 
 swm config layout <float|master|monocle|dwindle>
 swm config focus-follows-mouse <off|autofocus|autoraise>
 swm config master-ratio <ratio>
-swm config master-placement <left|right|top|bottom>
+swm config master-placement <left|right|top|bottom|next|prev>
+swm config split-ratio <ratio>
 swm config preserve-split <on|off>
 swm config animation-duration <seconds>
 swm config animation-easing <linear|ease-out-quad|ease-out-cubic|ease-out-circ|ease-in-out-quad>
@@ -387,7 +390,7 @@ swm config gap <points>
 swm config padding [--top <points>] [--bottom <points>] [--left <points>] [--right <points>]
 ```
 
-Built-in defaults are floating layout, focus-follows-mouse off, `0.5` master ratio, master on the left, split preservation off, animation disabled, and zero padding and gaps. The master ratio must be from `0.1` through `0.9`. Global settings accept absolute values only. Global padding requires unsigned values; negative gaps are clamped to zero. Run a config command without a value to print its current setting, such as `swm config gap` or `swm config padding`.
+Built-in defaults are floating layout, focus-follows-mouse off, `0.5` master and dwindle split ratios, master on the left, split preservation off, animation disabled, and zero padding and gaps. Master and split ratios must be from `0.1` through `0.9`. Gap, padding, master ratio, and split ratio accept unsigned values to set them or signed changes to the global value. The result replaces per-Space settings and becomes the default for future Spaces. Padding updates only the supplied sides. Negative resulting gaps and padding are clamped to zero; ratios are clamped to `0.1` through `0.9`. Run a config command without a value to print its current setting, such as `swm config gap` or `swm config padding`.
 
 ## Window animation
 
@@ -468,7 +471,7 @@ Use `swm rule clear` to remove every registered rule.
 
 A rule can use these filters:
 
-- `bundle-id=<identifier>` matches an exact, case-sensitive application identifier.
+- `bundle-id=<identifier>` matches an exact, case-sensitive application identifier. `bundle-id!=<identifier>` excludes it.
 - `app=<regex>` matches the application name, which can vary with the system language.
 - `title=<regex>` matches the window title.
 - `app!=<regex>` or `title!=<regex>` requires the text not to match.
@@ -525,7 +528,7 @@ swm signal remove <index|label>
 - `label=<text>`: unique name used by `remove`.
 - `app=<regex>` and `title=<regex>`: require a regular-expression match.
 - `app!=<regex>` and `title!=<regex>`: require the value not to match.
-- `active=yes|no`: filter application and window events by active or focused state.
+- `active=on|off`: filter application and window events by active or focused state.
 
 Supported events:
 
@@ -564,7 +567,7 @@ Signal registrations exist only for the current daemon run, so put persistent re
 
 ## Keyboard shortcuts
 
-`swm` does not bind keys. Use a hotkey daemon such as [skbd](/skbd/) to invoke its commands:
+`swm` does not bind keys. Use a hotkey daemon such as [skbd](/skbd/) to invoke its commands. These grid bindings require a floating window. Run `swm window layout float` first if it is tiled:
 
 ```text
 hyper - h: swm window grid 2:1:0:0:1:1
