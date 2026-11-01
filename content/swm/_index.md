@@ -55,6 +55,19 @@ Negative resulting gaps and padding are clamped to zero, and master ratios to `0
 
 A negative global gap now subtracts from the global value instead of setting the gap to zero. Use `swm config gap 0` to reset it. After upgrading, restart the daemon so the client and daemon agree on the changed IPC format for global gap and master ratio.
 
+### Cycle global master placement
+
+On `main`, `swm config master-placement next` and `swm config master-placement prev` cycle the global master-area edge. This was added in [18fb8e7](https://github.com/starkwm/swm/commit/18fb8e714e920811f4c87bd0422513bc35bfee8e) and is not included in v0.0.28.
+
+```sh
+swm config master-placement next
+swm config master-placement prev
+```
+
+`next` cycles through `left`, `top`, `right`, `bottom`, then back to `left`; `prev` reverses that order. The command starts from the current global edge, applies the result to every Space, replacing per-Space master-placement overrides, and updates the default for future Spaces. It prints the resulting edge, such as `top`.
+
+Omit the argument to read the global edge without changing it, or supply `left`, `right`, `top`, or `bottom` to set it directly. Use `swm space master-placement next` or `prev` to cycle just one Space from its own current edge.
+
 ## Requirements
 
 - macOS 26 or later
