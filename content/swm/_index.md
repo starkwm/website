@@ -39,6 +39,22 @@ The commands use the active Space unless you supply `--space <space-index>`, the
 
 Reading a setting leaves it unchanged. Layout, master ratio, master placement, and split preservation reads return an error if automatic tiling is unavailable for the selected Space. `space activate` still requires an index.
 
+### Adjust global settings
+
+On `main`, `config gap`, `config padding`, and `config master-ratio` accept signed changes such as `+2` or `-0.05`. An unsigned number sets the value. This was added in [95cdec2](https://github.com/starkwm/swm/commit/95cdec2b285bf2bedec6d03be14e69dd2c418498) and is not included in v0.0.28.
+
+```sh
+swm config gap +2
+swm config padding --top -2 --bottom +2
+swm config master-ratio -0.05
+```
+
+Each adjustment starts from the current global value and applies the result to every Space, replacing that setting's per-Space overrides and updating the default for future Spaces. For example, with a global gap of `6` and a Space gap of `20`, `swm config gap +2` sets both to `8`. Padding changes affect only the sides supplied; omitted sides keep their existing values on each Space.
+
+Negative resulting gaps and padding are clamped to zero, and master ratios to `0.1` through `0.9`. Omitting the value still prints the current global setting. Use the corresponding `space` command to adjust just one Space.
+
+A negative global gap now subtracts from the global value instead of setting the gap to zero. Use `swm config gap 0` to reset it. After upgrading, restart the daemon so the client and daemon agree on the changed IPC format for global gap and master ratio.
+
 ## Requirements
 
 - macOS 26 or later
