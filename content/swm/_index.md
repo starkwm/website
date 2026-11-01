@@ -68,6 +68,18 @@ swm config master-placement prev
 
 Omit the argument to read the global edge without changing it, or supply `left`, `right`, `top`, or `bottom` to set it directly. Use `swm space master-placement next` or `prev` to cycle just one Space from its own current edge.
 
+### Exclude a bundle ID from a rule
+
+On `main`, `swm rule add` accepts `bundle-id!=<identifier>` to match windows whose bundle ID differs from the given identifier. This was added in [83dde79](https://github.com/starkwm/swm/commit/83dde79606ecdc6d9c0f7d15c1df873c82ac721d) and is not included in v0.0.28.
+
+```sh
+swm rule add label=other-apps 'bundle-id!=com.apple.finder' manage=off
+```
+
+This rule leaves windows from other identified applications out of automatic tiling. It does not match Finder or windows whose bundle ID is missing. Bundle IDs use exact, case-sensitive comparison, not regular expressions. Other filters on the same rule must also match.
+
+Negation is supported only for `bundle-id`, `app`, and `title` rule filters. Supplying both `bundle-id` and `bundle-id!` in one rule is rejected as a duplicate property. Signal filters are unchanged and do not accept bundle IDs.
+
 ## Requirements
 
 - macOS 26 or later
