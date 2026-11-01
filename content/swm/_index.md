@@ -16,6 +16,18 @@ It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the Java
 
 This reference covers [v0.0.29](https://github.com/starkwm/swm/releases/tag/v0.0.29), the latest prerelease, checked on 1 November 2026.
 
+## Unreleased main
+
+The following behavior is on [main at 5385402](https://github.com/starkwm/swm/commit/5385402353a77c1a27ef2b66347086ac0c36786f), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
+
+### Dwindle size recovery
+
+When an application repeatedly keeps a window larger than requested, dwindle records the refused dimensions and tries to fit the layout around them. The configured split ratio stays unchanged, but the actual window sizes can use a different ratio. Dynamic splits still follow each region's longest edge; preserved split directions stay fixed.
+
+swm waits for all windows in the Space/display layout to settle before attempting up to two corrective layout passes. If recovery fails, it can try restoring the last verified arrangement when the same windows, display bounds, and Space settings still match. It does not float windows or turn on split preservation to make them fit.
+
+If swm cannot find or restore a working arrangement, it logs an unsatisfied layout and stops retrying that arrangement during background reflows. Recovery is bounded and is not guaranteed when windows cannot fit or an app changes its size requirements. Explicit layout adjustments and finishing a pointer move or resize allow a fresh attempt. Observed size constraints are temporary and are removed when the window closes.
+
 ## Upgrade from v0.0.28
 
 In v0.0.29, `swm -v` is a short form of `swm --version`. Both print `swm version <version>` and exit without starting the daemon. The short form was added in [b213835](https://github.com/starkwm/swm/commit/b2138357727b99333e6bdaedf30c950209d0eb0f). Use `swm --version` with v0.0.28.
