@@ -16,6 +16,10 @@ It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the Java
 
 This reference covers [v0.0.28](https://github.com/starkwm/swm/releases/tag/v0.0.28), the latest prerelease, checked on 31 October 2026.
 
+## Unreleased main
+
+On `main`, `swm -v` is a short form of `swm --version`. Both print `swm version <version>` and exit without starting the daemon. The short form was added in [b213835](https://github.com/starkwm/swm/commit/b2138357727b99333e6bdaedf30c950209d0eb0f) and is not included in v0.0.28. Use `swm --version` with that release.
+
 ## Requirements
 
 - macOS 26 or later
