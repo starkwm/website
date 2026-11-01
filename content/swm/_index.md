@@ -22,6 +22,23 @@ On `main`, `swm -v` is a short form of `swm --version`. Both print `swm version 
 
 On `main`, window subcommands accept only `--window` for the optional window selector. The `-w` short form was removed in [ea1e57d](https://github.com/starkwm/swm/commit/ea1e57d62e3ab7500f9d29fd856eeed60ec1afbc). Replace `-w` with `--window` in scripts and key bindings before using a build from `main`. This change is not included in v0.0.28. Window IDs, `recent`, and the default focused-window selection are unchanged.
 
+### Read Space settings
+
+On `main`, omit the value from `space layout`, `space master-ratio`, `space master-placement`, `space preserve-split`, or `space gap` to print the selected Space's current setting. Run `space padding` without side flags to print all four sides. These read operations were added in [46a0ba6](https://github.com/starkwm/swm/commit/46a0ba614ba8a13f995c724157c738fa49fcf3bb) and are not included in v0.0.28.
+
+```sh
+swm space layout
+swm space master-ratio
+swm space master-placement
+swm space preserve-split
+swm space gap
+swm space padding --space 2
+```
+
+The commands use the active Space unless you supply `--space <space-index>`, the one-based index from `swm query spaces`. They print a plain value in the form accepted by the setting command. Padding prints `--top <points> --bottom <points> --left <points> --right <points>`; split preservation prints `on` or `off`.
+
+Reading a setting leaves it unchanged. Layout, master ratio, master placement, and split preservation reads return an error if automatic tiling is unavailable for the selected Space. `space activate` still requires an index.
+
 ## Requirements
 
 - macOS 26 or later
