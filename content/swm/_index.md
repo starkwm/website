@@ -92,6 +92,28 @@ swm signal add event=window-focused active=on action='echo "$SWM_WINDOW_ID"'
 
 `on` matches active applications or focused windows; `off` matches inactive applications or unfocused windows. The filter remains limited to application and window events. Space and display events reject it.
 
+### Set dwindle split ratios
+
+On `main`, `swm space split-ratio` and `swm config split-ratio` read, set, or adjust the ratio used for dwindle splits. These commands were added in [9523c6e](https://github.com/starkwm/swm/commit/9523c6e41bf73b07180ad22989e0c60b8a6f7867) and are not included in v0.0.28.
+
+```sh
+swm space split-ratio [--space <space-index>] [<ratio>]
+swm config split-ratio [<ratio>]
+```
+
+The ratio is the share of each split's region given to its left or upper side. The built-in default is `0.5`. An unsigned number sets the ratio from `0.1` through `0.9`; a signed number adjusts it, clamping the result to that range. Omit the value to print the current setting without changing it.
+
+```sh
+swm space split-ratio 0.6
+swm space split-ratio --space 2 +0.05
+swm config split-ratio -0.05
+swm config split-ratio
+```
+
+A Space command uses the active Space unless you supply `--space`, and applies to every display showing that Space. Setting or adjusting its ratio rebalances every existing dwindle split to the result and uses it for new splits. Retained split directions are preserved. Reads and writes return an error if automatic tiling is unavailable for the selected Space.
+
+A global change starts from the global ratio, applies the result to every Space, replacing per-Space split ratios, and updates the default for future Spaces. Both commands replace any individual split adjustments in their scope. Use `swm window split-ratio` afterwards to adjust just the nearest split for a window; that command does not change the Space's setting for new splits.
+
 ## Requirements
 
 - macOS 26 or later
