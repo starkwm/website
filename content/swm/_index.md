@@ -18,7 +18,7 @@ This reference covers [v0.0.29](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main
 
-The following behavior is on [main at 2543eb4](https://github.com/starkwm/swm/commit/2543eb481791f67e07df1225e393a20cd547b7c3), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
+The following behavior is on [main at ce11da7](https://github.com/starkwm/swm/commit/ce11da7c61456385bc036aea5778cf648906dccd), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
 
 ### Dwindle size recovery
 
@@ -42,6 +42,30 @@ swm window toggle-split
 Update scripts and key bindings that toggle splits to enable preservation first. For a window selected with `--window`, enable preservation on its Space with `swm space preserve-split --space <space-index> on`. Without preservation, or when the window has no eligible dwindle split, the command returns `window has no dwindle split to toggle, or preserve-split is off: <window-id>`.
 
 Turning preservation off with `swm space preserve-split off` clears retained directions and returns splits to following the longest edge. The new preservation requirement does not apply to v0.0.29.
+
+### Focus a display
+
+On main, `swm display focus <target>` focuses another display. This command was added in [ce11da7](https://github.com/starkwm/swm/commit/ce11da7c61456385bc036aea5778cf648906dccd).
+
+| Target | Display |
+| --- | --- |
+| `<display-index>` | One-based index from `swm query displays` |
+| `next`, `prev` | Next or previous in arrangement order, wrapping at the ends |
+| `first`, `last` | First or last in arrangement order |
+| `recent` | Previously active display |
+| `mouse` | Display under the mouse cursor |
+| `left`, `right`, `up`, `down` | Neighbor in that direction, preferring aligned displays |
+
+```sh
+swm display focus 2
+swm display focus next
+swm display focus recent
+swm display focus right
+```
+
+The current display is the one containing the focused window, or the active Space's display when no focused window can be resolved. swm focuses the target display's frontmost visible, non-minimized window known to the daemon. If there is no such window, it moves the pointer to the display's center and attempts to focus the desktop. Selecting the current display does nothing.
+
+Success prints nothing. If a target cannot be resolved, such as a missing recent display or no neighbor in the requested direction, the command fails with `could not locate display: <target>`. Use `swm display focus --help` for command help.
 
 ## Upgrade from v0.0.28
 
