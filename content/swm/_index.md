@@ -67,119 +67,6 @@ The current display is the one containing the focused window, or the active Spac
 
 Success prints nothing. If a target cannot be resolved, such as a missing recent display or no neighbor in the requested direction, the command fails with `could not locate display: <target>`. Use `swm display focus --help` for command help.
 
-## Upgrade from v0.0.28
-
-In v0.0.29, `swm -v` is a short form of `swm --version`. Both print `swm version <version>` and exit without starting the daemon. The short form was added in [b213835](https://github.com/starkwm/swm/commit/b2138357727b99333e6bdaedf30c950209d0eb0f). Use `swm --version` with v0.0.28.
-
-In v0.0.29, window subcommands accept only `--window` for the optional window selector. The `-w` short form was removed in [ea1e57d](https://github.com/starkwm/swm/commit/ea1e57d62e3ab7500f9d29fd856eeed60ec1afbc). Replace `-w` with `--window` in scripts and key bindings before upgrading. This change is not included in v0.0.28. Window IDs, `recent`, and the default focused-window selection are unchanged.
-
-### Read Space settings
-
-In v0.0.29, omit the value from `space layout`, `space master-ratio`, `space master-placement`, `space preserve-split`, or `space gap` to print the selected Space's current setting. Run `space padding` without side flags to print all four sides. These read operations were added in [46a0ba6](https://github.com/starkwm/swm/commit/46a0ba614ba8a13f995c724157c738fa49fcf3bb).
-
-```sh
-swm space layout
-swm space master-ratio
-swm space master-placement
-swm space preserve-split
-swm space gap
-swm space padding --space 2
-```
-
-The commands use the active Space unless you supply `--space <space-index>`, the one-based index from `swm query spaces`. They print a plain value in the form accepted by the setting command. Padding prints `--top <points> --bottom <points> --left <points> --right <points>`; split preservation prints `on` or `off`.
-
-Reading a setting leaves it unchanged. Layout, master ratio, master placement, and split preservation reads return an error if automatic tiling is unavailable for the selected Space. `space activate` still requires an index.
-
-### Adjust global settings
-
-In v0.0.29, `config gap`, `config padding`, and `config master-ratio` accept signed changes such as `+2` or `-0.05`. An unsigned number sets the value. This was added in [95cdec2](https://github.com/starkwm/swm/commit/95cdec2b285bf2bedec6d03be14e69dd2c418498).
-
-```sh
-swm config gap +2
-swm config padding --top -2 --bottom +2
-swm config master-ratio -0.05
-```
-
-Each adjustment starts from the current global value and applies the result to every Space, replacing that setting's per-Space overrides and updating the default for future Spaces. For example, with a global gap of `6` and a Space gap of `20`, `swm config gap +2` sets both to `8`. Padding changes affect only the sides supplied; omitted sides keep their existing values on each Space.
-
-Negative resulting gaps and padding are clamped to zero, and master ratios to `0.1` through `0.9`. Omitting the value still prints the current global setting. Use the corresponding `space` command to adjust just one Space.
-
-A negative global gap now subtracts from the global value instead of setting the gap to zero. Use `swm config gap 0` to reset it. After upgrading, restart the daemon so the client and daemon agree on the changed IPC format for global gap and master ratio.
-
-### Cycle global master placement
-
-In v0.0.29, `swm config master-placement next` and `swm config master-placement prev` cycle the global master-area edge. This was added in [18fb8e7](https://github.com/starkwm/swm/commit/18fb8e714e920811f4c87bd0422513bc35bfee8e).
-
-```sh
-swm config master-placement next
-swm config master-placement prev
-```
-
-`next` cycles through `left`, `top`, `right`, `bottom`, then back to `left`; `prev` reverses that order. The command starts from the current global edge, applies the result to every Space, replacing per-Space master-placement overrides, and updates the default for future Spaces. It prints the resulting edge, such as `top`.
-
-Omit the argument to read the global edge without changing it, or supply `left`, `right`, `top`, or `bottom` to set it directly. Use `swm space master-placement next` or `prev` to cycle just one Space from its own current edge.
-
-### Exclude a bundle ID from a rule
-
-In v0.0.29, `swm rule add` accepts `bundle-id!=<identifier>` to match windows whose bundle ID differs from the given identifier. This was added in [83dde79](https://github.com/starkwm/swm/commit/83dde79606ecdc6d9c0f7d15c1df873c82ac721d).
-
-```sh
-swm rule add label=other-apps 'bundle-id!=com.apple.finder' manage=off
-```
-
-This rule leaves windows from other identified applications out of automatic tiling. It does not match Finder or windows whose bundle ID is missing. Bundle IDs use exact, case-sensitive comparison, not regular expressions. Other filters on the same rule must also match.
-
-Negation is supported only for `bundle-id`, `app`, and `title` rule filters. Supplying both `bundle-id` and `bundle-id!` in one rule is rejected as a duplicate property. Signal filters do not accept bundle IDs.
-
-### Update signal active filters
-
-In v0.0.29, `swm signal add` accepts `active=on|off` instead of `active=yes|no`. This changed in [19395d7](https://github.com/starkwm/swm/commit/19395d7e0d7f5f3d27d2f82c83144310ff944949). Keep using `yes` and `no` with v0.0.28.
-
-Before upgrading, replace `active=yes` with `active=on` and `active=no` with `active=off` in signal registrations, including those in `swmrc`. The old values now return an error.
-
-```sh
-swm signal add event=window-focused active=on action='echo "$SWM_WINDOW_ID"'
-```
-
-`on` matches active applications or focused windows; `off` matches inactive applications or unfocused windows. The filter remains limited to application and window events. Space and display events reject it.
-
-### Set dwindle split ratios
-
-In v0.0.29, `swm space split-ratio` and `swm config split-ratio` read, set, or adjust the ratio used for dwindle splits. These commands were added in [9523c6e](https://github.com/starkwm/swm/commit/9523c6e41bf73b07180ad22989e0c60b8a6f7867).
-
-```sh
-swm space split-ratio [--space <space-index>] [<ratio>]
-swm config split-ratio [<ratio>]
-```
-
-The ratio is the share of each split's region given to its left or upper side. The built-in default is `0.5`. An unsigned number sets the ratio from `0.1` through `0.9`; a signed number adjusts it, clamping the result to that range. Omit the value to print the current setting without changing it.
-
-```sh
-swm space split-ratio 0.6
-swm space split-ratio --space 2 +0.05
-swm config split-ratio -0.05
-swm config split-ratio
-```
-
-A Space command uses the active Space unless you supply `--space`, and applies to every display showing that Space. Setting or adjusting its ratio rebalances every existing dwindle split to the result and uses it for new splits. Retained split directions are preserved. Reads and writes return an error if automatic tiling is unavailable for the selected Space.
-
-A global change starts from the global ratio, applies the result to every Space, replacing per-Space split ratios, and updates the default for future Spaces. Both commands replace any individual split adjustments in their scope. Use `swm window split-ratio` afterwards to adjust just the nearest split for a window; that command does not change the Space's setting for new splits.
-
-### Float windows before direct placement
-
-In v0.0.29, `swm window move`, `swm window resize`, and `swm window grid` reject tiled windows with `window is tiled: <window-id>`. This changed in [755a57c](https://github.com/starkwm/swm/commit/755a57c2f6f488df4a1d4690e6426b28e28e3771).
-
-Before using these commands on a tiled window, float it first. For example, to place the focused window in the right half of the display:
-
-```sh
-swm window layout float
-swm window grid 2:1:1:0:1:1
-```
-
-For a specific window, pass the same `--window <window-id>` to both commands. Update scripts and grid key bindings that target tiled windows before upgrading. Use `swm window layout tile` to return the window to automatic tiling afterwards.
-
-Windows on a Space using the `float` layout, explicitly floated windows, and windows on multiple Spaces are outside automatic layout geometry and do not trigger this rejection. Other checks still apply. `swm window display` and `swm window space` are not affected by this change.
-
 ## Requirements
 
 - macOS 26 or later
@@ -220,6 +107,8 @@ make build
 
 A source build does not install a login service.
 
+Restart the daemon after upgrading so the client and daemon use the same IPC format. For a Homebrew service, run `brew services restart swm`.
+
 ## How commands work
 
 Run `swm` without a subcommand to start the daemon. `swm start` is the explicit equivalent:
@@ -242,6 +131,8 @@ Top-level options:
 -h, --help                 Show help
 -v, --version              Show the version
 ```
+
+`swm --version` and `swm -v` print `swm version <version>` and exit without starting the daemon.
 
 Daemon startup options, accepted by `swm` and `swm start`:
 
@@ -342,6 +233,10 @@ swm window layout float
 swm window grid 2:1:1:0:1:1
 ```
 
+For a specific window, pass the same `--window <window-id>` to both commands. Use `swm window layout tile` to return it to automatic tiling afterwards.
+
+Tiled windows return `window is tiled: <window-id>`. Windows on a Space using the `float` layout, explicitly floated windows, and windows on multiple Spaces are outside automatic layout geometry and do not trigger this rejection. Other checks still apply. `swm window display` and `swm window space` can move tiled windows.
+
 Display indexes are one-based. `next` and `prev` wrap around the arranged display list; `previous` is also accepted.
 
 ### Move between Spaces
@@ -411,6 +306,37 @@ swm space gap [--space <space-index>] [<points>]
 
 Use an unsigned value to set a ratio, padding, or gap, or a signed value such as `+2` or `-2` to adjust it. Master and split ratios must be from `0.1` through `0.9`; adjustments are clamped to that range. Omit the value to read a setting. Padding without side flags prints all four sides; when setting padding, omitted sides stay unchanged. Negative resulting padding and gaps are clamped to zero. Space settings apply to every display showing that space.
 
+### Read Space settings
+
+Omit the value to print a setting without changing it:
+
+```sh
+swm space layout
+swm space master-ratio
+swm space master-placement
+swm space split-ratio
+swm space preserve-split
+swm space gap
+swm space padding --space 2
+```
+
+These commands print a plain value in the form accepted by the setting command. Padding prints `--top <points> --bottom <points> --left <points> --right <points>`; split preservation prints `on` or `off`.
+
+Layout, master ratio, master placement, split ratio, and split preservation reads return an error if automatic tiling is unavailable for the selected Space.
+
+### Set dwindle split ratios
+
+The split ratio is the share of each dwindle split's region given to its left or upper side. The built-in default is `0.5`.
+
+```sh
+swm space split-ratio 0.6
+swm space split-ratio --space 2 +0.05
+```
+
+Setting or adjusting a Space's ratio rebalances every existing dwindle split to the result and uses it for new splits on every display showing that Space. Retained split directions are preserved. Reads and writes return an error if automatic tiling is unavailable for the selected Space.
+
+The command replaces individual split adjustments in that Space. Use `swm window split-ratio` afterwards to adjust just the nearest split for a window; that command does not change the Space's setting for new splits.
+
 ### Layouts
 
 The layouts are:
@@ -442,6 +368,32 @@ swm config padding [--top <points>] [--bottom <points>] [--left <points>] [--rig
 ```
 
 Built-in defaults are floating layout, focus-follows-mouse off, `0.5` master and dwindle split ratios, master on the left, split preservation off, animation disabled, and zero padding and gaps. Master and split ratios must be from `0.1` through `0.9`. Gap, padding, master ratio, and split ratio accept unsigned values to set them or signed changes to the global value. The result replaces per-Space settings and becomes the default for future Spaces. Padding updates only the supplied sides. Negative resulting gaps and padding are clamped to zero; ratios are clamped to `0.1` through `0.9`. Run a config command without a value to print its current setting, such as `swm config gap` or `swm config padding`.
+
+### Adjust global settings
+
+Each signed adjustment starts from the current global value and applies the result to every Space, replacing that setting's per-Space overrides and updating the default for future Spaces:
+
+```sh
+swm config gap +2
+swm config padding --top -2 --bottom +2
+swm config master-ratio -0.05
+swm config split-ratio -0.05
+```
+
+For example, with a global gap of `6` and a Space gap of `20`, `swm config gap +2` sets both to `8`. Padding changes affect only the sides supplied; omitted sides keep their existing values on each Space. Use `swm config gap 0` to reset the gap to zero.
+
+A global split-ratio change also rebalances existing dwindle splits, replacing individual split adjustments, and sets the ratio for new splits. Retained split directions are preserved. Use the corresponding `space` command to adjust just one Space.
+
+### Cycle global master placement
+
+```sh
+swm config master-placement next
+swm config master-placement prev
+```
+
+`next` cycles through `left`, `top`, `right`, `bottom`, then back to `left`; `prev` reverses that order. The command starts from the current global edge, applies the result to every Space, replacing per-Space master-placement overrides, and updates the default for future Spaces. It prints the resulting edge, such as `top`.
+
+Omit the argument to read the global edge without changing it, or supply `left`, `right`, `top`, or `bottom` to set it directly. Use `swm space master-placement next` or `prev` to cycle just one Space from its own current edge.
 
 ## Window animation
 
@@ -529,6 +481,14 @@ A rule can use these filters:
 
 All filters must match. If a window's value is missing, that filter fails even when inverted. A rule without filters matches every window.
 
+To leave windows from applications other than Finder out of automatic tiling:
+
+```sh
+swm rule add label=other-apps 'bundle-id!=com.apple.finder' manage=off
+```
+
+This does not match Finder or windows whose bundle ID is missing. Bundle IDs use exact comparison, not regular expressions. Negation is supported only for `bundle-id`, `app`, and `title`. Supplying both `bundle-id` and `bundle-id!` in one rule is rejected as a duplicate property.
+
 Regexes use Foundation's ICU syntax. They are case-sensitive by default and match substrings unless anchored with `^` and `$`. Quote them in shell scripts. swm rejects invalid regexes, unknown properties, empty values, and duplicate properties without adding the rule.
 
 The last matching value for each action wins. A rule that only sets `grid` leaves an earlier `manage` or `display` value in place. Put broad rules before exceptions:
@@ -580,6 +540,12 @@ swm signal remove <index|label>
 - `app=<regex>` and `title=<regex>`: require a regular-expression match.
 - `app!=<regex>` and `title!=<regex>`: require the value not to match.
 - `active=on|off`: filter application and window events by active or focused state.
+
+`active=on` matches active applications or focused windows; `active=off` matches inactive applications or unfocused windows. Space and display events reject this filter. The values `yes` and `no` are not accepted. Signal filters do not accept bundle IDs.
+
+```sh
+swm signal add event=window-focused active=on action='echo "$SWM_WINDOW_ID"'
+```
 
 Supported events:
 
