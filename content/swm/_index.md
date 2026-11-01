@@ -78,7 +78,19 @@ swm rule add label=other-apps 'bundle-id!=com.apple.finder' manage=off
 
 This rule leaves windows from other identified applications out of automatic tiling. It does not match Finder or windows whose bundle ID is missing. Bundle IDs use exact, case-sensitive comparison, not regular expressions. Other filters on the same rule must also match.
 
-Negation is supported only for `bundle-id`, `app`, and `title` rule filters. Supplying both `bundle-id` and `bundle-id!` in one rule is rejected as a duplicate property. Signal filters are unchanged and do not accept bundle IDs.
+Negation is supported only for `bundle-id`, `app`, and `title` rule filters. Supplying both `bundle-id` and `bundle-id!` in one rule is rejected as a duplicate property. Signal filters do not accept bundle IDs.
+
+### Update signal active filters
+
+On `main`, `swm signal add` accepts `active=on|off` instead of `active=yes|no`. This changed in [19395d7](https://github.com/starkwm/swm/commit/19395d7e0d7f5f3d27d2f82c83144310ff944949) and is not included in v0.0.28. Keep using `yes` and `no` with that release.
+
+Before using a build from `main`, replace `active=yes` with `active=on` and `active=no` with `active=off` in signal registrations, including those in `swmrc`. The old values now return an error.
+
+```sh
+swm signal add event=window-focused active=on action='echo "$SWM_WINDOW_ID"'
+```
+
+`on` matches active applications or focused windows; `off` matches inactive applications or unfocused windows. The filter remains limited to application and window events. Space and display events reject it.
 
 ## Requirements
 
