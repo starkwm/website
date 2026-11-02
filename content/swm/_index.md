@@ -18,7 +18,7 @@ This reference covers [v0.0.29](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main
 
-The following behavior is on [main at ce11da7](https://github.com/starkwm/swm/commit/ce11da7c61456385bc036aea5778cf648906dccd), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
+The following behavior is on [main at 4a4667f](https://github.com/starkwm/swm/commit/4a4667f5c476e3e4363c12b145e269b1544f281f), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
 
 ### Dwindle size recovery
 
@@ -66,6 +66,25 @@ swm display focus right
 The current display is the one containing the focused window, or the active Space's display when no focused window can be resolved. swm focuses the target display's frontmost visible, non-minimized window known to the daemon. If there is no such window, it moves the pointer to the display's center and attempts to focus the desktop. Selecting the current display does nothing.
 
 Success prints nothing. If a target cannot be resolved, such as a missing recent display or no neighbor in the requested direction, the command fails with `could not locate display: <target>`. Use `swm display focus --help` for command help.
+
+### Place windows on a Space with rules
+
+On main, `swm rule add` accepts `space=<index>` as a placement action, added in [4a4667f](https://github.com/starkwm/swm/commit/4a4667f5c476e3e4363c12b145e269b1544f281f). It moves matching windows without switching to the destination Space.
+
+```sh
+swm query spaces
+swm rule add label=slack app='^Slack$' space=3
+```
+
+The index must be a positive integer from `swm query spaces`. Rules do not accept `next`, `prev`, or Space IDs. Indexes follow the current Space ordering, so reordering Spaces can change the destination of future rule applications.
+
+A rule can combine `space` with `manage` and `grid`, but cannot set both `space` and `display`. Across matching rules, the last `space` or `display` action chooses the destination and replaces the other. A later rule that only sets `grid` or `manage` preserves that destination. `swm rule list` includes the registered `space` value in each rule's JSON properties.
+
+Only windows on one normal desktop Space can move, and the destination must be a normal desktop Space. Placement waits while the window is minimized, on an inactive or fullscreen Space, or being dragged. Missing destinations and indexes naming fullscreen Spaces wait for later updates. A window already on the target Space stays there.
+
+The window stays out of its source tiling layout during the move, then joins the destination layout. Moving to another display fits the window to that display's visible bounds. A matching grid applies after the move, once the destination Space is visible and the window is floating and resizable, using that Space's padding and gaps.
+
+The Space action runs when it first matches or its value changes. Moving the window back manually does not repeat it. Removing the rule does not move the window back. If a move fails, swm logs the failure and stops retrying that action. Check the window's actual Space before removing and adding the rule to retry, since a timed-out move can still complete later.
 
 ## Requirements
 
