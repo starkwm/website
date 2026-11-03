@@ -4,7 +4,7 @@ description: "sbar changes available in source builds after v0.0.2."
 weight: 3
 ---
 
-These pages describe unreleased source builds, verified at [5f375d6](https://github.com/starkwm/sbar/commit/5f375d65d5aabb13329e1e009f94d7b29dcc663d). They do not describe the Homebrew v0.0.2 release. The [release reference](/sbar/) remains available separately.
+These pages describe unreleased source builds, verified at [0a8ad51](https://github.com/starkwm/sbar/commit/0a8ad51f8cb0eeb83bb408dea041fc1d9a23312a). They do not describe the Homebrew v0.0.2 release. The [release reference](/sbar/) remains available separately.
 
 ## Build the reviewed revision
 
@@ -13,7 +13,7 @@ The requirements remain macOS 26 and Xcode 26 with Swift 6.2 or later. In a sepa
 ```fish
 git clone https://github.com/starkwm/sbar.git
 cd sbar
-git checkout 5f375d65d5aabb13329e1e009f94d7b29dcc663d
+git checkout 0a8ad51f8cb0eeb83bb408dea041fc1d9a23312a
 make build
 ```
 
@@ -28,3 +28,7 @@ The [Reminders provider](/sbar/main/reminders/) adds incomplete-task counts, nex
 ## Pomodoro
 
 The [Pomodoro provider](/sbar/main/pomodoro/) adds a shared focus and break timer, native bar actions, and `pomodoro` CLI controls. Timing changes take effect after Reset; no session is saved across restarts.
+
+## Agent activity
+
+The [agent activity provider](/sbar/main/agent-activity/) adds shared session reporting, a native popup, templates and `agents` CLI controls, with optional Codex, Claude and pi adapters.

@@ -13,7 +13,7 @@ homeDetails: "Show system information, media, and workspaces using native provid
 
 sbar draws a status bar on your displays. Each item comes from a native provider, such as battery or Spaces, a shell command, or a long-running plugin process. One JSON file describes the bar, and sbar reloads it when you save.
 
-The latest prerelease is [v0.0.2](https://github.com/starkwm/sbar/releases/tag/v0.0.2), checked on 31 October 2026. This reference covers that release. For later source builds, see [main / unreleased changes](/sbar/main/), including the Reminders and Pomodoro providers.
+The latest prerelease is [v0.0.2](https://github.com/starkwm/sbar/releases/tag/v0.0.2), checked on 31 October 2026. This reference covers that release. For later source builds, see [main / unreleased changes](/sbar/main/), including the Reminders, Pomodoro and agent activity providers.
 
 ## Start here
 
