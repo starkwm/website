@@ -43,3 +43,7 @@ Use these items for fixed text, containers, and spacing. See [shared item option
 | `popup` | `text`, `children` | Click to reveal children; label defaults to the item ID unless overridden. |
 | `divider` | Shared styling | Vertical separator. |
 | `spacer` | No dedicated options | Flexible empty space. |
+
+## Main / unreleased providers
+
+[Reminders](/sbar/main/reminders/) displays incomplete-task counts and next-task details. It is available in the reviewed main source build, not v0.0.2.
