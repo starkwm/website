@@ -47,3 +47,5 @@ Use these items for fixed text, containers, and spacing. See [shared item option
 ## Main / unreleased providers
 
 [Reminders](/sbar/main/reminders/) displays incomplete-task counts and next-task details. It is available in the reviewed main source build, not v0.0.2.
+
+[Pomodoro](/sbar/main/pomodoro/) provides a shared focus and break timer with bar and CLI controls. It is also unreleased and requires the reviewed main source build.
