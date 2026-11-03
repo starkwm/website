@@ -18,7 +18,53 @@ This reference covers [v0.0.29](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main
 
-The following behavior is on [main at 85ebcc1](https://github.com/starkwm/swm/commit/85ebcc1004acd80857a30995f6c24a96864d3dbe), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
+The following behavior is on [main at 44ca799](https://github.com/starkwm/swm/commit/44ca7997345102dd531a14bfe30ef57cb69af686), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
+
+### Update floating and cursor-warp commands
+
+Main changes the CLI in [ad96172](https://github.com/starkwm/swm/commit/ad961722d02866acd72522ad365041a00712073d). Update scripts and key bindings when building from main:
+
+| v0.0.29 | Unreleased main |
+| --- | --- |
+| `swm window layout float` | `swm window float on` |
+| `swm window layout tile` | `swm window float off` |
+| `swm window layout toggle` | `swm window float toggle` |
+| `swm window warp --window recent` | `swm window warp recent` |
+| `swm window warp --window <window-id>` | `swm window warp <window-id>` |
+
+`window layout` and `window warp --window` are no longer accepted on main. The new forms are:
+
+```sh
+swm window float [--window <window|recent>] <on|off|toggle>
+swm window warp [<left|right|up|down|recent|window-id>]
+```
+
+`float` still defaults to the focused window and accepts `--window`. Its choices override management rules until the window closes or the daemon restarts; editing rules does not reset them. `off` returns the window to tiling eligibility, but does not change the Space's layout or bypass other tiling requirements. Before moving, resizing, or placing a tiled window on a grid, use the new float command:
+
+```sh
+swm window float on
+swm window grid 2:1:1:0:1:1
+swm window float off
+```
+
+`warp` accepts one positional target. Omit it to use the focused window, or use `recent` for the previously focused window. Directional warps are unchanged. Window IDs must be positive 32-bit integers; `next`, `prev`, and `master` are not warp targets. Cursor movement still does not focus or raise the target window or switch Spaces.
+
+### Set padding on all sides
+
+Main adds an optional positional padding value to both `config padding` and `space padding`:
+
+```sh
+swm config padding 8
+swm config padding 8 --top +2
+swm space padding --space 2 +2 --top 12
+swm space padding --space=2 -2
+```
+
+An unsigned value sets every side, and a signed value adjusts each side from its current padding. Side flags take precedence over the positional value regardless of argument order. For example, `swm config padding 8 --top +2` adds 2 to the current global top padding and sets the other sides to 8. It does not add 2 to 8.
+
+Global adjustments use the current global padding, apply the changed sides to every Space, and update defaults for future Spaces. Space adjustments use the selected Space's padding and leave global defaults unchanged. Negative results clamp to zero.
+
+With side flags alone, omitted sides keep their padding. With no values, the command still prints `--top <points> --bottom <points> --left <points> --right <points>`. The existing side-flag forms remain valid on main and v0.0.29; positional padding requires main.
 
 ### Dwindle size recovery
 
