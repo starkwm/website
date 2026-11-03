@@ -6,7 +6,7 @@ homeSummary: "Moves your windows around so you don't have to."
 homeHello: "I tile."
 homeSays: "swm window warp right"
 homeInstall: "brew install starkwm/formulae/swm"
-homeVersion: "v0.0.29"
+homeVersion: "v0.0.30"
 homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
 ---
 
@@ -14,17 +14,17 @@ homeDetails: "Move, resize, and focus windows from the command line, or tile the
 
 It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the JavaScript configuration used by its predecessor, [Stark](https://github.com/starkwm/stark), with a small shell-based command interface.
 
-This reference covers [v0.0.29](https://github.com/starkwm/swm/releases/tag/v0.0.29), the latest prerelease, checked on 1 November 2026.
+The latest prerelease is [v0.0.30](https://github.com/starkwm/swm/releases/tag/v0.0.30), checked on 3 November 2026. The changes below describe upgrading from v0.0.29. The reference from [Requirements](#requirements) onward still describes v0.0.29; apply these changes when using v0.0.30.
 
-## Unreleased main
+## v0.0.30 changes {#unreleased-main}
 
-The following behavior is on [main at 44ca799](https://github.com/starkwm/swm/commit/44ca7997345102dd531a14bfe30ef57cb69af686), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
+These changes shipped in [v0.0.30 at a5c1fc6](https://github.com/starkwm/swm/commit/a5c1fc6fef455fa589ce657a702f9e1be493bce4). The [Homebrew formula](https://github.com/starkwm/homebrew-formulae/blob/main/Formula/swm.rb) also selects v0.0.30. The source-build example below deliberately checks out v0.0.29; use `git checkout v0.0.30` to build the new prerelease.
 
 ### Update floating and cursor-warp commands
 
-Main changes the CLI in [ad96172](https://github.com/starkwm/swm/commit/ad961722d02866acd72522ad365041a00712073d). Update scripts and key bindings when building from main:
+v0.0.30 includes the CLI changes from [ad96172](https://github.com/starkwm/swm/commit/ad961722d02866acd72522ad365041a00712073d). Update scripts and key bindings when upgrading:
 
-| v0.0.29 | Unreleased main |
+| v0.0.29 | v0.0.30 |
 | --- | --- |
 | `swm window layout float` | `swm window float on` |
 | `swm window layout tile` | `swm window float off` |
@@ -32,7 +32,7 @@ Main changes the CLI in [ad96172](https://github.com/starkwm/swm/commit/ad961722
 | `swm window warp --window recent` | `swm window warp recent` |
 | `swm window warp --window <window-id>` | `swm window warp <window-id>` |
 
-`window layout` and `window warp --window` are no longer accepted on main. The new forms are:
+`window layout` and `window warp --window` are no longer accepted in v0.0.30. The new forms are:
 
 ```sh
 swm window float [--window <window|recent>] <on|off|toggle>
@@ -51,7 +51,7 @@ swm window float off
 
 ### Set padding on all sides
 
-Main adds an optional positional padding value to both `config padding` and `space padding`:
+v0.0.30 adds an optional positional padding value to both `config padding` and `space padding`:
 
 ```sh
 swm config padding 8
@@ -64,7 +64,7 @@ An unsigned value sets every side, and a signed value adjusts each side from its
 
 Global adjustments use the current global padding, apply the changed sides to every Space, and update defaults for future Spaces. Space adjustments use the selected Space's padding and leave global defaults unchanged. Negative results clamp to zero.
 
-With side flags alone, omitted sides keep their padding. With no values, the command still prints `--top <points> --bottom <points> --left <points> --right <points>`. The existing side-flag forms remain valid on main and v0.0.29; positional padding requires main.
+With side flags alone, omitted sides keep their padding. With no values, the command still prints `--top <points> --bottom <points> --left <points> --right <points>`. The existing side-flag forms remain valid in v0.0.30 and v0.0.29; positional padding requires v0.0.30.
 
 ### Dwindle size recovery
 
@@ -76,7 +76,7 @@ If swm cannot find or restore a working arrangement, it logs an unsatisfied layo
 
 ### Enable split preservation before toggling
 
-On main, `swm window toggle-split` requires split preservation to be enabled for the selected window's dwindle layout. This requirement was added in [2543eb4](https://github.com/starkwm/swm/commit/2543eb481791f67e07df1225e393a20cd547b7c3). Split preservation is off by default.
+In v0.0.30, `swm window toggle-split` requires split preservation to be enabled for the selected window's dwindle layout. This requirement was added in [2543eb4](https://github.com/starkwm/swm/commit/2543eb481791f67e07df1225e393a20cd547b7c3). Split preservation is off by default.
 
 For a focused tiled window in the active Space's dwindle layout:
 
@@ -91,7 +91,7 @@ Turning preservation off with `swm space preserve-split off` clears retained dir
 
 ### Focus a display
 
-On main, `swm display focus <target>` focuses another display. This command was added in [ce11da7](https://github.com/starkwm/swm/commit/ce11da7c61456385bc036aea5778cf648906dccd).
+In v0.0.30, `swm display focus <target>` focuses another display. This command was added in [ce11da7](https://github.com/starkwm/swm/commit/ce11da7c61456385bc036aea5778cf648906dccd).
 
 | Target | Display |
 | --- | --- |
@@ -115,7 +115,7 @@ Success prints nothing. If a target cannot be resolved, such as a missing recent
 
 ### Place windows on a Space with rules
 
-On main, `swm rule add` accepts `space=<index>` as a placement action, added in [4a4667f](https://github.com/starkwm/swm/commit/4a4667f5c476e3e4363c12b145e269b1544f281f). It moves matching windows without switching to the destination Space.
+In v0.0.30, `swm rule add` accepts `space=<index>` as a placement action, added in [4a4667f](https://github.com/starkwm/swm/commit/4a4667f5c476e3e4363c12b145e269b1544f281f). It moves matching windows without switching to the destination Space.
 
 ```sh
 swm query spaces
@@ -134,7 +134,7 @@ The Space action runs when it first matches or its value changes. Moving the win
 
 ### Windows from accessory applications
 
-On main, swm also observes applications with macOS's accessory activation policy, including helper processes that own windows. It tracks their windows when Accessibility reports the `AXStandardWindow` subrole. Nonstandard windows from these processes, such as panels and menu-bar strips, are ignored.
+In v0.0.30, swm also observes applications with macOS's accessory activation policy, including helper processes that own windows. It tracks their windows when Accessibility reports the `AXStandardWindow` subrole. Nonstandard windows from these processes, such as panels and menu-bar strips, are ignored.
 
 These standard windows use the usual window rules and tiling eligibility checks. A window must still be movable and resizable to tile, and fixed-size or native-fullscreen windows remain excluded from automatic tiling. This support was added in [85ebcc1](https://github.com/starkwm/swm/commit/85ebcc1004acd80857a30995f6c24a96864d3dbe).
 
