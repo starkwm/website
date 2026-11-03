@@ -1,10 +1,10 @@
 ---
-title: "Main / unreleased"
-description: "sbar changes available in source builds after v0.0.2."
+title: "v0.0.3 and main"
+description: "sbar v0.0.3 source builds and the reviewed main revision."
 weight: 3
 ---
 
-These pages describe unreleased source builds, verified at [0a8ad51](https://github.com/starkwm/sbar/commit/0a8ad51f8cb0eeb83bb408dea041fc1d9a23312a). They do not describe the Homebrew v0.0.2 release. The [release reference](/sbar/) remains available separately.
+These pages describe [v0.0.3](https://github.com/starkwm/sbar/releases/tag/v0.0.3) and main at [d490fae](https://github.com/starkwm/sbar/commit/d490fae32148d2d242e849db434ee5f782fcf25d), verified on 3 November 2026. The tag and reviewed main revision are identical; there are no additional unreleased changes at this revision. Homebrew still installs v0.0.2. The [Homebrew release reference](/sbar/) remains available separately.
 
 ## Build the reviewed revision
 
@@ -13,13 +13,13 @@ The requirements remain macOS 26 and Xcode 26 with Swift 6.2 or later. In a sepa
 ```fish
 git clone https://github.com/starkwm/sbar.git
 cd sbar
-git checkout 0a8ad51f8cb0eeb83bb408dea041fc1d9a23312a
+git checkout d490fae32148d2d242e849db434ee5f782fcf25d
 make build
 ```
 
 Use `.build/debug/sbar` for this build. It is a standalone executable; Calendar and Reminders use EventKit in that process, without a helper app. These commands do not install a login service.
 
-Use the [main configuration schema](/sbar/config.main.schema.json) with this revision. It is copied from the source schema at the revision above. Keep the [release schema](/sbar/config.schema.json) for v0.0.2 configurations. Validate a main configuration with `.build/debug/sbar validate --config /path/to/config.json`; validation does not request EventKit access.
+Use the [main configuration schema](/sbar/config.main.schema.json) with this revision. It is copied from the source schema at the revision above. Keep the [release schema](/sbar/config.schema.json) for v0.0.2 configurations. Validate a v0.0.3 or main configuration with `.build/debug/sbar validate --config /path/to/config.json`; validation does not request EventKit access.
 
 ## Reminders
 

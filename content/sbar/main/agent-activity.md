@@ -1,10 +1,10 @@
 ---
-title: "Agent activity (main / unreleased)"
+title: "Agent activity (v0.0.3 and main)"
 description: "Report agent sessions to a shared native item and inspect them in a popup."
 weight: 3
 ---
 
-Available in [main source builds](/sbar/main/) at `0a8ad51`, not in the Homebrew v0.0.2 release.
+Available in [v0.0.3 and the reviewed main source build](/sbar/main/), not in Homebrew v0.0.2.
 
 An `agentActivity` item shows which agents are working or waiting for input. Click it for session details and a Dismiss button. All items and displays share one session store in memory. Reports arrive through the control socket; no shell command or streaming plugin is needed for the item itself.
 
