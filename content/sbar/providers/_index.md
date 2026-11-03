@@ -44,8 +44,10 @@ Use these items for fixed text, containers, and spacing. See [shared item option
 | `divider` | Shared styling | Vertical separator. |
 | `spacer` | No dedicated options | Flexible empty space. |
 
-## Main / unreleased providers
+## v0.0.3 and main providers
 
-[Reminders](/sbar/main/reminders/) displays incomplete-task counts and next-task details. It is available in the reviewed main source build, not v0.0.2.
+[Reminders](/sbar/main/reminders/) displays incomplete-task counts and next-task details. It is available in [v0.0.3 and the reviewed main source build](/sbar/main/), not Homebrew v0.0.2.
 
-[Pomodoro](/sbar/main/pomodoro/) provides a shared focus and break timer with bar and CLI controls. It is also unreleased and requires the reviewed main source build.
+[Pomodoro](/sbar/main/pomodoro/) provides a shared focus and break timer with bar and CLI controls. It also requires v0.0.3 or the reviewed main source build.
+
+[Agent activity](/sbar/main/agent-activity/) reports agent sessions with a native popup and CLI controls. It requires v0.0.3 or the reviewed main source build.

@@ -1,10 +1,10 @@
 ---
-title: "Pomodoro (main / unreleased)"
+title: "Pomodoro (v0.0.3 and main)"
 description: "Configure a shared focus timer and control it from the bar or CLI."
 weight: 2
 ---
 
-Available in [main source builds](/sbar/main/) at `5f375d6`, not in the Homebrew v0.0.2 release.
+Available in [v0.0.3 and the reviewed main source build](/sbar/main/), not in Homebrew v0.0.2.
 
 A `pomodoro` item shows and controls one shared timer per sbar process. The [Pomodoro example](https://github.com/starkwm/sbar/tree/5f375d65d5aabb13329e1e009f94d7b29dcc663d/examples/pomodoro) includes a timer and a controls popup.
 
