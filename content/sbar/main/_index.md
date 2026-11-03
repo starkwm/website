@@ -4,7 +4,7 @@ description: "sbar v0.0.3 source builds and the reviewed main revision."
 weight: 3
 ---
 
-These pages describe [v0.0.3](https://github.com/starkwm/sbar/releases/tag/v0.0.3) and main at [d490fae](https://github.com/starkwm/sbar/commit/d490fae32148d2d242e849db434ee5f782fcf25d), verified on 3 November 2026. The tag and reviewed main revision are identical; there are no additional unreleased changes at this revision. Homebrew still installs v0.0.2. The [Homebrew release reference](/sbar/) remains available separately.
+These pages describe [v0.0.3](https://github.com/starkwm/sbar/releases/tag/v0.0.3) and main at [d490fae](https://github.com/starkwm/sbar/commit/d490fae32148d2d242e849db434ee5f782fcf25d), verified on 3 November 2026. The tag and reviewed main revision are identical; there are no additional unreleased changes at this revision. Homebrew also installs v0.0.3. See the [installation guide](/sbar/) to install it without building from source.
 
 ## Build the reviewed revision
 
@@ -19,7 +19,7 @@ make build
 
 Use `.build/debug/sbar` for this build. It is a standalone executable; Calendar and Reminders use EventKit in that process, without a helper app. These commands do not install a login service.
 
-Use the [main configuration schema](/sbar/config.main.schema.json) with this revision. It is copied from the source schema at the revision above. Keep the [release schema](/sbar/config.schema.json) for v0.0.2 configurations. Validate a v0.0.3 or main configuration with `.build/debug/sbar validate --config /path/to/config.json`; validation does not request EventKit access.
+Use the [main configuration schema](/sbar/config.main.schema.json) with this revision. It is copied from the source schema at the revision above. The [release schema](/sbar/config.schema.json) also targets v0.0.3 and is identical at this revision. Validate a v0.0.3 or main configuration with `.build/debug/sbar validate --config /path/to/config.json`; validation does not request EventKit access.
 
 ## Reminders
 

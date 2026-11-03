@@ -4,7 +4,7 @@ description: "Read incomplete tasks, discover lists, and display due counts and 
 weight: 1
 ---
 
-Available in [v0.0.3 and the reviewed main source build](/sbar/main/), not in Homebrew v0.0.2.
+Available in [v0.0.3 and the reviewed main source build](/sbar/main/), including Homebrew v0.0.3.
 
 A `reminders` item reads incomplete tasks from Apple EventKit. The default label shows disjoint counts such as `3 due · 1 overdue`. The [Reminders example](https://github.com/starkwm/sbar/tree/d25f0da981ee9ad447ec9e9e9d49ea79fbfa1817/examples/reminders) includes a summary and a popup with next-task details. sbar never edits or completes reminders.
 

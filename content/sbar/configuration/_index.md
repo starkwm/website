@@ -29,11 +29,11 @@ Both `.jsonc` and `.json` files accept this syntax. `sbar start` and `sbar valid
 }
 ```
 
-Save persistent changes in the configuration file. sbar never writes to the file or backs it up. For editor completion, copy the [v0.0.2 schema](/sbar/config.schema.json) beside your configuration as `config.schema.json` and add `"$schema": "config.schema.json"` to the root object.
+Save persistent changes in the configuration file. sbar never writes to the file or backs it up. For editor completion, copy the [v0.0.3 schema](/sbar/config.schema.json) beside your configuration as `config.schema.json` and add `"$schema": "config.schema.json"` to the root object.
 
-The [Everyday bar](https://github.com/starkwm/sbar/tree/v0.0.2/examples/everyday) includes native application icons, media shown only during playback, weather, system metrics, unread Mail counts, and connection and audio-device popovers. It uses [text templates](/sbar/configuration/text-templates/) for labels, plus hover colours and minimum widths for its CPU and memory items. The [floating bar](https://github.com/starkwm/sbar/tree/v0.0.2/examples/floating) has fewer items, inset edges, and rounded corners. The [sections example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/sections) gives the left, centre, and right regions separate backgrounds and borders.
+The [Everyday bar](https://github.com/starkwm/sbar/tree/v0.0.3/examples/everyday) includes native application icons, media shown only during playback, weather, system metrics, unread Mail counts, and connection and audio-device popovers. It uses [text templates](/sbar/configuration/text-templates/) for labels, plus hover colours and minimum widths for its CPU and memory items. The [floating bar](https://github.com/starkwm/sbar/tree/v0.0.3/examples/floating) has fewer items, inset edges, and rounded corners. The [sections example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/sections) gives the left, centre, and right regions separate backgrounds and borders.
 
-The [groups example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/groups) demonstrates child spacing and style inheritance. For a side bar, see the [vertical example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/vertical).
+The [groups example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/groups) demonstrates child spacing and style inheritance. For a side bar, see the [vertical example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/vertical).
 
 ## Example
 
@@ -149,7 +149,7 @@ Group children and provider entries, such as a list of Spaces, stack vertically.
 
 Side bars do not reserve space for other windows. Set a left or right gap in your window manager if needed.
 
-See the [vertical example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/vertical) for app shortcuts, status icons and popups.
+See the [vertical example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/vertical) for app shortcuts, status icons and popups.
 
 ## Shadows
 

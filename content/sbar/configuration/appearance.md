@@ -160,7 +160,7 @@ Region backgrounds fit their visible items, padding, and overflow button. A flex
 
 Padding reduces the room available to items and may move them into overflow. sbar limits padding to half the allocated width or height. Regions stay within the bar bounds, and oversized content remains clipped. Borders draw inside the region bounds. Region decoration adds no click targets, so mouse pass-through still uses item bounds.
 
-The whole-bar background and corner radius still apply. Use a transparent `theme.background` and disable `bar.shadow` for separate floating regions. Region shadows and material backgrounds are not supported. See the complete [sections example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/sections).
+The whole-bar background and corner radius still apply. Use a transparent `theme.background` and disable `bar.shadow` for separate floating regions. Region shadows and material backgrounds are not supported. See the complete [sections example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/sections).
 
 ## Hover colours
 
@@ -415,4 +415,4 @@ In side bars, `theme.regions.left`, `center` and `right` style the top, middle a
 
 Vertical padding leaves less height for items before they move into overflow. Horizontal padding leaves less width for each label.
 
-Item `width`, `minWidth` and `alignment` still control horizontal sizing. Allow for bar and section padding when setting an item width. Content wider than its section is clipped. See the [vertical example](https://github.com/starkwm/sbar/tree/v0.0.2/examples/vertical).
+Item `width`, `minWidth` and `alignment` still control horizontal sizing. Allow for bar and section padding when setting an item width. Content wider than its section is clipped. See the [vertical example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/vertical).

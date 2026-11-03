@@ -46,7 +46,7 @@ Use these items for fixed text, containers, and spacing. See [shared item option
 
 ## v0.0.3 and main providers
 
-[Reminders](/sbar/main/reminders/) displays incomplete-task counts and next-task details. It is available in [v0.0.3 and the reviewed main source build](/sbar/main/), not Homebrew v0.0.2.
+[Reminders](/sbar/main/reminders/) displays incomplete-task counts and next-task details. It is available in [v0.0.3 and the reviewed main source build](/sbar/main/), including Homebrew v0.0.3.
 
 [Pomodoro](/sbar/main/pomodoro/) provides a shared focus and break timer with bar and CLI controls. It also requires v0.0.3 or the reviewed main source build.
 
