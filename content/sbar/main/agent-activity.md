@@ -4,7 +4,7 @@ description: "Report agent sessions to a shared native item and inspect them in 
 weight: 3
 ---
 
-Available in [v0.0.3 and the reviewed main source build](/sbar/main/), not in Homebrew v0.0.2.
+Available in [v0.0.3 and the reviewed main source build](/sbar/main/), including Homebrew v0.0.3.
 
 An `agentActivity` item shows which agents are working or waiting for input. Click it for session details and a Dismiss button. All items and displays share one session store in memory. Reports arrive through the control socket; no shell command or streaming plugin is needed for the item itself.
 
