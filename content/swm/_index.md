@@ -18,7 +18,7 @@ This reference covers [v0.0.29](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main
 
-The following behavior is on [main at 4a4667f](https://github.com/starkwm/swm/commit/4a4667f5c476e3e4363c12b145e269b1544f281f), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
+The following behavior is on [main at 85ebcc1](https://github.com/starkwm/swm/commit/85ebcc1004acd80857a30995f6c24a96864d3dbe), after v0.0.29. It is not included in that release or its Homebrew installation. The rest of this reference describes v0.0.29.
 
 ### Dwindle size recovery
 
@@ -85,6 +85,12 @@ Only windows on one normal desktop Space can move, and the destination must be a
 The window stays out of its source tiling layout during the move, then joins the destination layout. Moving to another display fits the window to that display's visible bounds. A matching grid applies after the move, once the destination Space is visible and the window is floating and resizable, using that Space's padding and gaps.
 
 The Space action runs when it first matches or its value changes. Moving the window back manually does not repeat it. Removing the rule does not move the window back. If a move fails, swm logs the failure and stops retrying that action. Check the window's actual Space before removing and adding the rule to retry, since a timed-out move can still complete later.
+
+### Windows from accessory applications
+
+On main, swm also observes applications with macOS's accessory activation policy, including helper processes that own windows. It tracks their windows when Accessibility reports the `AXStandardWindow` subrole. Nonstandard windows from these processes, such as panels and menu-bar strips, are ignored.
+
+These standard windows use the usual window rules and tiling eligibility checks. A window must still be movable and resizable to tile, and fixed-size or native-fullscreen windows remain excluded from automatic tiling. This support was added in [85ebcc1](https://github.com/starkwm/swm/commit/85ebcc1004acd80857a30995f6c24a96864d3dbe).
 
 ## Requirements
 
