@@ -1,10 +1,9 @@
 ---
-title: "Agent activity (v0.0.3 and main)"
+title: "Agent activity"
 description: "Report agent sessions to a shared native item and inspect them in a popup."
-weight: 3
+weight: 24
+aliases: ["/sbar/main/agent-activity/"]
 ---
-
-Available in [v0.0.3 and the reviewed main source build](/sbar/main/), including Homebrew v0.0.3.
 
 An `agentActivity` item shows which agents are working or waiting for input. Click it for session details and a Dismiss button. All items and displays share one session store in memory. Reports arrive through the control socket; no shell command or streaming plugin is needed for the item itself.
 
@@ -22,18 +21,18 @@ An `agentActivity` item shows which agents are working or waiting for input. Cli
 }
 ```
 
-The settings above are the defaults. Omit `text` to show only states with nonzero counts. With no sessions, the item hides by default; `hideWhenEmpty: false` shows "No agent activity". The [standalone example](https://github.com/starkwm/sbar/tree/0a8ad51f8cb0eeb83bb408dea041fc1d9a23312a/examples/agent-activity) includes a separate socket and a simulator for manual testing.
+The settings above are the defaults. Omit `text` to show only states with nonzero counts. With no sessions, the item hides by default; `hideWhenEmpty: false` shows "No agent activity". The [standalone example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/agent-activity) includes a separate socket and a simulator for manual testing.
 
 ## Reporting and control commands
 
-Use the reviewed source binary from the repository root:
+Use `sbar` on your `PATH`:
 
 ```fish
-.build/debug/sbar agents report --source custom --session conversation --run turn-one --sequence 0 --state working --title Build --project /work/project
-.build/debug/sbar agents report --source custom --session conversation --run turn-one --sequence 1 --state needsInput
-.build/debug/sbar agents report --source custom --session conversation --run turn-two --replaces turn-one --sequence 0 --state working
-.build/debug/sbar agents list
-.build/debug/sbar agents dismiss --source custom --session conversation
+sbar agents report --source custom --session conversation --run turn-one --sequence 0 --state working --title Build --project /work/project
+sbar agents report --source custom --session conversation --run turn-one --sequence 1 --state needsInput
+sbar agents report --source custom --session conversation --run turn-two --replaces turn-one --sequence 0 --state working
+sbar agents list
+sbar agents dismiss --source custom --session conversation
 ```
 
 These commands accept `--socket` and require an active `agentActivity` item. Responses contain an `ok` flag and a `value` array of stored entries. Each entry contains `report`, `startedAt`, `reportedAt`, `changedAt`, `expired` and `dismissed`. The list includes dismissed and retained entries, even when item filters or retention hide their rows.
@@ -83,11 +82,11 @@ A custom host reporter can suppress a matching standalone row by providing the s
 `agents setup` supports `codex`, `claude` and `pi`. It requires an explicit configuration root. These commands modify agent settings:
 
 ```fish
-.build/debug/sbar agents setup --source codex --root "$HOME/.codex"
-.build/debug/sbar agents setup --source claude --root "$HOME/.claude"
-.build/debug/sbar agents setup --source pi --root "$HOME/.pi/agent"
-.build/debug/sbar agents doctor --source codex
-.build/debug/sbar agents setup --source codex --root "$HOME/.codex" --remove
+sbar agents setup --source codex --root "$HOME/.codex"
+sbar agents setup --source claude --root "$HOME/.claude"
+sbar agents setup --source pi --root "$HOME/.pi/agent"
+sbar agents doctor --source codex
+sbar agents setup --source codex --root "$HOME/.codex" --remove
 ```
 
 Setup uses Bash, `jq` and `lockf`. It installs owned hooks in Codex `hooks.json` or Claude `settings.json`, or an owned pi extension, preserving unrelated settings. `--remove` removes the owned integration. Pass `--socket` to select another bar. Installed shell hooks call the binary used for setup; rerun setup if its path changes.
@@ -100,6 +99,6 @@ The pi extension reports settled responses as idle, errors as failed and cancell
 
 Hosted agents use the same adapters when their host loads the relevant agent settings and permits hooks. There is no bundled T3 adapter or thread-title mapping. Select the configuration root used by the host and verify event delivery in that environment.
 
-For custom sources, use the reporting protocol above. The [source adapter guide](https://github.com/starkwm/sbar/blob/0a8ad51f8cb0eeb83bb408dea041fc1d9a23312a/docs/providers/agent-activity.md#writing-an-adapter-for-another-harness) includes ordering, retry and wrapper examples. Keep hook failures separate from agent approvals and response continuation.
+For custom sources, use the reporting protocol above. The [source adapter guide](https://github.com/starkwm/sbar/blob/v0.0.3/docs/providers/agent-activity.md#writing-an-adapter-for-another-harness) includes ordering, retry and wrapper examples. Keep hook failures separate from agent approvals and response continuation.
 
 Store and routing tests cover ordering, expiry, filtering and lifecycle behavior. Live popup rendering, supported-agent settings preservation and hook delivery still need manual checks. Test prompt start, a question or approval, response stop, a second turn and reconnect after restarting the bar.

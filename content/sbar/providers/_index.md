@@ -31,6 +31,9 @@ Every provider uses the same item structure. Start with `id` and `type`, then ad
 | [Yabai](/sbar/providers/yabai/) | 2-second polling / fresh triggers | `yabai` block |
 | [Shell command](/sbar/providers/command/) | Startup / trigger / interval | `command` block |
 | [Process plugin](/sbar/providers/plugin/) | Process stream | `plugin` block |
+| [Reminders](/sbar/providers/reminders/) | EventKit changes / minute polling / deadlines | `reminders` block |
+| [Pomodoro](/sbar/providers/pomodoro/) | Timer ticks / native and CLI controls | `pomodoro` block |
+| [Agent activity](/sbar/providers/agent-activity/) | Reports / one-second expiry checks | `agentActivity` block |
 
 ## Layout items
 
@@ -43,11 +46,3 @@ Use these items for fixed text, containers, and spacing. See [shared item option
 | `popup` | `text`, `children` | Click to reveal children; label defaults to the item ID unless overridden. |
 | `divider` | Shared styling | Vertical separator. |
 | `spacer` | No dedicated options | Flexible empty space. |
-
-## v0.0.3 and main providers
-
-[Reminders](/sbar/main/reminders/) displays incomplete-task counts and next-task details. It is available in [v0.0.3 and the reviewed main source build](/sbar/main/), including Homebrew v0.0.3.
-
-[Pomodoro](/sbar/main/pomodoro/) provides a shared focus and break timer with bar and CLI controls. It also requires v0.0.3 or the reviewed main source build.
-
-[Agent activity](/sbar/main/agent-activity/) reports agent sessions with a native popup and CLI controls. It requires v0.0.3 or the reviewed main source build.

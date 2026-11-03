@@ -3,6 +3,7 @@ title: "sbar"
 description: "A status bar for macOS built from native providers, shell commands, and plugins."
 weight: 40
 showDocList: false
+aliases: ["/sbar/main/"]
 homeSummary: "Keeps an eye on everything, up top."
 homeHello: "I show."
 homeSays: "\"type\": \"datetime\""
@@ -13,7 +14,7 @@ homeDetails: "Show system information, media, and workspaces using native provid
 
 sbar draws a status bar on your displays. Each item comes from a native provider, such as battery or Spaces, a shell command, or a long-running plugin process. One JSON file describes the bar, and sbar reloads it when you save.
 
-The latest prerelease is [v0.0.3](https://github.com/starkwm/sbar/releases/tag/v0.0.3), checked on 3 November 2026. Homebrew installs that release, which this reference covers. See [v0.0.3 and main](/sbar/main/), including the Reminders, Pomodoro and agent activity providers.
+The latest prerelease is [v0.0.3](https://github.com/starkwm/sbar/releases/tag/v0.0.3), checked on 3 November 2026. Homebrew installs that release, which this reference covers. It includes the [Reminders](/sbar/providers/reminders/), [Pomodoro](/sbar/providers/pomodoro/) and [agent activity](/sbar/providers/agent-activity/) providers.
 
 ## Start here
 
