@@ -1,12 +1,11 @@
 ---
-title: "Pomodoro (v0.0.3 and main)"
+title: "Pomodoro"
 description: "Configure a shared focus timer and control it from the bar or CLI."
-weight: 2
+weight: 23
+aliases: ["/sbar/main/pomodoro/"]
 ---
 
-Available in [v0.0.3 and the reviewed main source build](/sbar/main/), including Homebrew v0.0.3.
-
-A `pomodoro` item shows and controls one shared timer per sbar process. The [Pomodoro example](https://github.com/starkwm/sbar/tree/5f375d65d5aabb13329e1e009f94d7b29dcc663d/examples/pomodoro) includes a timer and a controls popup.
+A `pomodoro` item shows and controls one shared timer per sbar process. The [Pomodoro example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/pomodoro) includes a timer and a controls popup.
 
 ```json
 {"id": "pomodoro", "type": "pomodoro"}
@@ -55,7 +54,7 @@ Sleep counts toward the running phase. If it expires during sleep, wake complete
 
 Enabled items, popup children, overflow items, and all displays share the same timer. Closing a popup does not stop it. Shared settings come from explicit values across active pomodoro items; omitted settings inherit the shared value or the default. Conflicting explicit values are configuration errors. Symbols, tints, templates, and `showSymbol` belong to each item independently.
 
-Reload preserves the phase, status, remaining time, and completed count. Changed durations or cycle counts wait until Reset, even across subsequent cycles. Sound and automatic-transition changes apply immediately. `.build/debug/sbar pomodoro status` exposes `activeTiming`, `configuredTiming`, and `resetRequired` to distinguish these settings. An invalid reload retains the previous configuration and session.
+Reload preserves the phase, status, remaining time, and completed count. Changed durations or cycle counts wait until Reset, even across subsequent cycles. Sound and automatic-transition changes apply immediately. `sbar pomodoro status` exposes `activeTiming`, `configuredTiming`, and `resetRequired` to distinguish these settings. An invalid reload retains the previous configuration and session.
 
 Disabling or removing the last active item discards the session. Re-adding an item or restarting sbar begins a fresh ready focus phase. No timer state is written to disk.
 
@@ -95,16 +94,16 @@ The default refresh behavior updates about once per second while running. Existi
 
 ## Sound and controls
 
-`sound: true` plays the system Glass sound once on natural completion, including a completion processed on wake. Reset and Skip do not themselves sound an alert. A control request or reload first reconciles an overdue phase, which can play its completion sound. Sound failure does not stop the timer; inspect `pomodoroSoundError` with `.build/debug/sbar query --diagnostics`. There are no Notification Center prompts, notifications, custom sound paths, progress rings, or history storage.
+`sound: true` plays the system Glass sound once on natural completion, including a completion processed on wake. Reset and Skip do not themselves sound an alert. A control request or reload first reconciles an overdue phase, which can play its completion sound. Sound failure does not stop the timer; inspect `pomodoroSoundError` with `sbar query --diagnostics`. There are no Notification Center prompts, notifications, custom sound paths, progress rings, or history storage.
 
 ```fish
-.build/debug/sbar pomodoro status
-.build/debug/sbar pomodoro start
-.build/debug/sbar pomodoro pause
-.build/debug/sbar pomodoro resume
-.build/debug/sbar pomodoro toggle
-.build/debug/sbar pomodoro reset
-.build/debug/sbar pomodoro skip
+sbar pomodoro status
+sbar pomodoro start
+sbar pomodoro pause
+sbar pomodoro resume
+sbar pomodoro toggle
+sbar pomodoro reset
+sbar pomodoro skip
 ```
 
 All commands accept `--socket`. Responses contain the current structured snapshot and do not depend on display templates. Commands fail when no pomodoro item is active. The JSON response includes `phase`, `status`, `remainingSeconds`, `durationSeconds`, `progress`, `completedSessions`, `activeTiming`, `configuredTiming`, `resetRequired`, `autoStart`, and `sound`. Both timing objects contain `focusMinutes`, `shortBreakMinutes`, `longBreakMinutes`, and `cyclesBeforeLongBreak`.
