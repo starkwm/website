@@ -18,7 +18,7 @@ This reference covers [v0.0.30](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main changes
 
-The changes below apply to [main at `201e8a1`](https://github.com/starkwm/swm/commit/201e8a125fac4421222f1602411c0f8073b179ac), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
+The changes below apply to [main at `58ec70a`](https://github.com/starkwm/swm/commit/58ec70a52bae1c81bb4b10ad318564746baf428c), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
 
 ### Move Space settings to config
 
@@ -42,6 +42,26 @@ Run a setting without a value to read its value in the selected scope. Signed ga
 For dwindle, use `swm config preserve-split --space current on` before `swm window toggle-split`. For a window on another Space, select that Space's index instead. `swm config split-ratio --space current 0.6` sets the ratio for new splits and rebalances existing splits on that Space. `swm window split-ratio` still changes one split.
 
 `animation-duration`, `animation-easing`, and `focus-follows-mouse` remain global only and reject `--space`. `swm space activate <space-index>` is unchanged.
+
+### Move and resize arguments
+
+On main, `swm window move` and `swm window resize` take two integers in points. They apply relative offsets by default. Add `--absolute` to set the top-left position or size instead. The old `abs:...` and `rel:...` CLI arguments are rejected.
+
+```sh
+swm window move [--window <window|recent>] [--absolute] <x> <y>
+swm window resize [--window <window|recent>] [--absolute] <width> <height>
+```
+
+Update configuration files and keyboard shortcuts to use the new arguments:
+
+| v0.0.30 | Unreleased main |
+| --- | --- |
+| `swm window move abs:0:25` | `swm window move --absolute 0 25` |
+| `swm window move rel:-20:0` | `swm window move -20 0` |
+| `swm window resize abs:1200:800` | `swm window resize --absolute 1200 800` |
+| `swm window resize rel:40:0` | `swm window resize 40 0` |
+
+Negative values work on either axis without a `--` separator, including with window selection: `swm window move -20 --window recent -10`. These commands still reject tiled windows. `swm window grid` retains its colon-separated cell syntax.
 
 ## Requirements
 
