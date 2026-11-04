@@ -1,0 +1,35 @@
+{{ with .FirstSection }}
+  {{ $order := partialCached "docs-order" . .RelPermalink }}
+  {{ $index := -1 }}
+  {{ range $i, $page := $order }}
+    {{ if eq $page.RelPermalink $.RelPermalink }}
+      {{ $index = $i }}
+    {{ end }}
+  {{ end }}
+  {{ if ge $index 0 }}
+    {{ $prev := false }}
+    {{ $next := false }}
+    {{ if gt $index 0 }}
+      {{ $prev = index $order (sub $index 1) }}
+    {{ end }}
+    {{ if lt $index (sub (len $order) 1) }}
+      {{ $next = index $order (add $index 1) }}
+    {{ end }}
+    {{ if or $prev $next }}
+      <nav class="page-nav" aria-label="Previous and next pages">
+        {{ with $prev }}
+          <a class="page-nav__link page-nav__link--prev" href="{{ .RelPermalink }}" rel="prev">
+            <small>Previous</small>
+            <span>{{ partial "page-nav-title" . }}</span>
+          </a>
+        {{ end }}
+        {{ with $next }}
+          <a class="page-nav__link page-nav__link--next" href="{{ .RelPermalink }}" rel="next">
+            <small>Next</small>
+            <span>{{ partial "page-nav-title" . }}</span>
+          </a>
+        {{ end }}
+      </nav>
+    {{ end }}
+  {{ end }}
+{{ end }}

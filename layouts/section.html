@@ -13,6 +13,7 @@
         {{ with .Description }}
           <p>{{ . }}</p>
         {{ end }}
+        {{ partial "release-line" . }}
       </header>
 
       <div class="prose">
@@ -34,6 +35,8 @@
           </div>
         </section>
       {{ end }}
+
+      {{ partial "page-nav" . }}
     </article>
 
     {{ partial "page-toc" . }}

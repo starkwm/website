@@ -1,0 +1,8 @@
+{{- $commit := .Get "commit" -}}
+{{- $repo := .Get "repo" | default .Page.FirstSection.Section -}}
+<aside class="callout" aria-label="Unreleased change">
+  <p class="callout__label">
+    Unreleased{{ with $commit }} · on main since <a href="https://github.com/starkwm/{{ $repo }}/commit/{{ . }}">{{ substr . 0 7 }}</a>{{ end }}
+  </p>
+  {{ .Inner | .Page.RenderString (dict "display" "block") }}
+</aside>

@@ -1,0 +1,9 @@
+{{- /* Reading order for a product's docs, matching the sidebar. */ -}}
+{{- $pages := slice . -}}
+{{- range .RegularPages.ByWeight -}}
+  {{- $pages = $pages | append . -}}
+{{- end -}}
+{{- range .Sections.ByWeight -}}
+  {{- $pages = $pages | append (partial "docs-order" .) -}}
+{{- end -}}
+{{- return $pages -}}
