@@ -18,7 +18,7 @@ This reference covers [v0.0.30](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main changes
 
-The changes below apply to [main at `50af8c9`](https://github.com/starkwm/swm/commit/50af8c94bdb9ea2e8f0d2b593dea579d4a6a9a3a), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
+The changes below apply to [main at `f6b17b9`](https://github.com/starkwm/swm/commit/f6b17b9247dcdfe471ca5877ef6fe44b8eb2f3c5), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
 
 ### Move Space settings to config
 
@@ -61,7 +61,29 @@ Update configuration files and keyboard shortcuts to use the new arguments:
 | `swm window resize abs:1200:800` | `swm window resize --absolute 1200 800` |
 | `swm window resize rel:40:0` | `swm window resize 40 0` |
 
-Negative values work on either axis without a `--` separator, including with window selection: `swm window move -20 --window recent -10`. Coordinate moves and resizes still reject tiled windows. `swm window grid` retains its colon-separated cell syntax.
+Negative values work on either axis without a `--` separator, including with window selection: `swm window move -20 --window recent -10`. Coordinate moves and resizes still reject tiled windows.
+
+### Grid arguments
+
+On main, `swm window grid` takes six separate integers instead of one colon-separated argument. The old CLI form is rejected.
+
+```sh
+swm window grid [--window <window|recent>] <columns> <rows> <x> <y> <width> <height>
+```
+
+Update grid commands in configuration files and keyboard shortcuts:
+
+| v0.0.30 | Unreleased main |
+| --- | --- |
+| `swm window grid 2:1:0:0:1:1` | `swm window grid 2 1 0 0 1 1` |
+| `swm window grid 2:1:1:0:1:1` | `swm window grid 2 1 1 0 1 1` |
+| `swm window grid 1:1:0:0:1:1` | `swm window grid 1 1 0 0 1 1` |
+
+Columns and rows must be at least 1. x and y count cells from zero at the top left; width and height count cells to span. swm clamps x and y into the grid, then clamps each span to between one cell and the cells remaining on that axis. Negative values work without a `--` separator.
+
+Window selection still uses `--window`, for example `swm window grid --window recent 2 1 1 0 1 1`. Grid placement still uses the configured padding and gaps and rejects tiled windows. Float a tiled window with `swm window float on` first, passing the same `--window` selector when targeting a specific window.
+
+Rule properties keep their colon-separated form, such as `grid=2:1:1:0:1:1`.
 
 ### Move windows between displays and Spaces
 
