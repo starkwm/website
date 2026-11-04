@@ -18,7 +18,7 @@ This reference covers [v0.0.30](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main changes
 
-The changes below apply to [main at `31a3786`](https://github.com/starkwm/swm/commit/31a37868694ef272cd57372f6381d0ec20748c62), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
+The changes below apply to [main at `50af8c9`](https://github.com/starkwm/swm/commit/50af8c94bdb9ea2e8f0d2b593dea579d4a6a9a3a), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
 
 ### Move Space settings to config
 
@@ -45,7 +45,7 @@ For dwindle, use `swm config preserve-split --space current on` before `swm wind
 
 ### Move and resize arguments
 
-On main, `swm window move` and `swm window resize` take two integers in points. They apply relative offsets by default. Add `--absolute` to set the top-left position or size instead. The old `abs:...` and `rel:...` CLI arguments are rejected.
+On main, coordinate moves and resizes take two integers in points. They apply relative offsets by default. Add `--absolute` to set the top-left position or size instead. The old `abs:...` and `rel:...` CLI arguments are rejected.
 
 ```sh
 swm window move [--window <window|recent>] [--absolute] <x> <y>
@@ -61,7 +61,24 @@ Update configuration files and keyboard shortcuts to use the new arguments:
 | `swm window resize abs:1200:800` | `swm window resize --absolute 1200 800` |
 | `swm window resize rel:40:0` | `swm window resize 40 0` |
 
-Negative values work on either axis without a `--` separator, including with window selection: `swm window move -20 --window recent -10`. These commands still reject tiled windows. `swm window grid` retains its colon-separated cell syntax.
+Negative values work on either axis without a `--` separator, including with window selection: `swm window move -20 --window recent -10`. Coordinate moves and resizes still reject tiled windows. `swm window grid` retains its colon-separated cell syntax.
+
+### Move windows between displays and Spaces
+
+On main, `swm window display` and `swm window space` are removed. Use `swm window move --display` or `swm window move --space` instead:
+
+| v0.0.30 | Unreleased main |
+| --- | --- |
+| `swm window display next` | `swm window move --display next` |
+| `swm window display --window 123 2` | `swm window move --window 123 --display 2` |
+| `swm window space 3` | `swm window move --space 3` |
+| `swm window space --window recent prev` | `swm window move --window recent --space prev` |
+
+Choose exactly one move mode: two coordinates, `--display <target>`, or `--space <target>`. Transfer modes reject coordinates and `--absolute`. Both accept a positive one-based index, `next`, `prev`, or `previous`. They default to the focused window; `--window` selects a window ID or `recent`.
+
+Display indexes follow the arranged display list. Space indexes match `swm query spaces`; cycling skips fullscreen Spaces and wraps through normal desktops. Transfers keep the current Space active. Unlike coordinate moves, transfers can move tiled windows into the destination layout. The existing display and Space transfer restrictions still apply, including the requirement that a Space transfer starts and ends on a normal desktop Space.
+
+Update configuration files and keyboard shortcuts that use the removed commands. Rule properties such as `display=2` and `space=3` are unchanged.
 
 ### Minimize and unminimize targets
 
