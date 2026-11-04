@@ -11,7 +11,7 @@ release:
   url: "https://github.com/starkwm/sborders/releases/tag/v0.0.1"
 ---
 
-`sborders` draws borders around application windows and follows focus, movement, and resizing. You can use it with [swm](/swm/), [skbd](/skbd/), and [sbar](/sbar/) or any other window manager.
+`sborders` draws a border around each application window and redraws it as focus changes and windows move or resize. It works with [swm](/swm/) or any other window manager, and alongside [skbd](/skbd/) and [sbar](/sbar/).
 
 ## Start here
 
