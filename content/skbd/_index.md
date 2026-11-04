@@ -6,15 +6,17 @@ homeSummary: "Turns key presses into shell commands."
 homeHello: "I listen."
 homeSays: "hyper - t: open -a Terminal"
 homeInstall: "brew install starkwm/formulae/skbd@2"
-homeVersion: "v0.0.8"
 homeDetails: "Bind key combinations to shell commands, including bindings that tell left and right modifier keys apart. skbd reloads its configuration when you save it, so a new shortcut works without a restart."
+release:
+  version: "v0.0.8"
+  url: "https://github.com/starkwm/skbd/releases/tag/v0.0.8"
+  checked: "31 October 2026"
+  prerelease: true
 ---
 
 skbd runs shell commands when you press configured keyboard shortcuts. It uses [Quartz Event Services][quartz] to monitor key presses on macOS and can distinguish left and right modifier keys.
 
 [quartz]: https://developer.apple.com/documentation/coregraphics/quartz-event-services
-
-This reference covers [v0.0.8](https://github.com/starkwm/skbd/releases/tag/v0.0.8), the latest prerelease, checked on 31 October 2026.
 
 ## Requirements
 

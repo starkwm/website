@@ -6,14 +6,14 @@ homeSummary: "Sorts your windows into piles."
 homeHello: "I tag."
 homeSays: "stags view work chat"
 homeInstall: "brew install starkwm/formulae/stags"
-homeVersion: "v0.0.1"
+release:
+  version: "v0.0.1"
+  url: "https://github.com/starkwm/stags/releases/tag/v0.0.1"
 ---
 
 `stags` assigns one or more tags to each window in the active macOS Space. Choose a view containing one or several tags, and it moves windows outside that view to a display edge. It does not switch native Spaces.
 
 `stags` is an early implementation. Some applications refuse off-screen moves or leave a narrow strip visible. Read [window recovery](/stags/recovery/) before using it with windows you need to keep open.
-
-These guides cover [stags v0.0.1](https://github.com/starkwm/stags/releases/tag/v0.0.1), available through Homebrew.
 
 ## Start here
 

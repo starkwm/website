@@ -44,7 +44,7 @@
             <div class="member__heading">
               <span class="member__number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
               <h2 class="member__name" id="project-{{ .Section }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-              {{ with .Params.homeVersion }}<span class="member__version">{{ . }}</span>{{ end }}
+              {{ with .Params.release }}<span class="member__version">{{ .version }}</span>{{ end }}
             </div>
             <p class="member__summary">{{ .Params.homeSummary | default .Description }}</p>
             {{ with (.Params.homeDetails | default .Description) }}

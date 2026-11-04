@@ -6,12 +6,12 @@ homeSummary: "Puts a border around your windows."
 homeHello: "I outline."
 homeSays: "sborders set width 6"
 homeInstall: "brew install starkwm/formulae/sborders"
-homeVersion: "v0.0.1"
+release:
+  version: "v0.0.1"
+  url: "https://github.com/starkwm/sborders/releases/tag/v0.0.1"
 ---
 
 `sborders` draws borders around application windows and follows focus, movement, and resizing. You can use it with [swm](/swm/), [skbd](/skbd/), and [sbar](/sbar/) or any other window manager.
-
-These guides cover [sborders v0.0.1](https://github.com/starkwm/sborders/releases/tag/v0.0.1).
 
 ## Start here
 

@@ -11,11 +11,14 @@
         {{ with .Params.cadence }}
           <p>Updates: {{ . }}.</p>
         {{ end }}
+        {{ partial "release-line" . }}
       </header>
 
       <div class="prose">
         {{ .Content }}
       </div>
+
+      {{ partial "page-nav" . }}
     </article>
 
     {{ partial "page-toc" . }}

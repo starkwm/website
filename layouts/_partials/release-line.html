@@ -1,0 +1,8 @@
+{{ with .FirstSection }}
+  {{ $product := . }}
+  {{ with .Params.release }}
+    <p class="page-header__release">
+      Covers <a href="{{ .url }}">{{ $product.Title }} {{ .version }}</a>{{ if .prerelease }}, the latest prerelease{{ end }}{{ with .checked }}, checked on {{ . }}{{ end }}.
+    </p>
+  {{ end }}
+{{ end }}
