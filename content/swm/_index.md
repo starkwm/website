@@ -16,6 +16,33 @@ It is inspired by [yabai](https://github.com/asmvik/yabai) and replaces the Java
 
 This reference covers [v0.0.30](https://github.com/starkwm/swm/releases/tag/v0.0.30), the latest prerelease, checked on 3 November 2026.
 
+## Unreleased main changes
+
+The changes below apply to [main at `201e8a1`](https://github.com/starkwm/swm/commit/201e8a125fac4421222f1602411c0f8073b179ac), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
+
+### Move Space settings to config
+
+On main, `swm space` only provides `activate`. The `layout`, `master-ratio`, `master-placement`, `split-ratio`, `preserve-split`, `padding`, and `gap` subcommands have moved from `space` to `config`. Their old `swm space` forms are rejected.
+
+Use `--space current` to select the active Space, or `--space <space-index>` for a positive one-based index from `swm query spaces`. Indexes follow the current Space ordering and can change when Spaces are reordered.
+
+| v0.0.30 | Unreleased main |
+| --- | --- |
+| `swm space gap 8` | `swm config gap --space current 8` |
+| `swm space gap --space 2 +2` | `swm config gap --space 2 +2` |
+| `swm space gap` | `swm config gap --space current` |
+| `swm space padding --space 2 --top +4` | `swm config padding --space 2 --top +4` |
+| `swm space master-placement next` | `swm config master-placement --space current next` |
+| `swm space preserve-split on` | `swm config preserve-split --space current on` |
+
+Apply the same migration to all seven settings in configuration files and keyboard shortcuts. Keep `--space current` when migrating a command that previously targeted the active Space. Omitting `--space` reads the global default or updates all current Spaces and the defaults for future Spaces. A selected Space changes independently of other Spaces and future defaults.
+
+Run a setting without a value to read its value in the selected scope. Signed gap, padding, and ratio changes use that scope's current value, as do `master-placement next` and `prev`. Padding side flags override the positional value for their side; with side flags alone, omitted sides keep their values.
+
+For dwindle, use `swm config preserve-split --space current on` before `swm window toggle-split`. For a window on another Space, select that Space's index instead. `swm config split-ratio --space current 0.6` sets the ratio for new splits and rebalances existing splits on that Space. `swm window split-ratio` still changes one split.
+
+`animation-duration`, `animation-easing`, and `focus-follows-mouse` remain global only and reject `--space`. `swm space activate <space-index>` is unchanged.
+
 ## Requirements
 
 - macOS 26 or later
