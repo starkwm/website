@@ -11,9 +11,9 @@ release:
   url: "https://github.com/starkwm/stags/releases/tag/v0.0.1"
 ---
 
-`stags` assigns one or more tags to each window in the active macOS Space. Choose a view containing one or several tags, and it moves windows outside that view to a display edge. It does not switch native Spaces.
+`stags` gives each window in the active macOS Space one or more tags. Pick a view of one or more tags, and stags parks every window outside it at the edge of the display. It does not switch native Spaces.
 
-`stags` is an early implementation. Some applications refuse off-screen moves or leave a narrow strip visible. Read [window recovery](/stags/recovery/) before using it with windows you need to keep open.
+`stags` is early software. Some applications refuse to move off-screen, or leave a narrow strip visible. Read [window recovery](/stags/recovery/) before using it with windows you need to keep open.
 
 ## Start here
 
