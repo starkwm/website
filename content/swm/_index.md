@@ -18,7 +18,7 @@ This reference covers [v0.0.30](https://github.com/starkwm/swm/releases/tag/v0.0
 
 ## Unreleased main changes
 
-The changes below apply to [main at `58ec70a`](https://github.com/starkwm/swm/commit/58ec70a52bae1c81bb4b10ad318564746baf428c), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
+The changes below apply to [main at `31a3786`](https://github.com/starkwm/swm/commit/31a37868694ef272cd57372f6381d0ec20748c62), after v0.0.30. They are not part of the v0.0.30 Homebrew release. The rest of this reference retains the v0.0.30 syntax.
 
 ### Move Space settings to config
 
@@ -62,6 +62,24 @@ Update configuration files and keyboard shortcuts to use the new arguments:
 | `swm window resize rel:40:0` | `swm window resize 40 0` |
 
 Negative values work on either axis without a `--` separator, including with window selection: `swm window move -20 --window recent -10`. These commands still reject tiled windows. `swm window grid` retains its colon-separated cell syntax.
+
+### Minimize and unminimize targets
+
+On main, `swm window minimize` and `swm window unminimize` take a positional target instead of `--window`. Use `recent` for the previously focused window or a positive window ID. Omit the target to minimize the focused window. `unminimize` requires a target because a minimized window cannot be focused.
+
+```sh
+swm window minimize [<recent|window-id>]
+swm window unminimize <recent|window-id>
+```
+
+Update configuration files and keyboard shortcuts that use `--window` with these commands:
+
+| v0.0.30 | Unreleased main |
+| --- | --- |
+| `swm window minimize --window recent` | `swm window minimize recent` |
+| `swm window unminimize --window 123` | `swm window unminimize 123` |
+
+`swm window minimize` still minimizes the focused window. A bare `swm window unminimize` now fails; provide `recent` or a window ID. Both commands reject `--window`, directional targets, and zero or out-of-range IDs. Other window commands that accept `--window`, including `move`, `resize`, and `swap`, retain that option.
 
 ## Requirements
 
