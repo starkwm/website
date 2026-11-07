@@ -29,7 +29,7 @@ swm rule remove 1
 `add` needs at least one action:
 
 - `manage=on|off` allows or prevents automatic tiling.
-- `display=<index|uuid>` moves the window to a display without moving focus. Indexes start at 1 and use the same order as `swm window display`. A UUID from `swm query displays` names a monitor whatever its index. Rules do not accept `next` or `prev`.
+- `display=<index|uuid>` moves the window to a display without moving focus. Indexes start at 1 and use the same order as `swm window move --display`. A UUID from `swm query displays` names a monitor whatever its index. Rules do not accept `next` or `prev`.
 - `space=<index>` moves the window to a normal desktop Space without switching to it. Use a positive index from `swm query spaces`. A rule cannot set both `space` and `display`.
 - `grid=<columns>:<rows>:<x>:<y>:<width>:<height>` places a floating window within the display's visible bounds. It uses the destination Space's padding and gaps, and clamps coordinates the same way as `swm window grid`.
 
