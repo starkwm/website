@@ -6,12 +6,14 @@ weight: 10
 
 ## Installation
 
-Install the latest release with Homebrew on Apple silicon:
+Install the available Homebrew package on Apple silicon:
 
 ```sh
 brew tap starkwm/formulae
 brew install starkwm/formulae/swm
 ```
+
+As checked on 7 November 2026, the Homebrew formula and bottle still target v0.0.30. This reference documents v0.0.31. Build the tagged release below to use the new commands, and read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
 
 Start the daemon now and at every login:
 
@@ -26,7 +28,7 @@ Grant Accessibility permission to `swm` in System Settings > Privacy & Security 
 ```sh
 git clone https://github.com/starkwm/swm.git
 cd swm
-git checkout v0.0.30
+git checkout v0.0.31
 make build
 ```
 
@@ -89,14 +91,10 @@ See [global settings](/swm/settings/) for everything `swm config` can set.
 `swm` does not bind keys. Use a hotkey daemon such as [skbd](/skbd/) to run its commands. Grid placement only works on floating windows, so run `swm window float on` on a tiled window before using these grid bindings:
 
 ```text
-hyper - h: swm window grid 2:1:0:0:1:1
-hyper - l: swm window grid 2:1:1:0:1:1
-hyper - f: swm window grid 1:1:0:0:1:1
+hyper - h: swm window grid 2 1 0 0 1 1
+hyper - l: swm window grid 2 1 1 0 1 1
+hyper - f: swm window grid 1 1 0 0 1 1
 hyper - r: swm window focus recent
 ```
 
 The first three place the focused window in the left half, the right half, or across the whole display. The last one returns focus to the previous window.
-
-{{< unreleased commit="f6b17b9247dcdfe471ca5877ef6fe44b8eb2f3c5" >}}
-On `main`, `swm window grid` takes six separate numbers, such as `swm window grid 2 1 0 0 1 1`. See [grid arguments](/swm/unreleased/#grid-arguments).
-{{< /unreleased >}}
