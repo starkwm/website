@@ -47,28 +47,21 @@ Top-level options:
 | `swm window warp` | Move the mouse cursor to a window. |
 | `swm window minimize`, `unminimize` | Minimize or restore a window. |
 | `swm window move`, `resize`, `grid` | Place a floating window. |
-| `swm window display`, `space` | Send a window to another display or Space. |
+| `swm window move --display`, `--space` | Send a window to another display or Space. |
 | `swm window float` | Float a window, return it to tiling, or toggle between the two. |
 | `swm window swap` | Swap a window with a neighbour or the master window. |
 | `swm window split-ratio`, `toggle-split`, `swap-split` | Change the nearest dwindle split. |
 | `swm display focus` | Focus another display. |
 | `swm space activate` | Show a Space on its display. |
-| `swm space layout`, `master-ratio`, `master-placement` | Read or change one Space's layout. |
-| `swm space split-ratio`, `preserve-split` | Read or change one Space's dwindle splits. |
-| `swm space padding`, `gap` | Read or change one Space's spacing. |
-| `swm config <setting>` | Read or change a global default. |
+| `swm config <setting>` | Read or change a global default, or select one Space with `--space`. |
 | `swm rule add`, `list`, `remove`, `clear` | Manage [window rules](/swm/rules/). |
 | `swm signal add`, `list`, `remove`, `clear` | Manage [signals](/swm/signals/). |
 
 [Windows](/swm/windows/), [Spaces and layouts](/swm/spaces-and-layouts/), and [global settings](/swm/settings/) describe each command's arguments.
 
-{{< unreleased commit="f6b17b9247dcdfe471ca5877ef6fe44b8eb2f3c5" >}}
-On `main`, the `swm space` settings move to `swm config --space`, and `swm window display` and `swm window space` become options of `swm window move`. See the [unreleased changes](/swm/unreleased/).
-{{< /unreleased >}}
-
 ## Query state
 
-Queries print JSON. List every tracked object of one type:
+Queries print indented JSON in a terminal and compact JSON on one line when piped or redirected. List every tracked object of one type:
 
 ```sh
 swm query displays

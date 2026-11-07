@@ -35,9 +35,7 @@ Master and split ratios must be from `0.1` through `0.9`. Apart from focus-follo
 
 Leave out the value to print the current setting, as in `swm config gap` or `swm config padding`. Put the commands you want at startup in [`swmrc`](/swm/getting-started/#configuration-file).
 
-{{< unreleased commit="f6b17b9247dcdfe471ca5877ef6fe44b8eb2f3c5" >}}
-On `main`, the per-Space settings also accept `--space` to change one Space, replacing the `swm space` setting commands. See [moving Space settings to config](/swm/unreleased/#move-space-settings-to-config).
-{{< /unreleased >}}
+For `layout`, `master-ratio`, `master-placement`, `split-ratio`, `preserve-split`, `padding`, and `gap`, add `--space current` or `--space <space-index>` to read or change only that Space. Without it, reads return the global default and writes affect all current Spaces and future defaults. Animation and focus-follows-mouse settings reject `--space`.
 
 ## Adjust global settings
 
@@ -52,17 +50,17 @@ swm config split-ratio -0.05
 
 swm adds the change to the current global value, then applies the result to every Space and to future Spaces. It replaces any per-Space value for that setting. With a global gap of `6` and a Space gap of `20`, `swm config gap +2` sets both to `8`. Gaps and padding stop at zero, and ratios stay within `0.1` through `0.9`. Run `swm config gap 0` to remove the gap.
 
-A global split-ratio change also rebalances existing dwindle splits, replacing adjustments made to single splits, and sets the ratio for new splits. Split directions stay the same. To change one Space, use the matching [`swm space` command](/swm/spaces-and-layouts/#configure-a-space).
+A global split-ratio change also rebalances existing dwindle splits, replacing adjustments made to single splits, and sets the ratio for new splits. Split directions stay the same. To change one Space, use the matching [`swm config --space` command](/swm/spaces-and-layouts/#configure-a-space).
 
 ## Set padding on all sides
 
-`swm config padding` and `swm space padding` both take an optional padding value without a flag:
+`swm config padding` and `swm config padding --space current` both take an optional padding value without a flag:
 
 ```sh
 swm config padding 8
 swm config padding 8 --top +2
-swm space padding --space 2 +2 --top 12
-swm space padding --space=2 -2
+swm config padding --space 2 +2 --top 12
+swm config padding --space=2 -2
 ```
 
 An unsigned value sets every side, and a signed value adjusts each side from its current padding. Side flags win over the plain value, whatever order you write them in. `swm config padding 8 --top +2` adds 2 to the current global top padding and sets the other three sides to 8. It does not add 2 to 8.
@@ -80,7 +78,7 @@ swm config master-placement prev
 
 `next` moves the master window's edge from `left` to `top`, `right`, `bottom`, and back to `left`. `prev` goes the other way. swm starts from the current global edge, applies the result to every Space, replacing their own placements, and makes it the default for future Spaces. The command prints the new edge, such as `top`.
 
-Leave out the argument to print the global edge, or pass `left`, `right`, `top`, or `bottom` to set it. `swm space master-placement next` and `prev` cycle a single Space from its own edge.
+Leave out the argument to print the global edge, or pass `left`, `right`, `top`, or `bottom` to set it. `swm config master-placement --space current next` and `prev` cycle a single Space from its own edge.
 
 ## Window animation
 

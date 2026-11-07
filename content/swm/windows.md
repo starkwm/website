@@ -10,15 +10,13 @@ Most window commands act on the focused window unless you pass `--window`. The o
 
 ```sh
 swm window focus <left|right|up|down|next|prev|recent|master|window-id>
-swm window minimize [--window <window|recent>]
-swm window unminimize [--window <window|recent>]
+swm window minimize [<recent|window-id>]
+swm window unminimize <recent|window-id>
 ```
 
 A direction focuses the nearest non-minimized window on the visible Spaces. `next` and `prev` follow a stable layout order. `recent` focuses the previously focused window, `master` focuses the master window in the focused window's layout, and a window ID focuses that window.
 
-{{< unreleased commit="f6b17b9247dcdfe471ca5877ef6fe44b8eb2f3c5" >}}
-On `main`, `minimize` and `unminimize` take the window as a positional argument instead of `--window`. See [minimize and unminimize targets](/swm/unreleased/#minimize-and-unminimize-targets).
-{{< /unreleased >}}
+`minimize` defaults to the focused window. `unminimize` requires a target because a minimized window cannot have focus. Both accept `recent` or a positive window ID as a positional argument and reject `--window`.
 
 ## Focus a display
 
@@ -61,40 +59,38 @@ With a direction, swm starts from the managed window under the cursor and picks 
 ## Move, resize, and place
 
 ```sh
-swm window move [--window <window|recent>] <abs|rel>:<x>:<y>
-swm window resize [--window <window|recent>] <abs|rel>:<width>:<height>
-swm window grid [--window <window|recent>] <columns>:<rows>:<x>:<y>:<width>:<height>
-swm window display [--window <window|recent>] <next|prev|display-index>
+swm window move [--window <window|recent>] [--absolute] <x> <y>
+swm window resize [--window <window|recent>] [--absolute] <width> <height>
+swm window grid [--window <window|recent>] <columns> <rows> <x> <y> <width> <height>
+swm window move [--window <window|recent>] --display <next|prev|display-index>
 ```
 
-`abs` sets the position or size. `rel` adds signed values to the current frame.
+Move and resize take two whole numbers in points. They add offsets to the current frame by default. `--absolute` sets the top-left position or size. Negative values work without a `--` separator. The old `abs:...` and `rel:...` forms are rejected.
 
-A grid divides the display's bounds, minus padding, into cells with the configured gap between them. `x` and `y` count cells from `0:0` in the top-left corner. `width` and `height` are the number of cells the window spans, including the gaps between them. A span across a whole axis uses all of it.
+Each move takes either coordinates, `--display <target>`, or `--space <target>`. The transfer options cannot be combined with coordinates, each other, or `--absolute`.
 
-`move`, `resize`, and `grid` refuse tiled windows with `window is tiled: <window-id>`. Float the window first. This places the focused window in the right half of a 2-by-1 grid:
+A grid divides the display's bounds, minus padding, into cells with the configured gap between them. `x` and `y` count cells from `0, 0` in the top-left corner. `width` and `height` are the number of cells the window spans, including the gaps between them. A span across a whole axis uses all of it. Columns and rows must be at least 1. swm clamps coordinates into the grid and spans to between one cell and the cells remaining on that axis. Rule properties keep their colon-separated `grid=...` form.
+
+Coordinate moves, `resize`, and `grid` refuse tiled windows with `window is tiled: <window-id>`. Float the window first. This places the focused window in the right half of a 2-by-1 grid:
 
 ```sh
 swm window float on
-swm window grid 2:1:1:0:1:1
+swm window grid 2 1 1 0 1 1
 ```
 
 For another window, pass the same `--window <window-id>` to both commands. Run `swm window float off` to return it to the layout.
 
-Windows outside the automatic layout never get the tiled error. That covers windows on a Space with the `float` layout, windows you floated, and windows on more than one Space. Other checks still apply. `swm window display` and `swm window space` move tiled windows too.
+Windows outside the automatic layout never get the tiled error. That covers windows on a Space with the `float` layout, windows you floated, and windows on more than one Space. Other checks still apply. `swm window move --display` and `swm window move --space` move tiled windows too.
 
-Display indexes start at 1. `next` and `prev` wrap around the arranged display list, and `previous` also works.
-
-{{< unreleased commit="f6b17b9247dcdfe471ca5877ef6fe44b8eb2f3c5" >}}
-On `main`, `move` and `resize` take two plain numbers with an optional `--absolute` flag, `grid` takes six separate numbers, and `swm window display` becomes `swm window move --display`. See [move and resize arguments](/swm/unreleased/#move-and-resize-arguments), [grid arguments](/swm/unreleased/#grid-arguments), and [moving windows between displays and Spaces](/swm/unreleased/#move-windows-between-displays-and-spaces).
-{{< /unreleased >}}
+Display indexes start at 1. `next` and `prev` wrap around the arranged display list.
 
 ## Move between Spaces
 
 ```sh
-swm window space [--window <window|recent>] <space-index|next|prev>
+swm window move [--window <window|recent>] --space <space-index|next|prev>
 ```
 
-Space indexes start at 1 and match `swm query spaces`. `next` and `prev` cycle through normal desktop Spaces in query order, skip fullscreen Spaces, and wrap at either end. `previous` also works. The command moves the focused window by default and leaves the current Space active. When the Space is on another display, swm fits the window within that display's visible bounds.
+Space indexes start at 1 and match `swm query spaces`. `next` and `prev` cycle through normal desktop Spaces in query order, skip fullscreen Spaces, and wrap at either end. The command moves the focused window by default and leaves the current Space active. When the Space is on another display, swm fits the window within that display's visible bounds.
 
 Only a window on a single normal desktop Space can move. swm rejects fullscreen windows and windows assigned to several Spaces. Moving a window to its current Space leaves it where it is.
 
@@ -102,13 +98,9 @@ This works with SIP enabled. swm waits up to two seconds for WindowServer to con
 
 ```sh
 swm query spaces
-swm window space next
-swm window space --window <window-id> 1
+swm window move --space next
+swm window move --window <window-id> --space 1
 ```
-
-{{< unreleased commit="f6b17b9247dcdfe471ca5877ef6fe44b8eb2f3c5" >}}
-On `main`, `swm window space` becomes `swm window move --space`. See [moving windows between displays and Spaces](/swm/unreleased/#move-windows-between-displays-and-spaces).
-{{< /unreleased >}}
 
 ## Control tiling
 
@@ -137,14 +129,10 @@ swm window swap-split [--window <window|recent>]
 For a focused tiled window in the active Space's dwindle layout:
 
 ```sh
-swm space preserve-split on
+swm config preserve-split --space current on
 swm window toggle-split
 ```
 
-For a window chosen with `--window`, turn preservation on for that window's Space with `swm space preserve-split --space <space-index> on`. Without preservation, or when the window has no dwindle split to change, the command fails with `window has no dwindle split to toggle, or preserve-split is off: <window-id>`.
+For a window chosen with `--window`, turn preservation on for that window's Space with `swm config preserve-split --space <space-index> on`. Without preservation, or when the window has no dwindle split to change, the command fails with `window has no dwindle split to toggle, or preserve-split is off: <window-id>`.
 
-`swm space preserve-split off` forgets the retained directions, and splits go back to following the longest edge.
-
-{{< unreleased commit="f6b17b9247dcdfe471ca5877ef6fe44b8eb2f3c5" >}}
-On `main`, turn preservation on with `swm config preserve-split --space current on`. See [moving Space settings to config](/swm/unreleased/#move-space-settings-to-config).
-{{< /unreleased >}}
+`swm config preserve-split --space current off` forgets the retained directions, and splits go back to following the longest edge.
