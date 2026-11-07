@@ -20,7 +20,7 @@ Tiling is optional. Keep the default floating layout and bind swm commands to ke
 
 swm borrows ideas from [yabai](https://github.com/asmvik/yabai). It replaces the JavaScript configuration of its predecessor, [Stark](https://github.com/starkwm/stark), with shell commands.
 
-This reference covers v0.0.31. Read [upgrading to v0.0.31](/swm/upgrading/) before updating scripts from v0.0.30. The [Homebrew package](/swm/getting-started/#installation) may lag behind the release.
+This reference covers v0.0.31. Read [upgrading to v0.0.31](/swm/upgrading/) before updating scripts from v0.0.30.
 
 ## Start here
 
