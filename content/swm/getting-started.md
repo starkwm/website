@@ -6,14 +6,14 @@ weight: 10
 
 ## Installation
 
-Install the available Homebrew package on Apple silicon:
+Install v0.0.31 with Homebrew on Apple silicon:
 
 ```sh
 brew tap starkwm/formulae
 brew install starkwm/formulae/swm
 ```
 
-As checked on 7 November 2026, the Homebrew formula and bottle still target v0.0.30. This reference documents v0.0.31. Build the tagged release below to use the new commands, and read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
+The Homebrew formula and bottle provide v0.0.31. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
 
 Start the daemon now and at every login:
 
