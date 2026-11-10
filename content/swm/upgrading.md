@@ -1,11 +1,25 @@
 ---
-title: "Upgrading to v0.0.31"
-description: "Command changes when upgrading from v0.0.30 to v0.0.31."
+title: "Upgrading swm"
+description: "Upgrade to v0.0.32 and migrate scripts from older versions."
 aliases: ["/swm/unreleased/"]
 weight: 90
 ---
 
-[v0.0.31](https://github.com/starkwm/swm/releases/tag/v0.0.31) changes commands and arguments from v0.0.30. Update `swmrc` and your key bindings when you upgrade. This reference uses v0.0.31 syntax. Check [installation](/swm/getting-started/#installation) for Homebrew availability.
+Check [installation](/swm/getting-started/#installation) for the current version.
+
+## From v0.0.31 to v0.0.32
+
+v0.0.32 keeps the v0.0.31 command syntax. Restart the daemon after upgrading so the client and daemon use the same IPC format:
+
+```sh
+brew services restart swm
+```
+
+This version improves parsing of signed setting values with options and retries temporary Accessibility read failures before deciding whether a window can be tiled. Existing v0.0.31 scripts need no syntax changes.
+
+## From v0.0.30 to v0.0.31
+
+v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.32.
 
 ## Move Space settings to config
 

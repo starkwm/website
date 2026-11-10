@@ -8,10 +8,9 @@ homeSays: "swm window warp right"
 homeInstall: "brew install starkwm/formulae/swm"
 homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
 release:
-  version: "v0.0.31"
-  url: "https://github.com/starkwm/swm/releases/tag/v0.0.31"
-  checked: "7 November 2026"
-  prerelease: true
+  version: "v0.0.32"
+  url: "https://github.com/starkwm/swm/tree/v0.0.32"
+  checked: "10 November 2026"
 ---
 
 `swm` is a window manager you drive from the shell. One `swm` process runs as a daemon and keeps track of applications, displays, Spaces, and windows. Every other `swm` invocation sends one command to that daemon and prints the result.
@@ -20,7 +19,7 @@ Tiling is optional. Keep the default floating layout and bind swm commands to ke
 
 swm borrows ideas from [yabai](https://github.com/asmvik/yabai). It replaces the JavaScript configuration of its predecessor, [Stark](https://github.com/starkwm/stark), with shell commands.
 
-This reference covers v0.0.31. Read [upgrading to v0.0.31](/swm/upgrading/) before updating scripts from v0.0.30.
+This reference covers v0.0.32. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
 
 ## Start here
 
