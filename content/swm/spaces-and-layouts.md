@@ -17,6 +17,8 @@ In a dwindle layout, a new window splits the focused tiled window. Closing a win
 
 Each physical display has its own tiling layout, even when macOS's **Displays have separate Spaces** setting is off. A tiled window moved to another display joins that display's layout. If you drag or resize a tiled window by hand, it snaps back into place.
 
+If an app temporarily fails to answer Accessibility queries about a window's type or whether it can move and resize, swm waits and retries. Once those reads succeed, it reassesses the window for tiling. A failed read alone does not make the window permanently ineligible.
+
 ## Dwindle size limits {#dwindle-size-recovery}
 
 Dwindle keeps the requested split ratios and directions when an app refuses a smaller tile. The app can remain larger, overlap neighbouring tiles, or extend beyond the display. Other tiles keep their planned positions. swm does not adjust allocations around observed size limits or restore an earlier arrangement.

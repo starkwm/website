@@ -6,14 +6,14 @@ weight: 10
 
 ## Installation
 
-Install v0.0.31 with Homebrew on Apple silicon:
+Install v0.0.32 with Homebrew on Apple silicon:
 
 ```sh
 brew tap starkwm/formulae
 brew install starkwm/formulae/swm
 ```
 
-The Homebrew formula and bottle provide v0.0.31. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
+Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
 
 Start the daemon now and at every login:
 
@@ -28,7 +28,7 @@ Grant Accessibility permission to `swm` in System Settings > Privacy & Security 
 ```sh
 git clone https://github.com/starkwm/swm.git
 cd swm
-git checkout v0.0.31
+git checkout v0.0.32
 make build
 ```
 
