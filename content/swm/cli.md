@@ -36,6 +36,8 @@ Top-level options:
     --log-level <level>    debug, info, warn, or error (default: info)
 ```
 
+The daemon requests cancellation after 4.5 seconds. A timed-out failure reports `request timed out and was cancelled`. Cancellation takes effect at the command's next cancellation check; it does not undo changes already submitted, such as a Space switch. Query the state before retrying.
+
 ## Command reference
 
 | Command | Action |
@@ -58,6 +60,24 @@ Top-level options:
 | `swm signal add`, `list`, `remove`, `clear` | Manage [signals](/swm/signals/). |
 
 [Windows](/swm/windows/), [Spaces and layouts](/swm/spaces-and-layouts/), and [global settings](/swm/settings/) describe each command's arguments.
+
+## Reload the configuration
+
+```sh
+swm reload [--config <path>]
+```
+
+Without `--config`, reload runs `~/.config/swm/swmrc`, even if the daemon started with another file. Pass that file's path explicitly to reload it.
+
+Rules and signals registered by the file replace the current ones only when the file exits successfully. While it runs, its rule and signal commands work on a separate collection that starts empty. Existing rules and signals stay active. Unchanged rule placements are not repeated, so windows you moved by hand stay where you put them.
+
+If the file exits unsuccessfully, reload exits with status 1, keeps the previous rules and signals, and restores settings. If the reload process exits before finishing, the daemon also rolls back. Add `set -e` to a shell configuration to stop at a failed command; otherwise the script's final exit status decides whether the reload succeeds.
+
+Settings change immediately while the file runs. Settings omitted from the file keep their values. Rollback cannot undo window, Space, or display commands, or programs the file starts. Restoring layout settings can reflow windows. Restoring a changed split ratio rebalances splits, and restoring split preservation cannot recover directions cleared by the script.
+
+Only one reload can run at a time. Commands outside the script still apply immediately, but rules and signals they add during a reload are replaced if it succeeds. Child programs inherit `SWM_RELOAD_TOKEN`; their commands join the reload while it is open and apply immediately after it closes.
+
+With an older daemon that lacks reload transactions, the client warns and falls back to clearing rules and signals before running the file. Restart the daemon after upgrading to use rollback.
 
 ## Query state
 

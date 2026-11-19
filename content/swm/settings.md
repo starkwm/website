@@ -97,7 +97,7 @@ With animation on, geometry commands return as soon as swm queues the movement. 
 
 ### Dragging during an animation
 
-Dragging or resizing a window with the mouse stops its animation until you let go. swm then recalculates the layout. A click without a drag leaves the animation running. During a drag, geometry commands fail and placement [rules](/swm/rules/) wait for the mouse release.
+Dragging or resizing a window with the mouse stops its animation until you let go. swm then recalculates the layout. A drag counts when the window moves or changes size. Clicking or dragging inside a window to select text leaves the animation running. During a drag, geometry commands fail and placement [rules](/swm/rules/) wait for the mouse release.
 
 ### Timing and corrections
 
