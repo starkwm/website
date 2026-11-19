@@ -65,7 +65,7 @@ swm window grid [--window <window|recent>] <columns> <rows> <x> <y> <width> <hei
 swm window move [--window <window|recent>] --display <next|prev|display-index>
 ```
 
-Move and resize take two whole numbers in points. They add offsets to the current frame by default. `--absolute` sets the top-left position or size. Negative values work without a `--` separator. The old `abs:...` and `rel:...` forms are rejected.
+Move and resize take two whole numbers in points. They add offsets to the current frame by default. `--absolute` sets the top-left position or size. Negative values work without a `--` separator. The old `abs:...` and `rel:...` forms are rejected. Resize rejects a resulting width or height of zero or less, whether set with `--absolute` or reached by an offset.
 
 Each move takes either coordinates, `--display <target>`, or `--space <target>`. The transfer options cannot be combined with coordinates, each other, or `--absolute`.
 

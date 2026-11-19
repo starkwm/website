@@ -11,7 +11,7 @@ swm rule add label=settings bundle-id=com.apple.systempreferences manage=off
 swm rule add label=finder bundle-id=com.apple.finder manage=off
 ```
 
-Rules last until the daemon stops. Adding or removing a rule updates windows that are already open as well as windows opened later.
+Rules last until the daemon stops or a successful [configuration reload](/swm/cli/#reload-the-configuration) replaces them. Adding or removing a rule updates windows that are already open as well as windows opened later.
 
 ## Commands
 

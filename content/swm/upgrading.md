@@ -1,11 +1,25 @@
 ---
 title: "Upgrading swm"
-description: "Upgrade to v0.0.32 and migrate scripts from older versions."
+description: "Upgrade to v0.0.33 and migrate scripts from older versions."
 aliases: ["/swm/unreleased/"]
 weight: 90
 ---
 
 Check [installation](/swm/getting-started/#installation) for the current version.
+
+## From v0.0.32 to v0.0.33
+
+v0.0.33 keeps the v0.0.32 command syntax. Restart the daemon after upgrading:
+
+```sh
+brew services restart swm
+```
+
+[Configuration reloads](/swm/cli/#reload-the-configuration) now keep existing rules and signals until the file succeeds, and restore settings on failure. Add `set -e` to shell configurations if a failed command should abort the reload. Window and Space moves are not rolled back.
+
+[Signal actions](/swm/signals/#execution-limits) now have a 30-second timeout. Move long-running work out of signal actions. Pending move and resize actions for the same registration and window are combined.
+
+The daemon requests cancellation of commands after 4.5 seconds. Check the current state before retrying a timed-out command. Resize commands now reject a resulting width or height of zero or less.
 
 ## From v0.0.31 to v0.0.32
 
@@ -19,7 +33,7 @@ This version improves parsing of signed setting values with options and retries 
 
 ## From v0.0.30 to v0.0.31
 
-v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.32.
+v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.33.
 
 ## Move Space settings to config
 

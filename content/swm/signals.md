@@ -43,3 +43,15 @@ swm runs each action in the background with `/usr/bin/env sh -c`, and sets envir
 | `display-added`, `display-removed`, `display-moved`, `display-resized` | `SWM_EVENT_DISPLAY_ID`, plus `SWM_DISPLAY_ID` and `SWM_RECENT_DISPLAY_ID` when known |
 
 `SWM_EVENT_DISPLAY_ID` names the display the event is about. `SWM_DISPLAY_ID` and `SWM_RECENT_DISPLAY_ID` name the current and previously active displays.
+
+## Execution limits
+
+Up to four actions run at once, with room for 128 waiting actions. swm drops new actions when the queue is full. For `window-moved` and `window-resized`, a newer event replaces a waiting action for the same registration, event, and window with the latest values.
+
+Actions read standard input from `/dev/null`. After 30 seconds, swm sends `SIGTERM` to an action's process group. If the action is still running two seconds later, it sends `SIGKILL` to that group. Keep long-running work outside signal actions.
+
+## Permissions
+
+Actions run as children of the daemon. They and the programs they start can use the Accessibility access associated with swm or the terminal or service manager that started it. Only register actions you trust, and keep their scripts writable only by your user.
+
+A successful [configuration reload](/swm/cli/#reload-the-configuration) replaces signal registrations. A failed reload keeps the previous registrations.
