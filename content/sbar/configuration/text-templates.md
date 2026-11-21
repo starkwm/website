@@ -109,7 +109,7 @@ See [throughput templates](/sbar/providers/throughput/#text-templates) for rate 
 
 ## Collection rules
 
-Collections cannot nest, be compared, or be inserted as scalar values. Each provider accepts only its own collection. `{{#separator}}...{{/separator}}` is valid only inside a collection, with no inverse, comparison, or scalar form. `{{symbol}}` is a shared value tag, valid inside or outside a collection. It cannot be used as a section or comparison.
+Collections cannot nest, be compared, or be inserted as scalar values. Each provider accepts only its own collection. Agent activity exposes a [`sessions` collection](/sbar/providers/agent-activity/#filters-templates-and-appearance). `{{#separator}}...{{/separator}}` is valid only inside a collection, with no inverse, comparison, or scalar form. `{{symbol}}` is a shared value tag, valid inside or outside a collection. It cannot be used as a section or comparison.
 
 Separators appear only between entries that render content. Entries that produce only a separator are omitted. Whitespace and symbol tags count as content, so keep literal spaces inside the condition when hiding an entry. Write spaces explicitly; templates add no spacing between runs.
 
@@ -140,6 +140,10 @@ Provider pages define their fields, accepted states, and examples:
 - [Battery](/sbar/providers/battery/#text-templates)
 - [Volume](/sbar/providers/volume/#text-templates)
 - [Audio devices](/sbar/providers/audiodevice/#text-templates)
+- [Calendar](/sbar/providers/calendar/#text-templates)
+- [Reminders](/sbar/providers/reminders/#templates-and-appearance)
+- [Pomodoro](/sbar/providers/pomodoro/#presentation-and-templates)
+- [Agent activity](/sbar/providers/agent-activity/#filters-templates-and-appearance)
 - [Mail](/sbar/providers/mail/#text-templates)
 - [Network](/sbar/providers/network/#text-templates)
 - [Weather](/sbar/providers/weather/#text-templates)

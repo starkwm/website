@@ -31,6 +31,7 @@ Every provider uses the same item structure. Start with `id` and `type`, then ad
 | [Yabai](/sbar/providers/yabai/) | 2-second polling / fresh triggers | `yabai` block |
 | [Shell command](/sbar/providers/command/) | Startup / trigger / interval | `command` block |
 | [Process plugin](/sbar/providers/plugin/) | Process stream | `plugin` block |
+| [Calendar](/sbar/providers/calendar/) | EventKit changes / minute polling | `calendar` block |
 | [Reminders](/sbar/providers/reminders/) | EventKit changes / minute polling / deadlines | `reminders` block |
 | [Pomodoro](/sbar/providers/pomodoro/) | Timer ticks / native and CLI controls | `pomodoro` block |
 | [Agent activity](/sbar/providers/agent-activity/) | Reports / one-second expiry checks | `agentActivity` block |

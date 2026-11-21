@@ -5,7 +5,7 @@ weight: 22
 aliases: ["/sbar/main/reminders/"]
 ---
 
-A `reminders` item reads incomplete tasks from Apple EventKit. The default label shows disjoint counts such as `3 due · 1 overdue`. The [Reminders example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/reminders) includes a summary and a popup with next-task details. sbar never edits or completes reminders.
+A `reminders` item reads incomplete tasks from Apple EventKit. The default label shows disjoint counts such as `3 due · 1 overdue`. The [Reminders example](https://github.com/starkwm/sbar/tree/v0.0.4/examples/reminders) includes a summary and a popup with next-task details. sbar never edits or completes reminders.
 
 ## Lists and permission
 

@@ -44,6 +44,8 @@ Adding or removing an unrelated provider keeps existing native providers running
 
 Native refresh snapshots and interval timing survive a reload when the item's `id`, `type`, `refresh` settings, disk path, and weather coordinates are unchanged. Styling edits, text-template edits, weather unit changes, and changes to other items do not refresh a held reading. Templates render fields from that same snapshot. A new item or a change to its type, refresh policy, disk path, or weather coordinates captures a new snapshot for that item. Removing its refresh policy returns it to live provider updates.
 
+Removing or disabling the last active item of a native provider stops that provider and clears its shared readings. Re-adding it captures fresh data, including for manual and interval items, instead of restoring the stopped provider's last reading.
+
 These rules apply to configuration reloads, not a process restart. Restarting the bar starts providers and captures initial values again.
 
 To trigger items, reload the configuration, or stop the bar, see the [command line](/sbar/cli/) reference.

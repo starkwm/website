@@ -21,7 +21,7 @@ An `agentActivity` item shows which agents are working or waiting for input. Cli
 }
 ```
 
-The settings above are the defaults. Omit `text` to show only states with nonzero counts. With no sessions, the item hides by default; `hideWhenEmpty: false` shows "No agent activity". The [standalone example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/agent-activity) includes a separate socket and a simulator for manual testing.
+The settings above are the defaults. Omit `text` to show only states with nonzero counts. With no sessions, the item hides by default; `hideWhenEmpty: false` shows "No agent activity". The [standalone example](https://github.com/starkwm/sbar/tree/v0.0.4/examples/agent-activity) includes a separate socket and a simulator for manual testing.
 
 ## Reporting and control commands
 
@@ -99,6 +99,6 @@ The pi extension reports settled responses as idle, errors as failed and cancell
 
 Hosted agents use the same adapters when their host loads the relevant agent settings and permits hooks. There is no bundled T3 adapter or thread-title mapping. Select the configuration root used by the host and verify event delivery in that environment.
 
-For custom sources, use the reporting protocol above. The [source adapter guide](https://github.com/starkwm/sbar/blob/v0.0.3/docs/providers/agent-activity.md#writing-an-adapter-for-another-harness) includes ordering, retry and wrapper examples. Keep hook failures separate from agent approvals and response continuation.
+For custom sources, use the reporting protocol above. The [source adapter guide](https://github.com/starkwm/sbar/blob/v0.0.4/docs/providers/agent-activity.md#writing-an-adapter-for-another-harness) includes ordering, retry and wrapper examples. Keep hook failures separate from agent approvals and response continuation.
 
 Store and routing tests cover ordering, expiry, filtering and lifecycle behavior. Live popup rendering, supported-agent settings preservation and hook delivery still need manual checks. Test prompt start, a question or approval, response stop, a second turn and reconnect after restarting the bar.

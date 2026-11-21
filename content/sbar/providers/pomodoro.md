@@ -5,7 +5,7 @@ weight: 23
 aliases: ["/sbar/main/pomodoro/"]
 ---
 
-A `pomodoro` item shows and controls one shared timer per sbar process. The [Pomodoro example](https://github.com/starkwm/sbar/tree/v0.0.3/examples/pomodoro) includes a timer and a controls popup.
+A `pomodoro` item shows and controls one shared timer per sbar process. The [Pomodoro example](https://github.com/starkwm/sbar/tree/v0.0.4/examples/pomodoro) includes a timer and a controls popup.
 
 ```json
 {"id": "pomodoro", "type": "pomodoro"}
