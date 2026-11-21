@@ -13,6 +13,9 @@ weight: 20
 | `sbar set` | Change an item property until the next reload. |
 | `sbar trigger` | Refresh matching items and send an event to plugins. |
 | `sbar subscribe` | Stream runtime events as JSON lines. |
+| `sbar reminders lists` | Discover Reminders lists and request access if needed, without starting the bar. |
+| `sbar pomodoro` | Inspect and control the shared timer. |
+| `sbar agents` | Report agent activity, inspect sessions, and manage adapters. |
 | `sbar stop` | Stop a running bar. |
 
 Run `sbar --help` or `sbar <command> --help` for help. Client commands and validation exit with a nonzero status when they fail.
@@ -94,6 +97,10 @@ sbar subscribe [--socket <path>]
 ```
 
 `subscribe` prints a JSON line for each configuration change, provider value, and trigger until you interrupt it. The bar disconnects subscribers that fall behind.
+
+## Provider commands
+
+See [Reminders list discovery](/sbar/providers/reminders/#lists-and-permission), [Pomodoro controls](/sbar/providers/pomodoro/#sound-and-controls), and [agent reporting and setup](/sbar/providers/agent-activity/#reporting-and-control-commands) for their subcommands and options. Reminders discovery reads EventKit directly and has no `--socket` option. Pomodoro and agent reporting commands use the running bar's control socket.
 
 ## Stop the bar
 

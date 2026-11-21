@@ -10,16 +10,15 @@ homeSays: "\"type\": \"datetime\""
 homeInstall: "brew install starkwm/formulae/sbar"
 homeDetails: "Show system information, media, and workspaces using native providers. Add shell commands and streaming plugins, then style the bar with JSON."
 release:
-  version: "v0.0.3"
-  url: "https://github.com/starkwm/sbar/releases/tag/v0.0.3"
-  checked: "3 November 2026"
-  prerelease: true
+  version: "v0.0.4"
+  url: "https://github.com/starkwm/sbar/tree/v0.0.4"
+  checked: "21 November 2026"
 schema: "/sbar/config.schema.json"
 ---
 
 sbar draws a status bar on your displays. Each item in the bar comes from a native provider such as battery or Spaces, a shell command, or a plugin process that keeps running and streams updates. One JSON file describes the whole bar, and sbar reloads it when you save.
 
-Homebrew installs v0.0.3, the release this reference covers. It added the [Reminders](/sbar/providers/reminders/), [Pomodoro](/sbar/providers/pomodoro/), and [agent activity](/sbar/providers/agent-activity/) providers.
+Homebrew installs v0.0.4, the release this reference covers. It fixes command and plugin output at process exit, provider reactivation, and agent hook report ordering.
 
 ## Start here
 
