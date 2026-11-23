@@ -8,8 +8,8 @@ homeSays: "swm window warp right"
 homeInstall: "brew install starkwm/formulae/swm"
 homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
 release:
-  version: "v0.0.34"
-  url: "https://github.com/starkwm/swm/tree/v0.0.34"
+  version: "v0.0.35"
+  url: "https://github.com/starkwm/swm/tree/v0.0.35"
   checked: "23 November 2026"
 ---
 
@@ -19,7 +19,7 @@ Tiling is optional. Keep the default floating layout and bind swm commands to ke
 
 swm borrows ideas from [yabai](https://github.com/asmvik/yabai). It replaces the JavaScript configuration of its predecessor, [Stark](https://github.com/starkwm/stark), with shell commands.
 
-This reference covers v0.0.34. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
+This reference covers v0.0.35. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
 
 ## Start here
 

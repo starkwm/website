@@ -1,11 +1,21 @@
 ---
 title: "Upgrading swm"
-description: "Upgrade to v0.0.34 and migrate scripts from older versions."
+description: "Upgrade to v0.0.35 and migrate scripts from older versions."
 aliases: ["/swm/unreleased/"]
 weight: 90
 ---
 
 Check [installation](/swm/getting-started/#installation) for the current version.
+
+## From v0.0.34 to v0.0.35
+
+v0.0.35 keeps the command syntax but changes the IPC format. Restart the daemon after upgrading so it matches the client. For a Homebrew service:
+
+```sh
+brew services restart swm
+```
+
+Do this before running `swm reload` or other commands. Reload cannot update the running daemon or make an older daemon compatible with the new client. Existing `swmrc` commands and key bindings need no syntax changes.
 
 ## From v0.0.33 to v0.0.34
 
@@ -42,7 +52,7 @@ This version improves parsing of signed setting values with options and retries 
 
 ## From v0.0.30 to v0.0.31
 
-v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.34.
+v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.35.
 
 ## Move Space settings to config
 
