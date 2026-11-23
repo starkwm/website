@@ -6,7 +6,7 @@ weight: 10
 
 ## Installation
 
-Install v0.0.34 with Homebrew on Apple silicon:
+Install v0.0.35 with Homebrew on Apple silicon:
 
 ```sh
 brew tap starkwm/formulae
@@ -28,7 +28,7 @@ Follow the [Accessibility permission instructions](#grant-accessibility-permissi
 ```sh
 git clone https://github.com/starkwm/swm.git
 cd swm
-git checkout v0.0.34
+git checkout v0.0.35
 make build
 ```
 
@@ -44,7 +44,7 @@ A source build does not install a login service.
 
 Without Accessibility permission, swm exits with an error naming the resolved path of the binary to add. Follow that path, including the versioned Homebrew directory rather than its symlink.
 
-The v0.0.34 error directs macOS 27.3 and later to System Settings > Privacy & Security > System & App Protection Override. On earlier versions, it directs you to Privacy & Security > Accessibility. Add the binary there, then start swm again. If an upgraded or rebuilt binary is already listed but access fails, remove its entry and add it again.
+The v0.0.35 error directs macOS 27.3 and later to System Settings > Privacy & Security > System & App Protection Override. On earlier versions, it directs you to Privacy & Security > Accessibility. Add the binary there, then start swm again. If an upgraded or rebuilt binary is already listed but access fails, remove its entry and add it again.
 
 ### Upgrade
 

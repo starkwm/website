@@ -77,7 +77,7 @@ Settings change immediately while the file runs. Settings omitted from the file 
 
 Only one reload can run at a time. Commands outside the script still apply immediately, but rules and signals they add during a reload are replaced if it succeeds. A failed reload restores all settings to their values at its start, including settings changed by hotkeys while it ran. Child programs inherit `SWM_RELOAD_TOKEN`; their commands join the reload while it is open and apply immediately after it closes.
 
-With an older daemon that lacks reload transactions, the client warns and falls back to clearing rules and signals before running the file. Restart the daemon after upgrading to use rollback.
+The client and daemon must use the same IPC format. Restart the daemon after upgrading to v0.0.35 before running reload or other commands.
 
 ## Query state
 
