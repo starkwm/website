@@ -26,7 +26,7 @@ Start skbd as a launchd service:
 brew services start skbd@2
 ```
 
-Grant Accessibility permission for the current `skbd` executable, then restart the service. If startup reports `failed to create event tap`, v0.0.9 prints the resolved executable path and the System Settings pane to check: Privacy & Security > Accessibility on macOS versions before 27.3, or Privacy & Security > System & App Protection Override on 27.3 or later.
+Grant Accessibility permission for the current `skbd` executable, then restart the service. If startup reports `failed to create event tap`, v0.0.10 prints the resolved executable path and the System Settings pane to check: Privacy & Security > Accessibility on macOS versions before 27.3, or Privacy & Security > System & App Protection Override on 27.3 or later.
 
 Use **+** in that pane and Command-Shift-G in the file picker to select the executable at the printed path. After upgrading or rebuilding skbd, remove the old entry and add the current executable again.
 
@@ -38,12 +38,12 @@ Press Hyper-T, which is Shift, Control, Option, and Command with T, to open Term
 
 ### Build from source
 
-To build v0.0.9 from [source](https://github.com/starkwm/skbd), install Xcode 26 or later and the macOS SDK:
+To build v0.0.10 from [source](https://github.com/starkwm/skbd), install Xcode 26 or later and the macOS SDK:
 
 ```sh
 git clone https://github.com/starkwm/skbd.git
 cd skbd
-git checkout v0.0.9
+git checkout v0.0.10
 make build
 ```
 
