@@ -8,10 +8,9 @@ homeSays: "hyper - t: open -a Terminal"
 homeInstall: "brew install starkwm/formulae/skbd@2"
 homeDetails: "Bind key combinations to shell commands, including bindings that tell left and right modifier keys apart. skbd reloads its configuration when you save it, so a new shortcut works without a restart."
 release:
-  version: "v0.0.8"
-  url: "https://github.com/starkwm/skbd/releases/tag/v0.0.8"
-  checked: "31 October 2026"
-  prerelease: true
+  version: "v0.0.9"
+  url: "https://github.com/starkwm/skbd/tree/v0.0.9"
+  checked: "23 November 2026"
 ---
 
 skbd runs a shell command when you press a shortcut. It watches key presses through [Quartz Event Services](https://developer.apple.com/documentation/coregraphics/quartz-event-services), so a binding can tell the left and right modifier keys apart.

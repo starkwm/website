@@ -12,7 +12,7 @@ For a directory, skbd loads every non-hidden regular file in lexicographical fil
 
 skbd reloads the configuration when you edit it. If the path is a symlink, skbd watches both the link and its target, so editing the target or pointing the link somewhere else both trigger a reload. For a directory, editing, adding, removing, or renaming a file in it triggers a reload.
 
-If the new configuration fails to load or parse, skbd prints an error and keeps the last one that worked.
+If the new configuration fails to load or parse, skbd prints an error and keeps the last one that worked. It resumes watching when a removed configuration directory or symlink target is recreated. Configuration files must be UTF-8; embedded NUL characters are rejected.
 
 ## Bindings
 
@@ -24,13 +24,13 @@ cmd + shift - k: open -a iTerm
 
 Modifiers are optional, so `f19: open -a Terminal` also works. They must match exactly. Holding Shift stops a `cmd - k` binding from matching.
 
-skbd swallows the key press after running the command. To pass the key press on to the application as well, use `->` instead of `:`.
+skbd queues the command and swallows the matching key press without waiting for the command to run. Commands launch in shortcut order, but can finish in a different order. To pass the key press on to the application as well, use `->` instead of `:`.
 
 ```text
 cmd + shift - k -> open -a iTerm
 ```
 
-skbd runs commands with `-c` in the shell named by `$SHELL`, or `/bin/bash` if that is unset or empty. It discards standard output and standard error unless you redirect them. End a line with `\` to continue the command on the next line.
+skbd runs commands with `-c` in the shell named by `$SHELL`, or `/bin/bash` if that is unset or empty. It discards standard output and standard error unless you redirect them. The command can start on the line after `:` or `->` if that line is indented. An unindented next line leaves the binding without a command and causes a parse error. End a line with `\` to continue the command on the next line.
 
 ```text
 ctrl + shift - return:
