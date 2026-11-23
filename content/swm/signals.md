@@ -48,7 +48,7 @@ swm runs each action in the background with `/usr/bin/env sh -c`, and sets envir
 
 Up to four actions run at once, with room for 128 waiting actions. swm drops new actions when the queue is full. For `window-moved` and `window-resized`, a newer event replaces a waiting action for the same registration, event, and window with the latest values.
 
-Actions read standard input from `/dev/null`. After 30 seconds, swm sends `SIGTERM` to an action's process group. If the action is still running two seconds later, it sends `SIGKILL` to that group. Keep long-running work outside signal actions.
+Actions read standard input from `/dev/null`. If the action's shell is still running after 30 seconds, swm sends `SIGTERM` to its process group. If the shell is still running two seconds later, it sends `SIGKILL` to that group. A child can survive if the shell exits before the second signal or the child leaves the group. Keep long-running work outside signal actions.
 
 ## Permissions
 
