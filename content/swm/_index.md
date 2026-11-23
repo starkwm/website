@@ -8,9 +8,9 @@ homeSays: "swm window warp right"
 homeInstall: "brew install starkwm/formulae/swm"
 homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
 release:
-  version: "v0.0.33"
-  url: "https://github.com/starkwm/swm/tree/v0.0.33"
-  checked: "19 November 2026"
+  version: "v0.0.34"
+  url: "https://github.com/starkwm/swm/tree/v0.0.34"
+  checked: "23 November 2026"
 ---
 
 `swm` is a window manager you drive from the shell. One `swm` process runs as a daemon and keeps track of applications, displays, Spaces, and windows. Every other `swm` invocation sends one command to that daemon and prints the result.
@@ -19,7 +19,7 @@ Tiling is optional. Keep the default floating layout and bind swm commands to ke
 
 swm borrows ideas from [yabai](https://github.com/asmvik/yabai). It replaces the JavaScript configuration of its predecessor, [Stark](https://github.com/starkwm/stark), with shell commands.
 
-This reference covers v0.0.33. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
+This reference covers v0.0.34. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
 
 ## Start here
 
@@ -45,7 +45,7 @@ brew install starkwm/formulae/swm
 brew services start swm
 ```
 
-Grant Accessibility permission to `swm` in System Settings > Privacy & Security > Accessibility. Then, from any terminal:
+Follow the [Accessibility permission instructions](/swm/getting-started/#grant-accessibility-permission), then, from any terminal:
 
 ```sh
 swm query windows

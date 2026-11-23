@@ -75,7 +75,7 @@ If the file exits unsuccessfully, reload exits with status 1, keeps the previous
 
 Settings change immediately while the file runs. Settings omitted from the file keep their values. Rollback cannot undo window, Space, or display commands, or programs the file starts. Restoring layout settings can reflow windows. Restoring a changed split ratio rebalances splits, and restoring split preservation cannot recover directions cleared by the script.
 
-Only one reload can run at a time. Commands outside the script still apply immediately, but rules and signals they add during a reload are replaced if it succeeds. Child programs inherit `SWM_RELOAD_TOKEN`; their commands join the reload while it is open and apply immediately after it closes.
+Only one reload can run at a time. Commands outside the script still apply immediately, but rules and signals they add during a reload are replaced if it succeeds. A failed reload restores all settings to their values at its start, including settings changed by hotkeys while it ran. Child programs inherit `SWM_RELOAD_TOKEN`; their commands join the reload while it is open and apply immediately after it closes.
 
 With an older daemon that lacks reload transactions, the client warns and falls back to clearing rules and signals before running the file. Restart the daemon after upgrading to use rollback.
 
@@ -106,3 +106,28 @@ swm query window [window-id]
 ```
 
 Display indexes start at 1 and follow the physical display arrangement. Space indexes also start at 1. When the selector names the same type as the query, a filtered query prints one JSON object. Otherwise it prints an array of related objects.
+
+### Window tiling state
+
+Window queries include `tiling` and `tiling-reason`. `tiling` reports how the last layout update treated the window:
+
+- `tiled`: the window is part of a tiling layout.
+- `floating`: swm leaves the window's frame alone.
+- `excluded`: swm does not lay out the window.
+- `pending`: swm is waiting for Accessibility or Space information.
+- `null`: swm has not yet laid out the window.
+
+`tiling-reason` explains a `floating` or `excluded` state and is otherwise `null`:
+
+| Reason | Meaning |
+| --- | --- |
+| `manual` | Floated with `swm window float`. |
+| `rule` | A rule sets `manage=off`. |
+| `float-layout` | The window's Space uses the `float` layout. |
+| `multiple-spaces` | The window is on more than one Space. |
+| `dialog` | The window is modal, or has a close button but no enabled full-screen button. |
+| `not-resizable` | The application does not allow resizing the window. |
+| `not-movable` | The application does not allow moving the window. |
+| `unsupported-subrole` | The window is not a standard window, such as a panel or sheet. |
+| `native-fullscreen` | The window is in macOS full screen. |
+| `minimized` | The window is minimized. |

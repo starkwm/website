@@ -1,11 +1,20 @@
 ---
 title: "Upgrading swm"
-description: "Upgrade to v0.0.33 and migrate scripts from older versions."
+description: "Upgrade to v0.0.34 and migrate scripts from older versions."
 aliases: ["/swm/unreleased/"]
 weight: 90
 ---
 
 Check [installation](/swm/getting-started/#installation) for the current version.
+
+## From v0.0.33 to v0.0.34
+
+v0.0.34 keeps the command syntax. Restart the daemon after upgrading with `brew services restart swm` for a Homebrew service.
+
+- Dialog-like windows now float by default. Use a matching [`manage=on` rule](/swm/rules/#tiling) to tile one that supports moving and resizing.
+- Dwindle and master layouts now [make room for observed minimum sizes](/swm/spaces-and-layouts/#dwindle-size-recovery) when they fit.
+- Window JSON adds [`tiling` and `tiling-reason`](/swm/cli/#window-tiling-state). Update consumers that reject unknown fields.
+- Permission errors now name the binary and settings pane to use. Follow the [permission instructions](/swm/getting-started/#grant-accessibility-permission) if access fails after upgrading.
 
 ## From v0.0.32 to v0.0.33
 
@@ -33,7 +42,7 @@ This version improves parsing of signed setting values with options and retries 
 
 ## From v0.0.30 to v0.0.31
 
-v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.33.
+v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.34.
 
 ## Move Space settings to config
 
@@ -133,4 +142,4 @@ A bare `swm window unminimize` now fails. Both commands reject `--window`, direc
 
 ## Dwindle size limits
 
-Dwindle keeps the planned tile positions when an app refuses a smaller size. It no longer adjusts allocations around observed size limits or restores a previous arrangement. See [dwindle size limits](/swm/spaces-and-layouts/#dwindle-size-recovery).
+In v0.0.31 through v0.0.33, dwindle kept planned tile positions when an app refused a smaller size. v0.0.34 adjusts allocations around observed minimum sizes again, without changing configured split ratios or directions. See [layout size limits](/swm/spaces-and-layouts/#dwindle-size-recovery).

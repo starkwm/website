@@ -19,11 +19,15 @@ Each physical display has its own tiling layout, even when macOS's **Displays ha
 
 If an app temporarily fails to answer Accessibility queries about a window's type or whether it can move and resize, swm waits and retries. Once those reads succeed, it reassesses the window for tiling. A failed read alone does not make the window permanently ineligible.
 
-## Dwindle size limits {#dwindle-size-recovery}
+Standard windows must support moving and resizing to tile. Dialog-like windows float where they open: modal windows, and windows with a close button but no enabled full-screen button. A window with neither button can still tile. A matching [`manage=on` rule](/swm/rules/#tiling) permits a dialog-like window to tile if it meets the other requirements.
 
-Dwindle keeps the requested split ratios and directions when an app refuses a smaller tile. The app can remain larger, overlap neighbouring tiles, or extend beyond the display. Other tiles keep their planned positions. swm does not adjust allocations around observed size limits or restore an earlier arrangement.
+Use [`swm query windows`](/swm/cli/#window-tiling-state) to see each window's tiling state and reason. Fixed-size and dialog-like windows take part in `focus next` and `focus prev` cycling on a Space using `float`, but stay out of tiling cycles.
 
-After a refused arrangement, swm logs an unsatisfied layout and avoids repeating it during background reflows. Explicit layout adjustments or finishing a move or resize with the pointer allow another attempt.
+## Dwindle and master size limits {#dwindle-size-recovery}
+
+When an app refuses to shrink a tiled window, swm remembers the larger size it kept until the window closes or the daemon restarts. Dwindle and master layouts adjust their allocations around these observed minimum sizes, taking room from neighbouring tiles. Configured ratios and split directions stay unchanged. If the minimum sizes cannot fit, swm keeps the planned split; windows can overlap or extend beyond the display.
+
+After a refused dwindle arrangement, swm logs an unsatisfied layout and avoids repeating it during background reflows. Explicit layout adjustments or finishing a move or resize with the pointer allow another attempt.
 
 ## Activate a Space
 

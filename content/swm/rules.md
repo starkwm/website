@@ -63,11 +63,11 @@ swm rule add label=finder-projects app='^Finder$' title='^Projects$' manage=on
 
 ## Tiling
 
-`manage=off` keeps a window out of automatic tiling and tiling cycles. Queries, focus, and direct window commands still work on it. `manage=on` lets the window tile if it can. It cannot force fixed-size, nonstandard, or native-fullscreen windows into a layout.
+`manage=off` keeps a window out of automatic tiling and tiling cycles. Queries, focus, and direct window commands still work on it. `manage=on` lets the window tile if it can, including dialog-like windows that would otherwise float. It cannot force fixed-size, nonstandard, or native-fullscreen windows into a layout.
 
 swm checks rules before a new window's first layout, whenever rules change, and on later window updates. A title change triggers a check if the app reports title changes. Removing a `manage` rule restores the value from an earlier matching rule, or the normal default.
 
-`swm window float on`, `off`, and `toggle` override `manage` rules for that window until it closes or the daemon restarts. Editing rules keeps that choice. `toggle` reverses the window's float or tile setting. Rules never change a Space's layout, and a Space using `float` keeps its usual floating-window commands and cycling.
+`swm window float on`, `off`, and `toggle` override `manage` rules for that window until it closes or the daemon restarts. Editing rules keeps that choice. `toggle` reverses the window's float or tile setting. These commands require a window eligible for tiling; a dialog-like window still needs a matching `manage=on` rule. Rules never change a Space's layout, and a Space using `float` keeps its usual floating-window commands and cycling.
 
 ## Windows from accessory applications
 
