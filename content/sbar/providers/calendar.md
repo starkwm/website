@@ -4,7 +4,7 @@ description: "Show the current or next event from macOS calendars."
 weight: 25
 ---
 
-A `calendar` item reads events from the calendars available through Apple EventKit. It shows an ongoing timed event first, then an ongoing all-day event, then the next event by start time. Cancelled and ended events are excluded. The [Calendar example](https://github.com/starkwm/sbar/tree/v0.0.4/examples/calendar) includes a complete bar configuration.
+A `calendar` item reads events from the calendars available through Apple EventKit. It shows an ongoing timed event first, then an ongoing all-day event, then the next event by start time. Cancelled and ended events are excluded. The [Calendar example](https://github.com/starkwm/sbar/tree/v0.0.5/examples/calendar) includes a complete bar configuration.
 
 ```json
 {

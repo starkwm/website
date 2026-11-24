@@ -100,14 +100,14 @@ The app's `symbol` appears if its icon is unavailable. Battery icons appear by d
 
 ## Release compatibility
 
-Use the [v0.0.4 configuration schema](/sbar/config.schema.json) with this release. It includes Calendar, Reminders, Pomodoro, and agent activity configuration. The examples on this site also target v0.0.4. `sbar validate` checks rules the schema cannot express.
+Use the [v0.0.5 configuration schema](/sbar/config.schema.json) with this release. It includes Calendar, Reminders, Pomodoro, and agent activity configuration. The examples on this site also target v0.0.5. `sbar validate` checks rules the schema cannot express.
 
 ## Build from source
 
 ```sh
 git clone https://github.com/starkwm/sbar.git
 cd sbar
-git checkout v0.0.4
+git checkout v0.0.5
 make build
 ```
 

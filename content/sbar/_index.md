@@ -10,15 +10,15 @@ homeSays: "\"type\": \"datetime\""
 homeInstall: "brew install starkwm/formulae/sbar"
 homeDetails: "Show system information, media, and workspaces using native providers. Add shell commands and streaming plugins, then style the bar with JSON."
 release:
-  version: "v0.0.4"
-  url: "https://github.com/starkwm/sbar/tree/v0.0.4"
-  checked: "21 November 2026"
+  version: "v0.0.5"
+  url: "https://github.com/starkwm/sbar/tree/v0.0.5"
+  checked: "24 November 2026"
 schema: "/sbar/config.schema.json"
 ---
 
 sbar draws a status bar on your displays. Each item in the bar comes from a native provider such as battery or Spaces, a shell command, or a plugin process that keeps running and streams updates. One JSON file describes the whole bar, and sbar reloads it when you save.
 
-Homebrew installs v0.0.4, the release this reference covers. It fixes command and plugin output at process exit, provider reactivation, and agent hook report ordering.
+Homebrew installs v0.0.5, the release this reference covers. Spaces now refreshes when Mission Control changes the desktop list, even when the active Space stays the same.
 
 ## Start here
 
@@ -33,4 +33,4 @@ Homebrew installs v0.0.4, the release this reference covers. It fixes command an
 
 - macOS 26 or later
 - Apple silicon for the Homebrew package
-- Xcode 26 or later with Swift 6.2 when building from source
+- Swift 6.4 or later and the macOS SDK when building from source

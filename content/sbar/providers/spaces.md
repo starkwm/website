@@ -109,7 +109,7 @@ Omit `text` for the current workspace label, or set `text: ""` for an icon alone
 
 ## Updates
 
-The provider refreshes on Space switches, application activation, and display changes. It combines notification bursts into one update. If a Space transition returns incomplete data, it retries a limited number of times and keeps the previous snapshot until then.
+The provider refreshes when Mission Control changes the desktop list, when the active Space or application changes, and when displays change. It combines notification bursts into one update. If a Space transition returns incomplete data, it retries a limited number of times and keeps the previous snapshot until then.
 
 Each refresh captures Spaces across displays. Every bar uses that snapshot to show the Spaces for its display. Manual and interval items retain that state until refreshed. See [refresh policies](/sbar/configuration/refresh/).
 
