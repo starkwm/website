@@ -7,8 +7,8 @@ homeHello: "I tag."
 homeSays: "stags view work chat"
 homeInstall: "brew install starkwm/formulae/stags"
 release:
-  version: "v0.0.1"
-  url: "https://github.com/starkwm/stags/releases/tag/v0.0.1"
+  version: "v0.0.2"
+  url: "https://github.com/starkwm/stags/tree/v0.0.2"
 ---
 
 `stags` gives each window in the active macOS Space one or more tags. Pick a view of one or more tags, and stags parks every window outside it at the edge of the display. It does not switch native Spaces.
@@ -25,7 +25,7 @@ release:
 
 - macOS 26 or later
 - Apple silicon for the Homebrew package
-- Swift 6.2 or later to build from source
+- Swift 6.4 or later to build from source
 - Accessibility permission for the `stags` executable
 
 `stags` also uses private macOS APIs to match windows with the active Space. macOS updates may change the behaviour it relies on.
