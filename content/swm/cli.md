@@ -18,7 +18,7 @@ Every other command goes to the running daemon:
 swm <domain> <command> [arguments]
 ```
 
-The domains are `query`, `window`, `space`, `display`, `config`, `rule`, and `signal`. Commands print their result to standard output and exit with a non-zero status when they fail. For help, run `swm --help`, `swm <domain> --help`, or `swm help <domain> <command>`.
+The domains are `query`, `window`, `space`, `display`, `config`, and `rule`. Commands print their result to standard output and exit with a non-zero status when they fail. For help, run `swm --help`, `swm <domain> --help`, or `swm help <domain> <command>`.
 
 Top-level options:
 
@@ -57,7 +57,6 @@ The daemon requests cancellation after 4.5 seconds. A timed-out failure reports 
 | `swm space activate` | Show a Space on its display. |
 | `swm config <setting>` | Read or change a global default, or select one Space with `--space`. |
 | `swm rule add`, `list`, `remove`, `clear` | Manage [window rules](/swm/rules/). |
-| `swm signal add`, `list`, `remove`, `clear` | Manage [signals](/swm/signals/). |
 
 [Windows](/swm/windows/), [Spaces and layouts](/swm/spaces-and-layouts/), and [global settings](/swm/settings/) describe each command's arguments.
 
@@ -69,15 +68,15 @@ swm reload [--config <path>]
 
 Without `--config`, reload runs `~/.config/swm/swmrc`, even if the daemon started with another file. Pass that file's path explicitly to reload it.
 
-Rules and signals registered by the file replace the current ones only when the file exits successfully. While it runs, its rule and signal commands work on a separate collection that starts empty. Existing rules and signals stay active. Unchanged rule placements are not repeated, so windows you moved by hand stay where you put them.
+Rules registered by the file replace the current ones only when the file exits successfully. While it runs, its rule commands work on a separate collection that starts empty. Existing rules stay active. Unchanged rule placements are not repeated, so windows you moved by hand stay where you put them.
 
-If the file exits unsuccessfully, reload exits with status 1, keeps the previous rules and signals, and restores settings. If the reload process exits before finishing, the daemon also rolls back. Add `set -e` to a shell configuration to stop at a failed command; otherwise the script's final exit status decides whether the reload succeeds.
+If the file exits unsuccessfully, reload exits with status 1, keeps the previous rules, and restores settings. If the reload process exits before finishing, the daemon also rolls back. Add `set -e` to a shell configuration to stop at a failed command; otherwise the script's final exit status decides whether the reload succeeds.
 
 Settings change immediately while the file runs. Settings omitted from the file keep their values. Rollback cannot undo window, Space, or display commands, or programs the file starts. Restoring layout settings can reflow windows. Restoring a changed split ratio rebalances splits, and restoring split preservation cannot recover directions cleared by the script.
 
-Only one reload can run at a time. Commands outside the script still apply immediately, but rules and signals they add during a reload are replaced if it succeeds. A failed reload restores all settings to their values at its start, including settings changed by hotkeys while it ran. Child programs inherit `SWM_RELOAD_TOKEN`; their commands join the reload while it is open and apply immediately after it closes.
+Only one reload can run at a time. Commands outside the script still apply immediately, but rules they add during a reload are replaced if it succeeds. A failed reload restores all settings to their values at its start, including settings changed by hotkeys while it ran. Child programs inherit `SWM_RELOAD_TOKEN`; their commands join the reload while it is open and apply immediately after it closes.
 
-The client and daemon must use the same IPC format. Restart the daemon after upgrading to v0.0.35 before running reload or other commands.
+The client and daemon must use the same IPC format. Restart the daemon after upgrading before running reload or other commands.
 
 ## Query state
 

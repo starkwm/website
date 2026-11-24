@@ -1,11 +1,19 @@
 ---
 title: "Upgrading swm"
-description: "Upgrade to v0.0.35 and migrate scripts from older versions."
-aliases: ["/swm/unreleased/"]
+description: "Upgrade to v0.0.36 and migrate scripts from older versions."
+aliases: ["/swm/unreleased/", "/swm/signals/"]
 weight: 90
 ---
 
 Check [installation](/swm/getting-started/#installation) for the current version.
+
+## From v0.0.35 to v0.0.36
+
+v0.0.36 removes signals. Remove every `swm signal` command from `swmrc`, key bindings, and other scripts before restarting the daemon. The `add`, `list`, `remove`, and `clear` commands no longer exist, and swm no longer runs shell actions on window, application, Space, or display events. There is no replacement event-action command.
+
+A configuration that stops on errors, such as a shell script with `set -e`, fails when it reaches a removed command. A failed startup configuration stops the daemon; a failed reload keeps the previous rules and restores settings.
+
+Restart the daemon after upgrading with `brew services restart swm` for a Homebrew service. [Reload](/swm/cli/#reload-the-configuration) now replaces only rules; settings and rollback limits are unchanged.
 
 ## From v0.0.34 to v0.0.35
 
@@ -36,7 +44,7 @@ brew services restart swm
 
 [Configuration reloads](/swm/cli/#reload-the-configuration) now keep existing rules and signals until the file succeeds, and restore settings on failure. Add `set -e` to shell configurations if a failed command should abort the reload. Window and Space moves are not rolled back.
 
-[Signal actions](/swm/signals/#execution-limits) now have a 30-second timeout. Move long-running work out of signal actions. Pending move and resize actions for the same registration and window are combined.
+Signals gained execution limits in v0.0.33, then were removed in v0.0.36. Remove signal commands when upgrading to the current release.
 
 The daemon requests cancellation of commands after 4.5 seconds. Check the current state before retrying a timed-out command. Resize commands now reject a resulting width or height of zero or less.
 
@@ -52,7 +60,7 @@ This version improves parsing of signed setting values with options and retries 
 
 ## From v0.0.30 to v0.0.31
 
-v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.35.
+v0.0.31 changed commands and arguments from v0.0.30. Apply the changes below to `swmrc` and your key bindings when upgrading from v0.0.30 to v0.0.36.
 
 ## Move Space settings to config
 
