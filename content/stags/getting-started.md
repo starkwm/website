@@ -45,10 +45,10 @@ Run this as your desktop user, without `sudo`. To stop the service and disable s
 
 ## Build from source
 
-Source builds require Swift 6.2 or later:
+Source builds require Swift 6.4 or later:
 
 ```sh
-git clone --branch v0.0.1 --depth 1 https://github.com/starkwm/stags.git
+git clone --branch v0.0.2 --depth 1 https://github.com/starkwm/stags.git
 cd stags
 make build
 .build/debug/stags daemon

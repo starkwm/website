@@ -18,8 +18,9 @@ Run `stags help` or `stags --help` for usage. Running `stags` without a command 
 | `window remove TAG` | Remove a tag from a window. |
 | `restore` | Show all known tags and restore parked windows in the active Space. |
 | `stop` | Restore parked windows, then stop the daemon if restoration succeeds. |
+| `--version` | Print the embedded binary version and exit. |
 
-Client commands need a running daemon. Each command accepts `--socket PATH` to use another control socket. The default is `~/.config/stags/control.sock`. Pass the same path to the daemon and its clients:
+Client commands need a running daemon. The daemon and client commands accept `--socket PATH` to use another control socket. The default is `~/.config/stags/control.sock`. Pass the same path to the daemon and its clients:
 
 ```sh
 stags daemon --socket /tmp/stags-test.sock
@@ -34,6 +35,8 @@ stags window set work chat --window 12345
 ```
 
 `--window` works only with `window set`, `window add`, and `window remove`. IDs must belong to managed windows in the active macOS Space. Invalid commands and daemon errors exit with a nonzero status and print an error to standard error.
+
+Run `stags --version` to print the embedded binary version and exit without starting a daemon or connecting to its socket.
 
 ## Query output
 
