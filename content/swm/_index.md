@@ -6,11 +6,11 @@ homeSummary: "Moves your windows around so you don't have to."
 homeHello: "I tile."
 homeSays: "swm window warp right"
 homeInstall: "brew install starkwm/formulae/swm"
-homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON, and run shell commands when windows or Spaces change."
+homeDetails: "Move, resize, and focus windows from the command line, or tile them with master, monocle, or dwindle layouts. Query displays, Spaces, and windows as JSON."
 release:
-  version: "v0.0.35"
-  url: "https://github.com/starkwm/swm/tree/v0.0.35"
-  checked: "23 November 2026"
+  version: "v0.0.36"
+  url: "https://github.com/starkwm/swm/tree/v0.0.36"
+  checked: "24 November 2026"
 ---
 
 `swm` is a window manager you drive from the shell. One `swm` process runs as a daemon and keeps track of applications, displays, Spaces, and windows. Every other `swm` invocation sends one command to that daemon and prints the result.
@@ -19,14 +19,14 @@ Tiling is optional. Keep the default floating layout and bind swm commands to ke
 
 swm borrows ideas from [yabai](https://github.com/asmvik/yabai). It replaces the JavaScript configuration of its predecessor, [Stark](https://github.com/starkwm/stark), with shell commands.
 
-This reference covers v0.0.35. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
+This reference covers v0.0.36. Read the [upgrade guide](/swm/upgrading/) before updating existing scripts.
 
 ## Start here
 
 1. [Install swm and start the daemon](/swm/getting-started/), then grant Accessibility permission.
 2. Learn [how commands work](/swm/cli/) and query what swm can see.
 3. [Move and focus windows](/swm/windows/), or [choose a tiling layout](/swm/spaces-and-layouts/) for a Space.
-4. Save your settings, [window rules](/swm/rules/), and [signals](/swm/signals/) in `swmrc` so the daemon applies them at startup.
+4. Save your settings and [window rules](/swm/rules/) in `swmrc` so the daemon applies them at startup.
 
 ## Requirements
 

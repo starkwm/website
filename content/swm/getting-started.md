@@ -6,7 +6,7 @@ weight: 10
 
 ## Installation
 
-Install v0.0.35 with Homebrew on Apple silicon:
+Install v0.0.36 with Homebrew on Apple silicon:
 
 ```sh
 brew tap starkwm/formulae
@@ -28,7 +28,7 @@ Follow the [Accessibility permission instructions](#grant-accessibility-permissi
 ```sh
 git clone https://github.com/starkwm/swm.git
 cd swm
-git checkout v0.0.35
+git checkout v0.0.36
 make build
 ```
 
@@ -44,7 +44,7 @@ A source build does not install a login service.
 
 Without Accessibility permission, swm exits with an error naming the resolved path of the binary to add. Follow that path, including the versioned Homebrew directory rather than its symlink.
 
-The v0.0.35 error directs macOS 27.3 and later to System Settings > Privacy & Security > System & App Protection Override. On earlier versions, it directs you to Privacy & Security > Accessibility. Add the binary there, then start swm again. If an upgraded or rebuilt binary is already listed but access fails, remove its entry and add it again.
+The v0.0.36 error directs macOS 27.3 and later to System Settings > Privacy & Security > System & App Protection Override. On earlier versions, it directs you to Privacy & Security > Accessibility. Add the binary there, then start swm again. If an upgraded or rebuilt binary is already listed but access fails, remove its entry and add it again.
 
 ### Upgrade
 
@@ -76,7 +76,7 @@ Restart the shell to load the new script.
 
 At startup, the daemon runs `~/.config/swm/swmrc` if it exists. Pass `--config <path>` to run a different file. That file must exist. `swm` makes the file executable by its owner when needed, and stops if the file exits with an error.
 
-At startup, the file runs as a child of the daemon and can use its Accessibility access. A reload runs the file from the calling process instead. Keep the file and scripts it runs writable only by your user. See [signal permissions](/swm/signals/#permissions).
+At startup, the file runs as a child of the daemon and can use its Accessibility access. A reload runs the file from the calling process instead. Keep the file and scripts it runs writable only by your user. The file and programs it starts can read and control other apps' windows through that access.
 
 `swmrc` can be any executable. A shell script that calls `swm` is the simplest:
 
@@ -91,7 +91,7 @@ swm config gap 8
 swm config padding --top 8 --bottom 8 --left 8 --right 8
 ```
 
-Run `swm reload` to run the file again, or `swm reload --config /path/to/swmrc` to run another one. On success, reload replaces every [rule](/swm/rules/) and [signal](/swm/signals/) with those registered by the file. On failure, it keeps the previous rules and signals and restores settings. Settings the file no longer mentions keep their current values. See [reload behavior and limits](/swm/cli/#reload-the-configuration).
+Run `swm reload` to run the file again, or `swm reload --config /path/to/swmrc` to run another one. On success, reload replaces every [rule](/swm/rules/) with those registered by the file. On failure, it keeps the previous rules and restores settings. Settings the file no longer mentions keep their current values. See [reload behavior and limits](/swm/cli/#reload-the-configuration).
 
 See [global settings](/swm/settings/) for everything `swm config` can set.
 
