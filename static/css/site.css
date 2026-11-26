@@ -649,32 +649,6 @@ button:focus-visible {
   }
 }
 
-.crew {
-  margin-top: 56px;
-  border: 1px solid var(--border-strong);
-  background-image: radial-gradient(var(--border) 0.75px, transparent 0.75px);
-  background-size: 8px 8px;
-}
-
-.crew::after {
-  content: "";
-  display: block;
-  height: 20px;
-  border-top: 1px solid var(--border-strong);
-  background-image: var(--texture-hatch);
-}
-
-.crew__bar {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 6px 14px;
-  border-bottom: 1px solid var(--border);
-  background: var(--code-bg);
-  color: var(--text-muted);
-  font-size: 12px;
-}
-
 .crew__spaces {
   display: inline-flex;
   gap: 4px;
@@ -687,37 +661,6 @@ button:focus-visible {
     background: var(--accent);
     color: #0d1110;
     font-weight: 600;
-  }
-}
-
-.crew__members {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-end;
-  gap: 24px;
-  margin: 0;
-  padding: 48px 24px 0;
-  list-style: none;
-}
-
-.crew__member {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-
-  .project-avatar {
-    width: clamp(120px, 14vw, 190px);
-    height: clamp(120px, 14vw, 190px);
-    border: 0;
-    background: none;
-  }
-
-  &:hover .speech {
-    background: var(--accent);
-    color: #0d1110;
   }
 }
 
@@ -755,20 +698,70 @@ button:focus-visible {
 
   .member__says {
     right: auto;
-    left: -20px;
-    border-radius: 16px 16px 16px 2px;
+    left: 5%;
   }
 }
 
+.member#swm {
+  --frame-outline: light-dark(#3859a0, #83aaff);
+  --frame-shadow: light-dark(#c5d3ed, #344b78);
+}
+
+.member#skbd {
+  --frame-outline: light-dark(#986016, #f0bd63);
+  --frame-shadow: light-dark(#efdab7, #725324);
+}
+
+.member#sbar {
+  --frame-outline: light-dark(#13777d, #60d9db);
+  --frame-shadow: light-dark(#b6e0df, #2b6668);
+}
+
+.member#stags {
+  --frame-outline: light-dark(#8051a6, #c299ed);
+  --frame-shadow: light-dark(#ddcaed, #5b427a);
+}
+
+.member#sborders {
+  --frame-outline: light-dark(#a64c3e, #f49a88);
+  --frame-shadow: light-dark(#efc9c1, #7e483c);
+}
+
 .member__stage {
+  --corners: polygon(
+    0 12px, 6px 12px, 6px 6px, 12px 6px, 12px 0, 100% 0,
+    100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px),
+    calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px),
+    calc(100% - 12px) 100%, 0 100%
+  );
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
-  border: 1px solid var(--border-strong);
-  background-image: radial-gradient(var(--border) 0.75px, transparent 0.75px);
-  background-size: 6px 6px;
+  filter: drop-shadow(4px 4px 0 var(--frame-shadow, var(--border-strong)));
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    clip-path: var(--corners);
+    pointer-events: none;
+  }
+
+  &::before {
+    inset: 0;
+    z-index: -2;
+    background: var(--frame-outline, var(--border-strong));
+  }
+
+  &::after {
+    inset: 1px;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse, var(--bg) 24%, transparent 78%),
+      radial-gradient(var(--border-strong) 1px, transparent 1px) 0 0 / 6px 6px var(--bg);
+  }
 
   .project-avatar {
     width: 82%;
@@ -780,11 +773,22 @@ button:focus-visible {
 
 .member__says {
   position: absolute;
-  top: 18px;
-  right: -20px;
-  max-width: 15rem;
-  border-radius: 16px 16px 2px 16px;
+  top: 7%;
+  right: 5%;
+  max-width: min(90%, 15rem);
+  border-radius: 0;
   padding: 8px 14px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    width: 12px;
+    height: 8px;
+    background: inherit;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 50%, 50% 100%, 0 100%);
+  }
 }
 
 .member__heading {
@@ -801,6 +805,8 @@ button:focus-visible {
   font-size: 12px;
 }
 
+.brand__text,
+.site-nav__link,
 .project-avatar + h1,
 .member__name {
   font-family: "Pixelify Sans", var(--font-mono);

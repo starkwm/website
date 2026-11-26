@@ -13,24 +13,6 @@
           <pre class="home-install__command"><span aria-hidden="true">$ </span>brew tap starkwm/formulae</pre>
         </div>
       </div>
-
-      <div class="crew">
-        <div class="crew__bar" aria-hidden="true">
-          <span class="crew__spaces"><span class="is-active">1</span><span>2</span><span>3</span></span>
-          <span>cpu 12% · 87%</span>
-        </div>
-        <ul class="crew__members">
-          {{ range site.Sections.ByWeight }}
-            <li>
-              <a class="crew__member" href="#{{ .Section }}">
-                {{ with .Params.homeHello }}<span class="speech">{{ . }}</span>{{ end }}
-                {{ partial "project-avatar" . }}
-                <span class="visually-hidden">{{ .Title }}</span>
-              </a>
-            </li>
-          {{ end }}
-        </ul>
-      </div>
     </section>
 
     <div class="member-list">
